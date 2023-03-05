@@ -102,9 +102,8 @@ const EntityLight = ({ entity, updateState }) => {
 								fillOpacity="0"
 							/>
 							<path
-								className="transition-all duration-300 ease-in-out"
+								className="transition-all duration-300 ease-in-out stroke-blue"
 								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								stroke="#005bc5"
 								strokeWidth="6"
 								fillOpacity="0"
 								style={{
