@@ -8,6 +8,7 @@ export const getHassAuth = async () => {
 	let auth;
 	const authOptions = {
 		hassUrl: getBaseURI(),
+		redirectUrl: window.location.origin + '/setup',
 		async loadTokens() {
 			try {
 				return JSON.parse(localStorage.hassTokens);
