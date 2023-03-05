@@ -86,7 +86,6 @@ const EntityLight = ({ entity, updateState }) => {
 						'flex',
 						'items-center',
 						'justify-center',
-						'rounded-full',
 						'w-11 h-11',
 						'relative',
 						{
@@ -96,13 +95,16 @@ const EntityLight = ({ entity, updateState }) => {
 					)}>
 						<svg viewBox="0 0 100 100" className="absolute ">
 							<path
-								className="stroke-light-gray"
+								className={cx({
+									'stroke-light/20': entity.attributes.brightness == null,
+									'stroke-light-gray': entity.attributes.brightness != null,
+								})}
 								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
 								strokeWidth="6"
 								fillOpacity="0"
 							/>
 							<path
-								className="transition-all duration-300 ease-in-out stroke-blue"
+								className="transition-all duration-200 ease-in-out stroke-blue"
 								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
 								strokeWidth="6"
 								fillOpacity="0"
