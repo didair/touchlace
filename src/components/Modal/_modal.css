@@ -1,0 +1,53 @@
+.ReactModal__Overlay {
+	@apply bg-transparent;
+	@apply fixed;
+	@apply top-0;
+	@apply bottom-0;
+	@apply left-0;
+	@apply right-0;
+	z-index: 2048;
+
+	@apply transition-all;
+	@apply ease-in-out;
+	@apply duration-300;
+}
+
+.ReactModal__Overlay--after-open {
+	@apply bg-dark/60 backdrop-blur-sm;
+}
+
+.ReactModal__Overlay--before-close {
+	@apply bg-transparent backdrop-blur-0;
+}
+
+body.ReactModal__Body--open {
+	@apply overflow-hidden;
+}
+
+.ReactModal__Content {
+	outline: none !important;
+	@apply absolute;
+	@apply bg-dark;
+	@apply max-w-lg;
+	@apply top-1/2 left-1/2;
+	width: 90%;
+
+	@apply rounded-md;
+	@apply -translate-y-1/2 -translate-x-1/2;
+	@apply scale-50;
+	@apply opacity-0;
+	@apply transition;
+	@apply ease-in-out;
+	@apply duration-300;
+	@apply flex flex-col;
+}
+
+.ReactModal__Content--after-open {
+	@apply scale-100;
+	@apply opacity-100;
+}
+
+.ReactModal__Content--before-close {
+	@apply scale-50;
+	@apply opacity-0;
+}
