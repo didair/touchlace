@@ -18,7 +18,7 @@ const Devices = () => {
 
 			<h3 className="text-xl mt-1 mb-4">Got states from {entities.length} devices</h3>
 
-			<div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-3">
+			<div className="flex flex-wrap gap-3">
 				{entities.map((entity) => {
 					return <Entity
 						key={entity.entity_id}
