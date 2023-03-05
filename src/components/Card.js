@@ -30,7 +30,7 @@ const Card = (props) => {
 			{...cleanProps}
 			{...clickEvents}
 			className={cx(
-				'aspect-square',
+				'w-40 h-40',
 				'transition-all',
 				'ease-in-out',
 				'duration-200',

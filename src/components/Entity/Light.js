@@ -125,7 +125,7 @@ const EntityLight = ({ entity, updateState }) => {
 				</div>
 
 				<div>
-					<div className="font-semibold">
+					<div className="font-semibold truncate text-ellipsis h-6">
 						{entity.attributes.friendly_name}
 					</div>
 
