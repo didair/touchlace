@@ -33,6 +33,7 @@ body.ReactModal__Body--open {
 	width: 90%;
 
 	@apply rounded-lg;
+	@apply border border-gray/40;
 	@apply -translate-y-1/2 -translate-x-1/2;
 	@apply scale-50;
 	@apply opacity-0;
@@ -40,6 +41,7 @@ body.ReactModal__Body--open {
 	@apply ease-in-out;
 	@apply duration-300;
 	@apply flex flex-col;
+	@apply shadow-2xl;
 }
 
 .ReactModal__Content--after-open {
