@@ -96,8 +96,8 @@ const EntityLight = ({ entity, updateState }) => {
 					)}>
 						<svg viewBox="0 0 100 100" className="absolute ">
 							<path
+								className="stroke-light-gray"
 								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								stroke="#ccc"
 								strokeWidth="6"
 								fillOpacity="0"
 							/>
