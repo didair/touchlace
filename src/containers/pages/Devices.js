@@ -1,10 +1,9 @@
-import { useGetServicesQuery, useGetStatesQuery } from "services/states/api";
+import { useGetStatesQuery } from "services/states/api";
 import Entity from "components/Entity";
 import { useGetConfigQuery } from "services/config/api";
 
 const Devices = () => {
 	const { data: config } = useGetConfigQuery();
-	const { data: services } = useGetServicesQuery();
 	const { data: entities } = useGetStatesQuery();
 
 	if (entities == null) {
