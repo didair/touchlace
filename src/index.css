@@ -25,7 +25,7 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-image: url('/public/bg.png');
+	background-image: url('/public/bg-min.png');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
