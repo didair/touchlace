@@ -24,13 +24,15 @@ const Card = (props) => {
 	const cleanProps = {...props};
 	delete cleanProps.onLongPress;
 	delete cleanProps.onClick;
+	delete cleanProps.state;
 
 	return (
 		<div
 			{...cleanProps}
 			{...clickEvents}
 			className={cx(
-				'w-40 h-40',
+				// 'w-40 h-40',
+				'h-full',
 				'transition-all',
 				'ease-in-out',
 				'duration-200',
