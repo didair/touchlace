@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { getBaseURI } from 'lib/config';
+import { getHassConnection } from 'lib/hass';
+import { getBaseURI, prepareHeaders } from 'lib/config';
 import { subscribeEntities } from 'home-assistant-js-websocket';
-import { getHassAuth, getHassConnection } from 'lib/hass';
 
 const deepCompare = (a, b) => {
 	return JSON.stringify(a) === JSON.stringify(b);
@@ -10,19 +10,7 @@ const deepCompare = (a, b) => {
 export const statesApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: getBaseURI() + '/api/',
-		prepareHeaders: async (headers) => {
-			const auth = await getHassAuth();
-			if (auth != null) {
-				if (auth.expired) {
-					console.log('token expired, trying to fetch a new token from server');
-					await auth.refreshAccessToken();
-				}
-
-				headers.set('Authorization', `Bearer ${auth.data.access_token}`);
-			}
-
-			return headers;
-		},
+		prepareHeaders: prepareHeaders,
 	}),
 	reducerPath: 'states',
 	tagTypes: ['Entities'],
