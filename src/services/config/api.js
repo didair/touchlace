@@ -1,18 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { getBaseURI } from 'lib/config';
-import { getHassAuth } from 'lib/hass';
+import { getBaseURI, prepareHeaders } from 'lib/config';
 
 export const configApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: getBaseURI() + '/api/',
-		prepareHeaders: async (headers) => {
-			const auth = await getHassAuth();
-			if (auth != null) {
-				headers.set('Authorization', `Bearer ${auth.data.access_token}`);
-			}
-
-			return headers;
-		},
+		prepareHeaders: prepareHeaders,
 	}),
 	reducerPath: 'configApi',
 	tagTypes: ['Config'],
