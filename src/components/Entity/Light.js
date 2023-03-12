@@ -23,7 +23,6 @@ const EntityLight = ({ entity, updateState }) => {
 	}, 500);
 
 	const toggleOnOff = () => {
-		return true;
 		updateState({
 			entity_id: entity.entity_id,
 			domain: 'light',
