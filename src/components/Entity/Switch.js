@@ -12,7 +12,7 @@ const EntitySwitch = ({ entity, updateState }) => {
 	};
 
 	return (
-		<Card onClick={toggleOnOff} state={entity.state == 'on' ? 'light' : 'dark'}>
+		<Card onClick={toggleOnOff} state={entity.state == 'on' ? 'light' : 'dark'} type="switch">
 			<div className="flex justify-between">
 				<div className="flex items-center">
 					Switch

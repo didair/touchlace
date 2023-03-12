@@ -25,21 +25,22 @@ const Card = (props) => {
 	delete cleanProps.onLongPress;
 	delete cleanProps.onClick;
 	delete cleanProps.state;
+	delete cleanProps.type;
 
 	return (
 		<div
 			{...cleanProps}
 			{...clickEvents}
 			className={cx(
-				// 'w-40 h-40',
-				'h-full',
+				'card',
+				'w-40 h-40',
 				'transition-all',
 				'ease-in-out',
 				'duration-200',
 				'flex',
 				'flex-col',
 				'justify-between',
-				'p-4',
+				'p-4 mb-3',
 				'text-dark',
 				'rounded-lg',
 				'text-md',
@@ -49,7 +50,8 @@ const Card = (props) => {
 					'bg-light': props.state == 'light',
 					'bg-light/20': props.state == 'dark',
 				},
-				...props.className
+				props.className,
+				props.type,
 			)}
 		/>
 	);
@@ -57,6 +59,7 @@ const Card = (props) => {
 
 Card.defaultProps = {
 	className: '',
+	type: '',
 	state: 'dark',
 };
 

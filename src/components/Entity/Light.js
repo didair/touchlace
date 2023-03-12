@@ -80,6 +80,7 @@ const EntityLight = ({ entity, updateState }) => {
 				onLongPress={() => setOpen(true)}
 				onClick={toggleOnOff}
 				state={entity.state == 'on' ? 'light' : 'dark'}
+				type="light"
 			>
 				<div className="flex justify-between">
 					<div className="flex items-center">
