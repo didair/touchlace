@@ -32,7 +32,7 @@ const Card = (props) => {
 			{...cleanProps}
 			{...clickEvents}
 			className={cx(
-				'card',
+				'grid-item',
 				'w-40 h-40',
 				'transition-all',
 				'ease-in-out',
