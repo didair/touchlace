@@ -40,7 +40,7 @@ const EntityLight = ({ entity, updateState }) => {
 
 	return (
 		<>
-			<Modal open={open} onClose={() => setOpen(false)} title={entity.attributes.friendly_name}>
+			<Modal open={open} onClose={() => setOpen(false)}>
 				<div className="mb-4">
 					<h3 className="text-2xl mb-2">{entity.attributes.friendly_name}</h3>
 					<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">
