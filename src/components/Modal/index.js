@@ -21,7 +21,7 @@ const Modal = (props) => {
 			closeTimeoutMS={300}
 			className={`type-${props.type}`}
 		>
-			<div className="max-h-full overflow-auto flex-1 px-10 py-7">
+			<div className="max-h-[85vh] overflow-auto flex-1 px-10 py-7">
 				{props.children}
 			</div>
 		</ReactModal>
