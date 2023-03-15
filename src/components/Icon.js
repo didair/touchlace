@@ -12,6 +12,15 @@ const Icon = ({ name }) => {
 		case 'trash-can':
 			return <FontAwesomeIcon icon={solid('trash-can')} />
 
+		case 'lightbulb':
+			return <FontAwesomeIcon icon={solid('lightbulb')} />
+
+		case 'toggle-on':
+			return <FontAwesomeIcon icon={solid('toggle-on')} />
+
+		case 'toggle-off':
+			return <FontAwesomeIcon icon={solid('toggle-off')} />
+
 		default:
 			return null;
 	};
