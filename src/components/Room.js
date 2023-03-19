@@ -1,7 +1,6 @@
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 import Icon from 'components/Icon';
-import Masonry from 'components/Masonry';
 import Entity from "components/Entity";
 
 const Room = (props) => {
@@ -37,22 +36,20 @@ const Room = (props) => {
 				: null}
 			</div>
 
-			<div className="relative">
+			<div className="flex flex-wrap gap-3">
 				{entities != null ?
-					<Masonry>
-						{props.entities.map((entity_id) => {
-							const entity = entities.find((entity) => entity.entity_id == entity_id);
+					props.entities.map((entity_id) => {
+						const entity = entities.find((entity) => entity.entity_id == entity_id);
 
-							if (entity == null) {
-								return null;
-							}
+						if (entity == null) {
+							return null;
+						}
 
-							return <Entity
-								key={entity.entity_id}
-								entity={entity}
-							/>;
-						})}
-					</Masonry>
+						return <Entity
+							key={entity.entity_id}
+							entity={entity}
+						/>;
+					})
 				: null}
 			</div>
 		</div>

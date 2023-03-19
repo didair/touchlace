@@ -40,7 +40,7 @@ const Card = (props) => {
 				'flex',
 				'flex-col',
 				'justify-between',
-				'p-4 mb-3',
+				'p-4',
 				'text-dark',
 				'rounded-lg',
 				'text-md',
