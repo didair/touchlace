@@ -1,4 +1,6 @@
+import cx from 'classnames';
 import Card from 'components/Card';
+import Icon from 'components/Icon';
 import { capitalize } from 'lib/text';
 
 const EntitySwitch = ({ entity, updateState }) => {
@@ -14,8 +16,14 @@ const EntitySwitch = ({ entity, updateState }) => {
 	return (
 		<Card onClick={toggleOnOff} state={entity.state == 'on' ? 'light' : 'dark'} type="switch">
 			<div className="flex justify-between">
-				<div className="flex items-center">
-					Switch
+				<div className={cx(
+					"h-11",
+					"flex",
+					"items-center",
+					"text-3xl",
+					{ 'text-gray': entity.state != 'on' }
+				)}>
+					<Icon name={entity.state == 'on' ? 'toggle-on' : 'toggle-off'} />
 				</div>
 			</div>
 

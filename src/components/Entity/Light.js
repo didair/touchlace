@@ -6,6 +6,8 @@ import debounce from 'lib/debounce';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
+import RangeSlider from 'components/Inputs/RangeSlider';
+import Icon from 'components/Icon';
 
 const EntityLight = ({ entity, updateState }) => {
 	const [open, setOpen] = useState(false);
@@ -59,14 +61,12 @@ const EntityLight = ({ entity, updateState }) => {
 				</div>
 
 				<div>
-					<input
+					<RangeSlider
 						id="brightness"
-						type="range"
 						min="1"
 						max="255"
 						onChange={(e) => { updateBrightness(e); setBrightness(e.target.value) }}
 						value={brightness}
-						className="slider"
 					/>
 
 					<label htmlFor="brightness" className="ml-2">
@@ -82,8 +82,14 @@ const EntityLight = ({ entity, updateState }) => {
 				type="light"
 			>
 				<div className="flex justify-between">
-					<div className="flex items-center">
-						Light
+					<div className={cx(
+						"h-11",
+						"flex",
+						"items-center",
+						"text-3xl",
+						{ 'text-gray': entity.state != 'on' }
+					)}>
+						<Icon name="lightbulb" />
 					</div>
 
 					<div className={cx(
