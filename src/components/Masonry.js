@@ -13,12 +13,18 @@ const Masonry = (props) => {
 			layoutMode: 'masonry',
 			masonry: {
 				columnWidth: 160,
-				gutter: 12,
+				gutter: 24,
 			},
 		});
 
 		return () => isotope.current.destroy();
 	}, []);
+
+	useEffect(() => {
+		if (isotope.current != null) {
+			isotope.current.reloadItems();
+		}
+	}, [props.children.length])
 
 	// useEffect(() => {
 	// 	filterKey === '*'
