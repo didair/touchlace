@@ -32,6 +32,7 @@ const EntitiesSelect = (props) => {
 					/>
 
 					{entities.map((entity) => {
+						const entity_type = entity.entity_id.split('.')[0];
 						if (filter != '') {
 							if (entity.entity_id.indexOf(filter) == -1) {
 								return null;
@@ -43,7 +44,15 @@ const EntitiesSelect = (props) => {
 								<Checkbox
 									checked={currentValue.indexOf(entity.entity_id) > -1}
 									onChange={() => onToggleEntity(entity)}
-									label={entity.entity_id}
+									label={(
+										<div>
+											<div className="text-sm">
+												{entity_type + ' • '}
+												{entity.attributes.friendly_name}
+											</div>
+											{entity.entity_id}
+										</div>
+									)}
 								/>
 							</div>
 						);
