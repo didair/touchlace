@@ -37,7 +37,7 @@ const Room = (props) => {
 			</div>
 
 			<div className="flex flex-wrap gap-3">
-				{entities != null ?
+				{entities != null && props.entities != null ?
 					props.entities.map((entity_id) => {
 						const entity = entities.find((entity) => entity.entity_id == entity_id);
 
