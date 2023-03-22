@@ -31,16 +31,12 @@ const Card = (props) => {
 		<div
 			{...cleanProps}
 			{...clickEvents}
-			className={cx(
-				'grid-item',
-				'w-40 h-40',
+		>
+			<div style={{ paddingTop: '100%' }} className={cx(
+				'relative',
 				'transition-all',
 				'ease-in-out',
 				'duration-200',
-				'flex',
-				'flex-col',
-				'justify-between',
-				'p-4',
 				'text-dark',
 				'rounded-lg',
 				'text-md',
@@ -52,8 +48,22 @@ const Card = (props) => {
 				},
 				props.className,
 				props.type,
-			)}
-		/>
+			)}>
+				<div className={cx(
+					"absolute",
+					"top-0",
+					"left-0",
+					"h-full",
+					"w-full",
+					"flex",
+					"flex-col",
+					"justify-between",
+					"p-4",
+				)}>
+					{props.children}
+				</div>
+			</div>
+		</div>
 	);
 };
 

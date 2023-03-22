@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Room from 'components/Room';
-import Masonry from "components/Masonry";
+import Grid from "components/Grid";
 import Icon from "components/Icon";
 
 const Devices = () => {
@@ -19,10 +19,8 @@ const Devices = () => {
 	return (
 		<div>
 			{config != null ?
-				<h1 className="text-5xl">{config.location_name}</h1>
+				<h1 className="text-5xl mb-6">{config.location_name}</h1>
 			: null}
-
-			<h3 className="text-xl mt-1 mb-4">Got states from {entities.length} devices</h3>
 
 			{rooms.length == 0 ?
 				<div className="my-40 flex items-center justify-center text-xl">
@@ -33,7 +31,7 @@ const Devices = () => {
 				</div>
 			: null}
 
-			<Masonry>
+			<Grid>
 				{rooms.map((room) => {
 					return (
 						<Room
@@ -42,7 +40,7 @@ const Devices = () => {
 						/>
 					);
 				})}
-			</Masonry>
+			</Grid>
 		</div>
 	);
 }

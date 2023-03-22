@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createRoom, deleteRoom, updateRoom } from "services/rooms/slice";
+import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/slice";
+import { useGetStatesQuery } from "services/states/api";
 import { v4 as uuidv4 } from 'uuid';
 
-import Masonry from "components/Masonry";
+import Grid from "components/Grid";
 import Room from "components/Room";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
@@ -11,6 +12,7 @@ import RoomForm from "components/Forms/RoomForm";
 
 const Settings = () => {
 	const dispatch = useDispatch();
+	const { data: entities } = useGetStatesQuery();
 	const [room, setSelectedRoom] = useState(null);
 	const rooms = useSelector((state) => state.rooms.list);
 
@@ -33,6 +35,18 @@ const Settings = () => {
 		}
 	};
 
+	const onMoveRoom = (room, direction = 'left') => {
+		const currentIndex = rooms.findIndex((_r) => _r.id === room.id);
+		const newIndex = direction == 'left' ? currentIndex - 1 : currentIndex + 1;
+
+		if (newIndex >= 0 && newIndex <= rooms.length) {
+			dispatch(moveRoom({
+				from: currentIndex,
+				to: newIndex,
+			}));
+		}
+	};
+
 	return (
 		<div>
 			<Modal open={room != null} onClose={() => setSelectedRoom(null)}>
@@ -48,6 +62,9 @@ const Settings = () => {
 			</Modal>
 
 			<h1 className="text-5xl">Settings</h1>
+			{entities != null ?
+				<h3 className="text-xl mt-1 mb-4">Got states from {entities.length} devices</h3>
+			: null}
 
 			<div>
 				<h2 className="text-2xl flex items-center mb-4">
@@ -59,19 +76,22 @@ const Settings = () => {
 					</span>
 				</h2>
 
-				<Masonry>
-					{rooms.map((room) => {
+				<Grid>
+					{rooms.map((room, index) => {
 						return (
 							<Room
 								key={room.id}
 								onEdit={() => setSelectedRoom(room)}
 								onDelete={() => onRoomDelete(room)}
+								moveLeft={() => onMoveRoom(room)}
+								moveRight={() => onMoveRoom(room, 'right')}
 								showSettings={true}
+								index={index}
 								{...room}
 							/>
 						);
 					})}
-				</Masonry>
+				</Grid>
 			</div>
 		</div>
 	);

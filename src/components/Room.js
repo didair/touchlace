@@ -13,10 +13,10 @@ const Room = (props) => {
 				'flex',
 				'flex-col',
 				'mb-3',
-				'w-[20.75rem]',
 				'rounded-lg',
 				'text-md',
 			)}
+			data-index={props.index}
 		>
 			<div className="flex items-center justify-between mb-4">
 				<h3 className="text-3xl font-semibold">
@@ -25,7 +25,15 @@ const Room = (props) => {
 
 				{props.showSettings ?
 					<div>
-						<span className="cursor-pointer" onClick={props.onEdit}>
+						<span className="cursor-pointer" onClick={props.moveLeft}>
+							<Icon name="arrow-left" />
+						</span>
+
+						<span className="ml-3 cursor-pointer" onClick={props.moveRight}>
+							<Icon name="arrow-right" />
+						</span>
+
+						<span className="ml-3 cursor-pointer" onClick={props.onEdit}>
 							<Icon name="pen" />
 						</span>
 
@@ -36,7 +44,7 @@ const Room = (props) => {
 				: null}
 			</div>
 
-			<div className="flex flex-wrap gap-3">
+			<div className="grid grid-cols-2 gap-4">
 				{entities != null && props.entities != null ?
 					props.entities.map((entity_id) => {
 						const entity = entities.find((entity) => entity.entity_id == entity_id);

@@ -7,6 +7,13 @@ const Masonry = (props) => {
 	const container = useRef();
 	const id = useMemo(() => 'grid' + uuidv4().replaceAll('-', ''), []);
 
+	const reloadItems = () => {
+		if (isotope.current != null) {
+			console.log('rooms change', isotope.current)
+			isotope.current.shuffle();
+		}
+	};
+
 	useEffect(() => {
 		isotope.current = new Isotope(`#${id}`, {
 			itemSelector: `#${id} > .grid-item`,
@@ -15,16 +22,21 @@ const Masonry = (props) => {
 				columnWidth: 160,
 				gutter: 24,
 			},
+			getSortData: {
+				index: '[data-index] parseInt'
+			},
+			sortBy: 'index',
 		});
 
-		return () => isotope.current.destroy();
+		window.addEventListener('roomschange', reloadItems);
+
+		return () => {
+			window.removeEventListener('roomschange', reloadItems);
+			isotope.current.destroy();
+		};
 	}, []);
 
-	useEffect(() => {
-		if (isotope.current != null) {
-			isotope.current.reloadItems();
-		}
-	}, [props.children.length])
+	useEffect(() => reloadItems, [props.children.length])
 
 	// useEffect(() => {
 	// 	filterKey === '*'
