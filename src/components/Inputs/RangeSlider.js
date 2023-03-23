@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import './rangeSlider.css';
 
 const RangeSlider = (props) => {
