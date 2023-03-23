@@ -10,6 +10,9 @@
 	@apply transition-all;
 	@apply ease-in-out;
 	@apply duration-300;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .ReactModal__Overlay--after-open {
