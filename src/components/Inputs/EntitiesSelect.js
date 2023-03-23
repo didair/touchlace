@@ -26,7 +26,7 @@ const EntitiesSelect = (props) => {
 				<Modal open={open} onClose={() => setOpen(false)}>
 					<Input
 						value={filter}
-						onChange={(e) => setFilter(e.target.value)}
+						onChange={(e) => setFilter(e.target.value.toLowerCase())}
 						placeholder="light.bulb"
 						label="Filter"
 					/>
