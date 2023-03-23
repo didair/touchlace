@@ -33,6 +33,51 @@ const Icon = ({ name, className }) => {
 		case 'gear':
 			return <FontAwesomeIcon icon={solid('gear')} className={className} />
 
+		case 'code':
+			return <FontAwesomeIcon icon={solid('code')} className={className} />
+
+		case 'city':
+			return <FontAwesomeIcon icon={solid('city')} className={className} />
+
+		case 'tree':
+			return <FontAwesomeIcon icon={solid('tree')} className={className} />
+
+		case 'bath':
+			return <FontAwesomeIcon icon={solid('bath')} className={className} />
+
+		case 'gamepad':
+			return <FontAwesomeIcon icon={solid('bath')} className={className} />
+
+		case 'rocket':
+			return <FontAwesomeIcon icon={solid('rocket')} className={className} />
+
+		case 'power-off':
+			return <FontAwesomeIcon icon={solid('power-off')} className={className} />
+
+		case 'door-open':
+			return <FontAwesomeIcon icon={solid('door-open')} className={className} />
+
+		case 'door-closed':
+			return <FontAwesomeIcon icon={solid('door-closed')} className={className} />
+
+		case 'unlock':
+			return <FontAwesomeIcon icon={solid('unlock')} className={className} />
+
+		case 'lock':
+			return <FontAwesomeIcon icon={solid('lock')} className={className} />
+
+		case 'umbrella-beach':
+			return <FontAwesomeIcon icon={solid('umbrella-beach')} className={className} />
+
+		case 'water-ladder':
+			return <FontAwesomeIcon icon={solid('water-ladder')} className={className} />
+
+		case 'tv':
+			return <FontAwesomeIcon icon={solid('tv')} className={className} />
+
+		case 'sink':
+			return <FontAwesomeIcon icon={solid('sink')} className={className} />
+
 		default:
 			return null;
 	};
