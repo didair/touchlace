@@ -27,6 +27,7 @@ const Devices = () => {
 					<span className="mr-2 text-xl">
 						<Icon name="circle-plus" />
 					</span>
+
 					Get started by adding a room in <Link to="/settings" className="font-bold ml-1 underline decoration-green">settings</Link>
 				</div>
 			: null}
@@ -41,6 +42,13 @@ const Devices = () => {
 					);
 				})}
 			</Grid>
+
+			<div className="mt-6">
+				<Link to="/settings" className="p-2 px-4 border border-light-gray rounded-md">
+					<Icon name="gear" className="mr-2" />
+					Settings
+				</Link>
+			</div>
 		</div>
 	);
 }

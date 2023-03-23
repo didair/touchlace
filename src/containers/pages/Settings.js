@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/slice";
 import { useGetStatesQuery } from "services/states/api";
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 import Grid from "components/Grid";
 import Room from "components/Room";
@@ -15,6 +16,7 @@ const Settings = () => {
 	const { data: entities } = useGetStatesQuery();
 	const [room, setSelectedRoom] = useState(null);
 	const rooms = useSelector((state) => state.rooms.list);
+	const unavailable = entities != null ? entities.filter((ent) => ent.state === 'unavailable').length : 0;
 
 	const onRoomSubmit = (values) => new Promise((resolve) => {
 		if (values.id == null || values.id == 'new') {
@@ -61,9 +63,27 @@ const Settings = () => {
 				<RoomForm initialValues={room} onSubmit={onRoomSubmit} />
 			</Modal>
 
-			<h1 className="text-5xl">Settings</h1>
+			<Link to="/" className="flex items-center text-3xl mb-6">
+				<span style={{ position: 'relative', top: 2 }}>
+					<Icon name="arrow-left" />
+				</span>
+
+				<h1 className="text-5xl ml-2">
+					Settings
+				</h1>
+			</Link>
+
 			{entities != null ?
-				<h3 className="text-xl mt-1 mb-4">Got states from {entities.length} devices</h3>
+				<h3 className="text-xl mt-1 mb-4">
+					Got states from {entities.length} devices
+
+					{unavailable > 0 ?
+						<span className="ml-4">
+							<Icon name="triangle-exclamation" className="mr-2" />
+							{unavailable} unavailable devices
+						</span>
+					: null}
+				</h3>
 			: null}
 
 			<div>
