@@ -10,8 +10,8 @@ const useLongPress = (onLongPress, onClick, {
 	const target = useRef();
 
 	const start = useCallback((event) => {
+		event.preventDefault();
 		if (shouldPreventDefault && event.target) {
-			event.preventDefault();
 			event.target.addEventListener("touchend", preventDefault, {
 				passive: false
 			});
