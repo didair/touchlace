@@ -4,7 +4,7 @@ const RangeSlider = (props) => {
 	const percentage = (parseInt(props.value) / parseInt(props.max)) * 100;
 
 	return (
-		<div style={{ height: 160 }}>
+		<div style={{ height: 225 }}>
 			<input
 				type="range"
 				{...props}

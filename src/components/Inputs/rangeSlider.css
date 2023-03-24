@@ -3,8 +3,8 @@ input[type=range] {
 	position: relative;
 	top: 8px;
 	display: inline-block;
-	width: 160px;
-	height: 65px;
+	width: 225px;
+	height: 95px;
 
 	--bg-range-color: rgba(255, 255, 255, 0.05);
 	--bg-value-color: rgba(255, 255, 255, 0.7);
