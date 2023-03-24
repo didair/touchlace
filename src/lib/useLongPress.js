@@ -38,7 +38,7 @@ const useLongPress = (onLongPress, onClick, {
 		onTouchStart: e => start(e),
 		onMouseUp: e => clear(e),
 		onMouseLeave: e => clear(e, false),
-		// onTouchEnd: e => clear(e)
+		onTouchEnd: e => clear(e)
 	};
 };
 

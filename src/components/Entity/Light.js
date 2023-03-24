@@ -51,13 +51,13 @@ const EntityLight = ({ entity, updateState }) => {
 					</label>
 
 					<div className="my-8">
-						<RangeSlider
+						{/* <RangeSlider
 							id="brightness"
 							min="1"
 							max="255"
 							onChange={(e) => { updateBrightness(e); setBrightness(e.target.value) }}
 							value={brightness}
-						/>
+						/> */}
 					</div>
 				</div>
 
