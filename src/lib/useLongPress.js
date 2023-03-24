@@ -11,6 +11,7 @@ const useLongPress = (onLongPress, onClick, {
 
 	const start = useCallback((event) => {
 		event.preventDefault();
+		event.stopPropagation();
 		if (shouldPreventDefault && event.target) {
 			event.target.addEventListener("touchend", preventDefault, {
 				passive: false
