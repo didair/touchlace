@@ -17,6 +17,9 @@ body {
 	min-height: 100%;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 body {
