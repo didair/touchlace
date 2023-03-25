@@ -34,7 +34,7 @@ const EntityLight = ({ entity, updateState }) => {
 		<>
 			<Modal open={open} onClose={() => setOpen(false)}>
 				<div className="flex items-center justify-center flex-col">
-					<h3 className="text-2xl mb-2">{entity.attributes.friendly_name}</h3>
+					<h3 className="text-2xl">{entity.attributes.friendly_name}</h3>
 
 					<div className="my-8">
 						<RangeSlider
