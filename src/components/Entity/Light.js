@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
-import debounce from 'lib/debounce';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
@@ -11,9 +10,8 @@ import Icon from 'components/Icon';
 
 const EntityLight = ({ entity, updateState }) => {
 	const [open, setOpen] = useState(false);
-	const [brightness, setBrightness] = useState(0);
 
-	const updateBrightness = debounce((event) => {
+	const updateBrightness = (event) => {
 		updateState({
 			entity_id: entity.entity_id,
 			domain: 'light',
@@ -21,8 +19,8 @@ const EntityLight = ({ entity, updateState }) => {
 			fields: {
 				brightness: event.target.value,
 			}
-		})
-	}, 500);
+		});
+	};
 
 	const toggleOnOff = () => {
 		updateState({
@@ -32,31 +30,18 @@ const EntityLight = ({ entity, updateState }) => {
 		});
 	};
 
-	useEffect(() => {
-		if (entity.attributes.brightness != null) {
-			setBrightness(entity.attributes.brightness);
-		} else {
-			setBrightness(0);
-		}
-	}, [entity.attributes.brightness]);
-
 	return (
 		<>
 			<Modal open={open} onClose={() => setOpen(false)}>
 				<div className="flex items-center justify-center flex-col">
 					<h3 className="text-2xl mb-2">{entity.attributes.friendly_name}</h3>
 
-					<label htmlFor="brightness" className="ml-2">
-						{Math.round((brightness / 255) * 100) + '%'}
-					</label>
-
 					<div className="my-8">
 						<RangeSlider
-							id="brightness"
 							min="1"
 							max="255"
-							onChange={(e) => { updateBrightness(e); setBrightness(e.target.value) }}
-							value={brightness}
+							onChange={updateBrightness}
+							value={entity.attributes.brightness}
 						/>
 					</div>
 				</div>
