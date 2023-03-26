@@ -60,6 +60,18 @@ export const statesApi = createApi({
 				};
 			},
 		}),
+		callEntityService: build.mutation({
+			query(data) {
+				return {
+					url: `services/${data.domain}/${data.service}`,
+					method: 'POST',
+					body: {
+						entity_id: data.entity_id,
+						...data.fields
+					},
+				};
+			},
+		}),
 	}),
 });
 
@@ -67,4 +79,5 @@ export const {
 	useGetServicesQuery,
 	useGetStatesQuery,
 	useUpdateEntityStateMutation,
+	useCallEntityServiceMutation,
 } = statesApi;
