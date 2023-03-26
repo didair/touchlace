@@ -101,7 +101,7 @@ const EntityCover = ({ entity, callService }) => {
 						'w-11 h-11',
 						'relative',
 					)}>
-						<svg viewBox="0 0 100 100" className="absolute ">
+						<svg viewBox="0 0 100 100" className="absolute">
 							<path
 								className={cx({
 									'stroke-light/20': entity.state == 'open',
@@ -111,22 +111,15 @@ const EntityCover = ({ entity, callService }) => {
 								strokeWidth="6"
 								fillOpacity="0"
 							/>
-
 							<path
-								className={cx(
-									'transition-all duration-200 ease-in-out',
-									{
-										'stroke-gray': entity.state == 'open',
-										'stroke-blue': entity.state != 'open',
-									}
-								)}
+								className="transition-all duration-200 ease-in-out stroke-light-gray/20"
 								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
 								strokeWidth="6"
 								fillOpacity="0"
 								style={{
 									strokeDasharray: "295.416, 295.416",
 									strokeDashoffset: entity.attributes.current_position != null ?
-										295 - lerp(0, 295, entity.attributes.current_position) : 295,
+										295 - lerp(0, 295, (entity.attributes.current_position / 100)) : 295,
 								}}
 							/>
 						</svg>

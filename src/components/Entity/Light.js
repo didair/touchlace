@@ -93,7 +93,7 @@ const EntityLight = ({ entity, updateState }) => {
 							'opacity-100': entity.attributes.brightness != null,
 						}
 					)}>
-						<svg viewBox="0 0 100 100" className="absolute ">
+						<svg viewBox="0 0 100 100" className="absolute">
 							<path
 								className={cx({
 									'stroke-light/20': entity.attributes.brightness == null,
