@@ -1,4 +1,4 @@
-import { useId, useState, useMemo } from 'react';
+import { useId, useState, useMemo, useEffect } from 'react';
 import debounce from 'lib/debounce';
 import './rangeSlider.css';
 
@@ -6,6 +6,12 @@ const RangeSlider = (props) => {
 	const [value, setValue] = useState(parseInt(props.value));
 	const percentage = (parseInt(value) / parseInt(props.max)) * 100;
 	const id = useId();
+
+	useEffect(() => {
+		if (props.value !== value) {
+			setValue(props.value);
+		}
+	}, [props.value]);
 
 	const updateParent = useMemo(() => debounce((event) => {
 		props.onChange(event);
