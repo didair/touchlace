@@ -21,6 +21,12 @@ const Icon = ({ name, className }) => {
 		case 'toggle-off':
 			return <FontAwesomeIcon icon={solid('toggle-off')} className={className} />
 
+		case 'arrow-up':
+			return <FontAwesomeIcon icon={solid('arrow-up')} className={className} />
+
+		case 'arrow-down':
+			return <FontAwesomeIcon icon={solid('arrow-down')} className={className} />
+
 		case 'arrow-left':
 			return <FontAwesomeIcon icon={solid('arrow-left')} className={className} />
 
