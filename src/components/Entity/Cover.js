@@ -7,9 +7,11 @@ import Card from 'components/Card';
 import Modal from 'components/Modal';
 import RangeSlider from 'components/Inputs/RangeSlider';
 import Icon from 'components/Icon';
+import Input from 'components/Inputs/Input';
 
-const EntityCover = ({ entity, callService }) => {
+const EntityCover = ({ entity, settings, callService, setSettings }) => {
 	const [open, setOpen] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
 
 	const updatePosition = (event) => {
 		callService({
@@ -30,6 +32,14 @@ const EntityCover = ({ entity, callService }) => {
 			fields: {
 				position: entity.attributes.current_position > 0 ? 0 : 100,
 			},
+		});
+	};
+
+	const updateNote = (event) => {
+		setSettings({
+			...settings,
+			entity_id: entity.entity_id,
+			note: event.target.value,
 		});
 	};
 
@@ -59,10 +69,31 @@ const EntityCover = ({ entity, callService }) => {
 
 					<label htmlFor="onOff" className="ml-2">{capitalize(entity.state)}</label>
 
-					<code className="p-2 ml-4 border border-gray/40 bg-gray/10 rounded-md">
-						{entity.entity_id}
-					</code>
+					<span
+						className={cx("ml-4 text-xl", { 'text-blue/90': showSettings })}
+						onClick={() => setShowSettings(!showSettings)}
+					>
+						<Icon name="gear" />
+					</span>
 				</div>
+
+				{showSettings ?
+					<div className="mt-4">
+						<label htmlFor="note" className="block mb-2">Entity note</label>
+
+						<Input
+							id="note"
+							value={settings?.note ?? ''}
+							placeholder="Hallway"
+							onChange={updateNote}
+						/>
+
+						<label className="block mt-4 mb-2">Entity ID</label>
+						<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">
+							{entity.entity_id}
+						</code>
+					</div>
+				: null}
 			</Modal>
 
 			<Card
@@ -138,6 +169,12 @@ const EntityCover = ({ entity, callService }) => {
 				</div>
 
 				<div>
+					{settings != null && settings.note != '' ?
+						<div className="font-semibold text-sm">
+							{settings.note}
+						</div>
+					: null}
+
 					<div className="font-semibold truncate text-ellipsis h-6">
 						{entity.attributes.friendly_name}
 					</div>

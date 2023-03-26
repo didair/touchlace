@@ -5,18 +5,20 @@ import { persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 
 import roomsReducer from 'services/rooms/slice';
+import entitiesReducer from 'services/entities/slice';
 import { configApi } from 'services/config/api';
 import { statesApi } from 'services/states/api';
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['config', 'rooms']
+	whitelist: ['config', 'entities', 'rooms']
 };
 
 // Load reducers from services (or other)
 const reducers = combineReducers({
 	rooms: roomsReducer,
+	entities: entitiesReducer,
 	[configApi.reducerPath]: configApi.reducer,
 	[statesApi.reducerPath]: statesApi.reducer,
 });
