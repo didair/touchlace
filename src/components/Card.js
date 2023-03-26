@@ -42,6 +42,7 @@ const Card = (props) => {
 				'text-md',
 				'cursor-pointer',
 				'backdrop-blur-lg',
+				'select-none',
 				{
 					'bg-light': props.state == 'light',
 					'bg-light/20': props.state == 'dark',

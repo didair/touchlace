@@ -44,7 +44,7 @@ const Devices = () => {
 			</Grid>
 
 			<div className="mt-6">
-				<Link to="/settings" className="p-2 px-4 border border-light-gray rounded-md">
+				<Link to="/settings" className="p-2 px-4 border border-light-gray rounded-md select-none">
 					<Icon name="gear" className="mr-2" />
 					Settings
 				</Link>
