@@ -14,9 +14,11 @@
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	pointer-events: none;
 }
 
 .ReactModal__Overlay--after-open {
+	pointer-events: all;
 	@apply bg-dark/60 backdrop-blur-sm;
 }
 

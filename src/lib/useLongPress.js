@@ -21,7 +21,6 @@ const useLongPress = (onLongPress, onClick, {
 		}
 
 		timeout.current = setTimeout(() => {
-			alert('longpress trigger callback')
 			onLongPress(event);
 			setLongPressTriggered(true);
 		}, delay);
