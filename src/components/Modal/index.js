@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 
 import './_modal.css';
@@ -11,18 +12,29 @@ ReactModal.defaultStyles.overlay = {};
 ReactModal.setAppElement('#root');
 
 const Modal = (props) => {
+	const [canClose, setCanClose] = useState(false);
+
+	useEffect(() => {
+		if (props.open) {
+			setTimeout(() => {
+				setCanClose(true);
+			}, 500);
+		} else {
+			setTimeout(() => {
+				setCanClose(false);
+			}, 350);
+		}
+	}, [props.open]);
 
 	return (
 		<ReactModal
 			isOpen={props.open}
-			onRequestClose={() => {
-				alert('on request close modal');
-				props.onClose()
-			}}
+			onRequestClose={props.onClose}
 			onAfterOpen={props.onOpen}
 			// Animation timing
 			closeTimeoutMS={300}
 			className={`type-${props.type}`}
+			shouldCloseOnOverlayClick={canClose}
 		>
 			<div className="max-h-[85vh] overflow-auto flex-1 px-10 py-7">
 				{props.children}

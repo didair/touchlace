@@ -13,9 +13,7 @@ const useLongPress = (onLongPress, onClick, {
 		event.preventDefault();
 		event.stopPropagation();
 		if (shouldPreventDefault && event.target) {
-			event.target.addEventListener("touchend", preventDefault, {
-				passive: false
-			});
+			event.target.addEventListener("touchend", preventDefault);
 
 			target.current = event.target;
 		}
@@ -53,6 +51,7 @@ const preventDefault = (event) => {
 
 	if (event.touches.length < 2 && event.preventDefault) {
 		event.preventDefault();
+		event.stopPropagation();
 	}
 };
 
