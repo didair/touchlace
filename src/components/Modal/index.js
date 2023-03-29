@@ -15,7 +15,10 @@ const Modal = (props) => {
 	return (
 		<ReactModal
 			isOpen={props.open}
-			onRequestClose={props.onClose}
+			onRequestClose={() => {
+				alert('on request close modal');
+				props.onClose()
+			}}
 			onAfterOpen={props.onOpen}
 			// Animation timing
 			closeTimeoutMS={300}
