@@ -18,7 +18,7 @@ const Modal = (props) => {
 		if (props.open) {
 			setTimeout(() => {
 				setCanClose(true);
-			}, 1500);
+			}, 1250);
 		} else {
 			setTimeout(() => {
 				setCanClose(false);
