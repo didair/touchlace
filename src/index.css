@@ -38,3 +38,9 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
 }
+
+.hue-icon {
+	display: inline;
+	width: 1.2em;
+	height: 1.2em;
+}
