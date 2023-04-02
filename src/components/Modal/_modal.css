@@ -11,6 +11,7 @@
 	@apply ease-in-out;
 	@apply duration-300;
 
+	-webkit-overflow-scrolling: auto;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
