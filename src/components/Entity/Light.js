@@ -36,7 +36,7 @@ const EntityLight = ({ entity, settings, updateState }) => {
 
 	return (
 		<>
-			<Modal open={open} onClose={() => setOpen(false)}>
+			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
 				<div className="flex items-center justify-center flex-col">
 					<h3 className="text-2xl">{entity.attributes.friendly_name}</h3>
 
