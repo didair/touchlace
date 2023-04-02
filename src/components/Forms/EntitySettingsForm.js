@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setEntitySettings } from "services/entities/slice";
 import Input from 'components/Inputs/Input';
+import IconSelect from "components/Inputs/IconSelect";
 
 const EntitySettings = ({ entity }) => {
 	const dispatch = useDispatch();
@@ -17,6 +18,14 @@ const EntitySettings = ({ entity }) => {
 		});
 	};
 
+	const updateIcon = (icon) => {
+		setSettings({
+			...entitySettings,
+			entity_id: entity.entity_id,
+			icon,
+		});
+	};
+
 	return (
 		<div className="mt-4">
 			<label htmlFor="note" className="block mb-2">Entity note</label>
@@ -26,6 +35,12 @@ const EntitySettings = ({ entity }) => {
 				value={entitySettings?.note ?? ''}
 				placeholder="Hallway"
 				onChange={updateNote}
+			/>
+
+			<IconSelect
+				onSelect={updateIcon}
+				entity={entity}
+				value={entitySettings?.icon ?? null}
 			/>
 
 			<label className="block mt-4 mb-2">Entity ID</label>

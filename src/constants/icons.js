@@ -19,6 +19,12 @@ export const IconsList = [
 		off: 'bath',
 	},
 	{
+		name: 'champagne-glasses',
+		preview: 'champagne-glasses',
+		on: 'champagne-glasses',
+		off: 'champagne-glasses',
+	},
+	{
 		name: 'circle-plus',
 		preview: 'circle-plus',
 		on: 'circle-plus',
@@ -35,6 +41,12 @@ export const IconsList = [
 		preview: 'code',
 		on: 'code',
 		off: 'code',
+	},
+	{
+		name: 'computer',
+		preview: 'computer',
+		on: 'computer',
+		off: 'computer',
 	},
 	{
 		name: 'door',

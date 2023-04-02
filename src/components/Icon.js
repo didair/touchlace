@@ -52,7 +52,7 @@ const Icon = ({ name, className }) => {
 			return <FontAwesomeIcon icon={solid('bath')} className={className} />
 
 		case 'gamepad':
-			return <FontAwesomeIcon icon={solid('bath')} className={className} />
+			return <FontAwesomeIcon icon={solid('gamepad')} className={className} />
 
 		case 'rocket':
 			return <FontAwesomeIcon icon={solid('rocket')} className={className} />
@@ -83,6 +83,12 @@ const Icon = ({ name, className }) => {
 
 		case 'sink':
 			return <FontAwesomeIcon icon={solid('sink')} className={className} />
+
+		case 'computer':
+			return <FontAwesomeIcon icon={solid('computer')} className={className} />
+
+		case 'champagne-glasses':
+			return <FontAwesomeIcon icon={solid('champagne-glasses')} className={className} />
 
 		default:
 			return null;
