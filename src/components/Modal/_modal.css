@@ -28,6 +28,7 @@
 
 body.ReactModal__Body--open, body.ReactModal__Body--open #root {
 	@apply overflow-hidden;
+	@apply touch-none;
 }
 
 .ReactModal__Content {
