@@ -10,6 +10,14 @@ const EntitySettings = ({ entity }) => {
 		return state.entities.entities.find((_ent) => _ent.entity_id == entity.entity_id)
 	});
 
+	const updateName = (event) => {
+		setSettings({
+			...entitySettings,
+			entity_id: entity.entity_id,
+			name: event.target.value,
+		});
+	};
+
 	const updateNote = (event) => {
 		setSettings({
 			...entitySettings,
@@ -28,6 +36,15 @@ const EntitySettings = ({ entity }) => {
 
 	return (
 		<div className="mt-4">
+			<label htmlFor="name" className="block mb-2">Entity name</label>
+
+			<Input
+				id="name"
+				value={entitySettings?.name ?? ''}
+				placeholder="Light"
+				onChange={updateName}
+			/>
+
 			<label htmlFor="note" className="block mb-2">Entity note</label>
 
 			<Input

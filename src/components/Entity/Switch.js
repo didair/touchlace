@@ -24,7 +24,11 @@ const EntitySwitch = ({ entity, settings, updateState }) => {
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
 				<div className="mb-8">
-					<h3 className="text-2xl">{entity.attributes.friendly_name}</h3>
+					<h3 className="text-2xl">
+						{settings != null && settings.name != null && settings.name != '' ?
+							settings.name
+						: entity.attributes.friendly_name}
+					</h3>
 				</div>
 
 				<div className="flex items-center justify-center">
@@ -76,7 +80,9 @@ const EntitySwitch = ({ entity, settings, updateState }) => {
 					: null}
 
 					<div className="font-semibold truncate text-ellipsis h-6">
-						{entity.attributes.friendly_name}
+						{settings != null && settings.name != null && settings.name != '' ?
+							settings.name
+						: entity.attributes.friendly_name}
 					</div>
 
 					<div className="font-semibold">

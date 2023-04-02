@@ -29,6 +29,10 @@ const useEntityIcon = (entity) => {
 		if (entity_type === 'switch') {
 			return 'toggle';
 		}
+
+		if (entity_type === 'cover') {
+			return 'arrow-up-down';
+		}
 	};
 
 	const selectedIcon = IconsList.find((icon) => icon.name === getIconName());
