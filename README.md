@@ -1,5 +1,28 @@
 # Touchlace
-(WIP) A Lovelace (Home Assistant) alternative written in ReactJS.
+(WIP) A Lovelace (Home Assistant) alternative written in ReactJS. Mainly designed to run on tablets
+
+## Features
+* A beautiful interface!
+* Configurable rooms
+* 90+ icons for your devices
+* Real time device updates using web sockets
+* Basic configuration of all cards
+
+### ... Also worth mentioning
+* ✓ All data lives on your device
+* ✓ Communicates directly with your Home Assistant server
+
+### Supported entities
+- [x] Light
+- [x] Switch
+- [x] Cover (Blinds etc)
+- [ ] Scene
+- [ ] Sensor
+- [ ] Binary sensor
+- [ ] Person
+
+### Note
+Since all data (including preferences and authentication) lives locally on your devices it will not sync between app/browsers. Please be careful to not clear the cache once all settings are made.
 
 ## Installation
 ### Expose Home Assistant
