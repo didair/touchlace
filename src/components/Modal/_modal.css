@@ -29,6 +29,7 @@
 body.ReactModal__Body--open, body.ReactModal__Body--open #root {
 	@apply overflow-hidden;
 	@apply touch-none;
+	-webkit-overflow-scrolling: auto;
 }
 
 .ReactModal__Content {
