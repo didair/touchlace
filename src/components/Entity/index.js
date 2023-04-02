@@ -1,5 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setEntitySettings } from "services/entities/slice";
+import { useSelector } from "react-redux";
 import { useCallEntityServiceMutation, useUpdateEntityStateMutation } from "services/states/api";
 
 import EntityLight from "./Light";
@@ -7,7 +6,6 @@ import EntitySwitch from './Switch';
 import EntityCover from "./Cover";
 
 const Entity = (props) => {
-	const dispatch = useDispatch();
 	const [updateState] = useUpdateEntityStateMutation();
 	const [callService] = useCallEntityServiceMutation();
 	const entity_type = props.entity.entity_id.split('.')[0];
@@ -15,17 +13,12 @@ const Entity = (props) => {
 		return state.entities.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
 
-	const setSettings = (value) => {
-		dispatch(setEntitySettings(value));
-	};
-
 	if (entity_type === 'cover') {
 		return (
 			<EntityCover
 				settings={entitySettings}
 				updateState={updateState}
 				callService={callService}
-				setSettings={setSettings}
 				{...props}
 			/>
 		);
@@ -37,7 +30,6 @@ const Entity = (props) => {
 				settings={entitySettings}
 				updateState={updateState}
 				callservice={callService}
-				setSettings={setSettings}
 				{...props}
 			/>
 		);
@@ -49,7 +41,6 @@ const Entity = (props) => {
 				settings={entitySettings}
 				updateState={updateState}
 				callservice={callService}
-				setSettings={setSettings}
 				{...props}
 			/>
 		);

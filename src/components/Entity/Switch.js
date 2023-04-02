@@ -4,9 +4,9 @@ import cx from 'classnames';
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
-import Input from 'components/Inputs/Input';
+import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntitySwitch = ({ entity, settings, updateState, setSettings }) => {
+const EntitySwitch = ({ entity, settings, updateState }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 
@@ -15,14 +15,6 @@ const EntitySwitch = ({ entity, settings, updateState, setSettings }) => {
 			entity_id: entity.entity_id,
 			domain: 'switch',
 			state: entity.state == 'on' ? 'off' : 'on',
-		});
-	};
-
-	const updateNote = (event) => {
-		setSettings({
-			...settings,
-			entity_id: entity.entity_id,
-			note: event.target.value,
 		});
 	};
 
@@ -52,21 +44,7 @@ const EntitySwitch = ({ entity, settings, updateState, setSettings }) => {
 				</div>
 
 				{showSettings ?
-					<div className="mt-4">
-						<label htmlFor="note" className="block mb-2">Entity note</label>
-
-						<Input
-							id="note"
-							value={settings?.note ?? ''}
-							placeholder="Hallway"
-							onChange={updateNote}
-						/>
-
-						<label className="block mt-4 mb-2">Entity ID</label>
-						<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">
-							{entity.entity_id}
-						</code>
-					</div>
+					<EntitySettings entity={entity} />
 				: null}
 			</Modal>
 
