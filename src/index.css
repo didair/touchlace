@@ -30,7 +30,8 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-	@apply bg-dark text-off-white;
+	background-color: #2a2d30;
+	@apply text-off-white;
 }
 
 code {
