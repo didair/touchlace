@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { capitalize } from 'lib/text';
+import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 import Card from 'components/Card';
 import Modal from 'components/Modal';
@@ -9,6 +10,7 @@ import EntitySettings from 'components/Forms/EntitySettingsForm';
 const EntitySwitch = ({ entity, settings, updateState }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const icon_name = useEntityIcon(entity);
 
 	const toggleOnOff = () => {
 		updateState({
@@ -62,7 +64,7 @@ const EntitySwitch = ({ entity, settings, updateState }) => {
 						"text-3xl",
 						{ 'text-gray': entity.state != 'on' }
 					)}>
-						<Icon name={entity.state == 'on' ? 'toggle-on' : 'toggle-off'} />
+						<Icon name={icon_name} />
 					</div>
 				</div>
 

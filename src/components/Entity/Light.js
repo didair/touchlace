@@ -2,6 +2,7 @@ import { useState } from 'react';
 import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
+import useEntityIcon from 'lib/useEntityIcon';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
@@ -12,6 +13,7 @@ import EntitySettings from 'components/Forms/EntitySettingsForm';
 const EntityLight = ({ entity, settings, updateState }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const icon_name = useEntityIcon(entity);
 
 	const updateBrightness = (event) => {
 		updateState({
@@ -85,7 +87,7 @@ const EntityLight = ({ entity, settings, updateState }) => {
 						"text-3xl",
 						{ 'text-gray': entity.state != 'on' }
 					)}>
-						<Icon name="lightbulb" />
+						<Icon name={icon_name} />
 					</div>
 
 					<div className={cx(

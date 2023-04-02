@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 const Icon = ({ name, className }) => {
-	switch(name) {
+	switch (name) {
 		case 'circle-plus':
 			return <FontAwesomeIcon icon={solid('circle-plus')} className={className} />
 
@@ -94,33 +94,3 @@ Icon.defaultProps = {
 };
 
 export default Icon;
-
-export const IconsList = [
-	'arrow-down',
-	'arrow-left',
-	'arrow-right',
-	'arrow-up',
-	'bath',
-	'circle-plus',
-	'city',
-	'code',
-	'door-closed',
-	'door-open',
-	'gamepad',
-	'gear',
-	'lightbulb',
-	'lock',
-	'pen',
-	'power-off',
-	'rocket',
-	'sink',
-	'toggle-off',
-	'toggle-on',
-	'trash-can',
-	'tree',
-	'triangle-exclamation',
-	'tv',
-	'umbrella-beach',
-	'unlock',
-	'water-ladder',
-];
