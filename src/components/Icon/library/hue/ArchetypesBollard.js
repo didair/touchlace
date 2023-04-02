@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 export function ArchetypesBollard(props) {
   return (
     <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' {...props} className="hue-icon">
