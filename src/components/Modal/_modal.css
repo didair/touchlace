@@ -28,8 +28,7 @@
 }
 
 body.ReactModal__Body--open, body.ReactModal__Body--open #root {
-	@apply overflow-hidden;
-	@apply touch-none;
+	@apply fixed inset-0 w-full overflow-hidden touch-none;
 	-webkit-overflow-scrolling: auto;
 }
 
