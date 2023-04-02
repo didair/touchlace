@@ -21,6 +21,7 @@ const IconSelect = (props) => {
 						return (
 							<div
 								key={icon.name}
+								title={icon.name}
 								onClick={() => onIconSelect(icon)}
 								className={cx(
 									'inline-flex',
