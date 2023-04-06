@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Room from 'components/Room';
 import Grid from "components/Grid";
 import Icon from "components/Icon";
+import Badge from "components/Badge";
 
 const Devices = () => {
 	const { data: config } = useGetConfigQuery();
@@ -44,10 +45,9 @@ const Devices = () => {
 			</Grid>
 
 			<div className="mt-6">
-				<Link to="/settings" className="p-2 px-4 border border-light-gray rounded-md select-none">
-					<Icon name="gear" className="mr-2" />
+				<Badge to="/settings" icon="gear">
 					Settings
-				</Link>
+				</Badge>
 			</div>
 		</div>
 	);
