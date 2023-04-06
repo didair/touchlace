@@ -38,7 +38,7 @@ const Card = (props) => {
 				'ease-in-out',
 				'duration-200',
 				'text-dark',
-				'rounded-lg',
+				'rounded-xl',
 				'text-md',
 				'cursor-pointer',
 				'backdrop-blur-lg',
