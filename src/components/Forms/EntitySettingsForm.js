@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setEntitySettings } from "services/entities/slice";
+import { setEntitySettings } from "services/settings/slice";
 import Input from 'components/Inputs/Input';
 import IconSelect from "components/Inputs/IconSelect";
 
@@ -7,7 +7,7 @@ const EntitySettings = ({ entity }) => {
 	const dispatch = useDispatch();
 	const setSettings = (value) => dispatch(setEntitySettings(value));
 	const entitySettings = useSelector((state) => {
-		return state.entities.entities.find((_ent) => _ent.entity_id == entity.entity_id)
+		return state.settings.entities.find((_ent) => _ent.entity_id == entity.entity_id)
 	});
 
 	const updateName = (event) => {

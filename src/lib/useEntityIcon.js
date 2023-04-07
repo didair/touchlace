@@ -4,7 +4,7 @@ import { IconsList } from "constants/icons";
 const useEntityIcon = (entity) => {
 	const entity_type = entity.entity_id.split('.')[0];
 	const entitySettings = useSelector((state) => {
-		return state.entities.entities.find(({ entity_id }) => entity_id == entity.entity_id)
+		return state.settings.entities.find(({ entity_id }) => entity_id == entity.entity_id)
 	});
 
 	const getState = () => {

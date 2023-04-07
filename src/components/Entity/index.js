@@ -10,7 +10,7 @@ const Entity = (props) => {
 	const [callService] = useCallEntityServiceMutation();
 	const entity_type = props.entity.entity_id.split('.')[0];
 	const entitySettings = useSelector((state) => {
-		return state.entities.entities.find((entity) => entity.entity_id == props.entity.entity_id)
+		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
 
 	if (entity_type === 'cover') {

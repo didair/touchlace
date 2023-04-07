@@ -4,8 +4,8 @@ const initialState = {
 	entities: [],
 };
 
-export const entitiesSlice = createSlice({
-	name: 'entities',
+export const settingsSlice = createSlice({
+	name: 'settings',
 	initialState,
 	reducers: {
 		setEntitySettings: (state, action) => {
@@ -24,6 +24,6 @@ export const entitiesSlice = createSlice({
 
 export const {
 	setEntitySettings,
-} = entitiesSlice.actions;
+} = settingsSlice.actions;
 
-export default entitiesSlice.reducer;
+export default settingsSlice.reducer;
