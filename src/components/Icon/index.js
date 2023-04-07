@@ -105,6 +105,9 @@ const Icon = ({ name, className }) => {
 		case 'arrow-right':
 			return <FontAwesomeIcon icon={solid('arrow-right')} className={className} />
 
+		case 'circle-info':
+			return <FontAwesomeIcon icon={solid('circle-info')} className={className} />
+
 		case 'triangle-exclamation':
 			return <FontAwesomeIcon icon={solid('triangle-exclamation')} className={className} />
 
