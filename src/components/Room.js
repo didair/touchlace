@@ -1,7 +1,7 @@
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 import Icon from 'components/Icon';
-import Entity from "components/Entity";
+import Entity from "components/EntityCard";
 
 const Room = (props) => {
 	const { data: entities } = useGetStatesQuery();
