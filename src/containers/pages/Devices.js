@@ -25,7 +25,7 @@ const Devices = () => {
 				<h1 className="text-5xl mb-6">{config.location_name}</h1>
 			: null}
 
-			{rooms.length == 0 ?
+			{rooms?.length == 0 ?
 				<div className="my-40 flex items-center justify-center text-xl">
 					<span className="mr-2 text-xl">
 						<Icon name="circle-plus" />
@@ -35,7 +35,7 @@ const Devices = () => {
 				</div>
 			: null}
 
-			{topBarEntities.length > 0 ?
+			{topBarEntities?.length > 0 ?
 				<div className="mb-6">
 					<Entities
 						entities={topBarEntities.filter((entity_id) =>
