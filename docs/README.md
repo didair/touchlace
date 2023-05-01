@@ -19,9 +19,10 @@
 - [x] Switch
 - [x] Cover (Blinds etc)
 - [ ] Scene
-- [ ] Sensor
+- [x] Sensor
 - [ ] Binary sensor
 - [ ] Person
+- [ ] Media player
 
 ### Note
 Since all data (including preferences and authentication) lives locally on your devices it will not sync between app/browsers. Please be careful to not clear the cache once all settings are made.
