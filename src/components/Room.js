@@ -1,10 +1,19 @@
-import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 import Icon from 'components/Icon';
-import Entity from "components/EntityCard";
+import Entities from './Entities';
 
 const Room = (props) => {
-	const { data: entities } = useGetStatesQuery();
+	const media_players = props.entities.filter((entity_id) =>
+		entity_id.indexOf('media_player') > -1
+	);
+
+	const sensors = props.entities.filter((entity_id) =>
+		entity_id.indexOf('sensor') > -1
+	);
+
+	const devices = props.entities.filter((entity_id) =>
+		entity_id.indexOf('sensor') === -1 && entity_id.indexOf('media_player') === -1
+	);
 
 	return (
 		<div
@@ -44,27 +53,28 @@ const Room = (props) => {
 				: null}
 			</div>
 
+			{sensors.length > 0 ?
+				<div className="grid grid-cols-2 gap-4 mb-4">
+					<Entities entities={sensors} />
+				</div>
+			: null}
+
+			{media_players.length > 0 ?
+				<div className="grid grid-cols-2 gap-4 mb-4">
+					<Entities entities={media_players} />
+				</div>
+			: null}
+
 			<div className="grid grid-cols-2 gap-4">
-				{entities != null && props.entities != null ?
-					props.entities.map((entity_id) => {
-						const entity = entities.find((entity) => entity.entity_id == entity_id);
-
-						if (entity == null) {
-							return null;
-						}
-
-						return <Entity
-							key={entity.entity_id}
-							entity={entity}
-						/>;
-					})
-				: null}
+				<Entities entities={devices} />
 			</div>
 		</div>
 	);
+
 };
 
 Room.defaultProps = {
+	entities: [],
 	showSettings: false,
 };
 

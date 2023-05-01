@@ -7,10 +7,12 @@ import Room from 'components/Room';
 import Grid from "components/Grid";
 import Icon from "components/Icon";
 import Badge from "components/Badge";
+import Entities from "components/Entities";
 
 const Devices = () => {
 	const { data: config } = useGetConfigQuery();
 	const { data: entities } = useGetStatesQuery();
+	const topBarEntities = useSelector((state) => state.settings.topEntities);
 	const rooms = useSelector((state) => state.rooms.list);
 
 	if (entities == null) {
@@ -30,6 +32,16 @@ const Devices = () => {
 					</span>
 
 					Get started by adding a room in <Link to="/settings" className="font-bold ml-1 underline decoration-green">settings</Link>
+				</div>
+			: null}
+
+			{topBarEntities.length > 0 ?
+				<div className="mb-6">
+					<Entities
+						entities={topBarEntities.filter((entity_id) =>
+							entity_id.indexOf('sensor') > -1
+						)}
+					/>
 				</div>
 			: null}
 

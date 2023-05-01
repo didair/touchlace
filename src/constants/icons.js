@@ -564,4 +564,34 @@ export const IconsList = [
 		on: 'UicontrolsNoMotion',
 		off: 'UicontrolsNoMotion',
 	},
+	{
+		name: 'temperature',
+		preview: 'temperature-half',
+		type: 'range',
+		range: {
+			0: 'temperature-empty',
+			33: 'temperature-quarter',
+			50: 'temperature-half',
+			66: 'temperature-three-quarters',
+			95: 'temperature-full',
+		}
+	},
+	{
+		name: 'battery',
+		preview: 'battery-half',
+		type: 'range',
+		range: {
+			0: 'battery-empty',
+			33: 'battery-quarter',
+			50: 'battery-half',
+			66: 'battery-three-quarters',
+			95: 'battery-full',
+		}
+	},
+	{
+		name: 'bolt',
+		preview: 'bolt',
+		on: 'bolt',
+		off: 'bolt',
+	}
 ];

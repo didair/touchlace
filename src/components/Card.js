@@ -32,7 +32,7 @@ const Card = (props) => {
 			{...cleanProps}
 			{...clickEvents}
 		>
-			<div style={{ paddingTop: '100%' }} className={cx(
+			<div style={props.type != 'media' ? { paddingTop: '100%' } : {}} className={cx(
 				'relative',
 				'transition-all',
 				'ease-in-out',
@@ -51,7 +51,6 @@ const Card = (props) => {
 				props.type,
 			)}>
 				<div className={cx(
-					"absolute",
 					"top-0",
 					"left-0",
 					"h-full",
@@ -60,6 +59,9 @@ const Card = (props) => {
 					"flex-col",
 					"justify-between",
 					"p-4",
+					{
+						"absolute": props.type != 'media'
+					}
 				)}>
 					{props.children}
 				</div>

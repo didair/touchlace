@@ -33,9 +33,29 @@ const useEntityIcon = (entity) => {
 		if (entity_type === 'cover') {
 			return 'arrow-up-down';
 		}
+
+		if (entity_type === 'sensor') {
+			return 'lightbulb';
+		}
+	};
+
+	const getCurrentRange = (icon) => {
+		let closest = Object.keys(icon.range)[0];
+		for (let key in icon.range) {
+			if (Math.abs(entity.state - key) < Math.abs(entity.state - closest)) {
+				closest = key;
+			}
+		}
+
+		return icon.range[closest];
 	};
 
 	const selectedIcon = IconsList.find((icon) => icon.name === getIconName());
+
+	if (selectedIcon.type === 'range') {
+		return getCurrentRange(selectedIcon);
+	}
+
 	return selectedIcon[getState() ? 'on' : 'off'];
 };
 

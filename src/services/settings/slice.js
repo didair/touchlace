@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	entities: [],
+	topEntities: [],
 };
 
 export const settingsSlice = createSlice({
@@ -19,11 +20,15 @@ export const settingsSlice = createSlice({
 				state.entities.push(action.payload);
 			}
 		},
+		setTopEntities: (state, action) => {
+			state.topEntities = action.payload;
+		},
 	},
 });
 
 export const {
 	setEntitySettings,
+	setTopEntities,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

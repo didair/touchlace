@@ -4,6 +4,8 @@ import { useCallEntityServiceMutation, useUpdateEntityStateMutation } from "serv
 import EntityLight from "./Light";
 import EntitySwitch from './Switch';
 import EntityCover from "./Cover";
+import EntitySensor from './Sensor';
+import MediaPlayerEntity from "./MediaPlayer";
 
 const Entity = (props) => {
 	const [updateState] = useUpdateEntityStateMutation();
@@ -12,6 +14,24 @@ const Entity = (props) => {
 	const entitySettings = useSelector((state) => {
 		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
+
+	if (entity_type === 'media_player') {
+		return <MediaPlayerEntity
+			settings={entitySettings}
+			updateState={updateState}
+			callService={callService}
+			{...props}
+		/>
+	}
+
+	if (entity_type === 'sensor') {
+		return <EntitySensor
+			settings={entitySettings}
+			updateState={updateState}
+			callService={callService}
+			{...props}
+		/>
+	}
 
 	if (entity_type === 'cover') {
 		return (

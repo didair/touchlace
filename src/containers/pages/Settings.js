@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setTopEntities } from "services/settings/slice";
 import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/slice";
 import { useGetStatesQuery } from "services/states/api";
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
+import Entities from "components/Entities";
 import Grid from "components/Grid";
 import Room from "components/Room";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import RoomForm from "components/Forms/RoomForm";
+import TopBarForm from "components/Forms/TopBarForm";
 
 const Settings = () => {
 	const dispatch = useDispatch();
 	const { data: entities } = useGetStatesQuery();
 	const [room, setSelectedRoom] = useState(null);
+	const [editTopBar, setEditTopBar] = useState(false);
 	const rooms = useSelector((state) => state.rooms.list);
+	const topBarEntities = useSelector((state) => state.settings.topEntities);
 	const unavailable = entities != null ? entities.filter((ent) => ent.state === 'unavailable').length : 0;
 
 	const onRoomSubmit = (values) => new Promise((resolve) => {
@@ -27,6 +32,12 @@ const Settings = () => {
 		}
 
 		setSelectedRoom(null);
+		resolve(1);
+	});
+
+	const onTopBarSubmit = (values) => new Promise((resolve) => {
+		dispatch(setTopEntities(values.entities));
+		setEditTopBar(false);
 		resolve(1);
 	});
 
@@ -63,6 +74,19 @@ const Settings = () => {
 				<RoomForm initialValues={room} onSubmit={onRoomSubmit} />
 			</Modal>
 
+			<Modal open={editTopBar} onClose={() => setEditTopBar(false)}>
+				<div className="mb-4">
+					<h3 className="text-2xl">Devices</h3>
+				</div>
+
+				<TopBarForm
+					onSubmit={onTopBarSubmit}
+					initialValues={{
+						entities: topBarEntities
+					}}
+				/>
+			</Modal>
+
 			<Link to="/" className="flex items-center text-3xl mb-6">
 				<span style={{ position: 'relative', top: 2 }}>
 					<Icon name="arrow-left" />
@@ -74,7 +98,8 @@ const Settings = () => {
 			</Link>
 
 			{entities != null ?
-				<h3 className="text-xl mt-1 mb-4">
+				<h3 className="text-lg mt-1 mb-4">
+					<Icon name="circle-info" className="mr-2" />
 					Got states from {entities.length} devices
 
 					{unavailable > 0 ?
@@ -87,9 +112,26 @@ const Settings = () => {
 			: null}
 
 			<div>
-				<h2 className="text-2xl flex items-center mb-4">
+				<h2 className="text-3xl flex items-center mb-4">
+					Devices
+
+					<span className="ml-2 cursor-pointer text-xl" onClick={() => setEditTopBar(true)}>
+						<Icon name="pen" />
+					</span>
+				</h2>
+
+				<Entities
+					entities={topBarEntities.filter((entity_id) =>
+						entity_id.indexOf('sensor') > -1
+					)}
+				/>
+			</div>
+
+			<div className="mt-8">
+				<h2 className="text-3xl flex items-center mb-4">
 					Rooms
-					<span className="ml-2 cursor-pointer" onClick={() => setSelectedRoom({
+
+					<span className="ml-2 cursor-pointer text-xl" onClick={() => setSelectedRoom({
 						id: 'new',
 					})}>
 						<Icon name="circle-plus" />

@@ -358,22 +358,55 @@ const Icon = ({ name, className }) => {
 			return <RoutinesNighttime />
 
 		case 'RoutinesSunrise':
-			return <RoutinesSunrise />
+			return <RoutinesSunrise className={className} />
 
 		case 'RoutinesSunset':
-			return <RoutinesSunset />
+			return <RoutinesSunset className={className} />
 
 		case 'RoutinesTimers':
-			return <RoutinesTimers />
+			return <RoutinesTimers className={className} />
 
 		case 'RoutinesWakeUp':
-			return <RoutinesWakeUp />
+			return <RoutinesWakeUp className={className} />
 
 		case 'UicontrolsMotionSensitivity':
-			return <UicontrolsMotionSensitivity />
+			return <UicontrolsMotionSensitivity className={className} />
 
 		case 'UicontrolsNoMotion':
-			return <UicontrolsNoMotion />
+			return <UicontrolsNoMotion className={className} />
+
+		case 'temperature-full':
+			return <FontAwesomeIcon icon={solid("temperature-full")} className={className} />
+
+		case 'temperature-three-quarters':
+			return <FontAwesomeIcon icon={solid("temperature-three-quarters")} className={className} />
+
+		case 'temperature-half':
+			return <FontAwesomeIcon icon={solid("temperature-half")} className={className} />
+
+		case 'temperature-quarter':
+			return <FontAwesomeIcon icon={solid("temperature-quarter")} className={className} />
+
+		case 'temperature-empty':
+			return <FontAwesomeIcon icon={solid("temperature-empty")} className={className} />
+
+		case 'battery-full':
+			return <FontAwesomeIcon icon={solid("battery-full")} className={className} />
+
+		case 'battery-three-quarters':
+			return <FontAwesomeIcon icon={solid("battery-three-quarters")} className={className} />
+
+		case 'battery-half':
+			return <FontAwesomeIcon icon={solid("battery-half")} className={className} />
+
+		case 'battery-quarter':
+			return <FontAwesomeIcon icon={solid("battery-quarter")} className={className} />
+
+		case 'battery-empty':
+			return <FontAwesomeIcon icon={solid("battery-empty")} className={className} />
+
+		case 'bolt':
+			return <FontAwesomeIcon icon={solid("bolt")} className={className} />
 
 		default:
 			return null;
