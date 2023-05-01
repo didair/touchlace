@@ -120,11 +120,13 @@ const Settings = () => {
 					</span>
 				</h2>
 
-				<Entities
-					entities={topBarEntities?.filter((entity_id) =>
-						entity_id.indexOf('sensor') > -1
-					)}
-				/>
+				<div className="flex gap-2 mb-6">
+					<Entities
+						entities={topBarEntities?.filter((entity_id) =>
+							entity_id.indexOf('sensor') > -1
+						)}
+					/>
+				</div>
 			</div>
 
 			<div className="mt-8">

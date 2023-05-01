@@ -36,7 +36,7 @@ const Devices = () => {
 			: null}
 
 			{topBarEntities?.length > 0 ?
-				<div className="mb-6">
+				<div className="flex gap-2 mb-6">
 					<Entities
 						entities={topBarEntities.filter((entity_id) =>
 							entity_id.indexOf('sensor') > -1
