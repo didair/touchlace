@@ -593,5 +593,11 @@ export const IconsList = [
 		preview: 'bolt',
 		on: 'bolt',
 		off: 'bolt',
-	}
+	},
+	{
+		name: 'speaker',
+		preview: 'speaker',
+		on: 'speaker',
+		off: 'speaker',
+	},
 ];

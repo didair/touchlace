@@ -69,6 +69,7 @@ import {
 	RoutinesSunset,
 	RoutinesTimers,
 	RoutinesWakeUp,
+	Speaker,
 	UicontrolsMotionSensitivity,
 	UicontrolsNoMotion,
 } from './library';
@@ -407,6 +408,9 @@ const Icon = ({ name, className }) => {
 
 		case 'bolt':
 			return <FontAwesomeIcon icon={solid("bolt")} className={className} />
+
+		case 'speaker':
+			return <Speaker className={className} />
 
 		default:
 			return null;

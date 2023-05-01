@@ -15,7 +15,7 @@ const MediaPlayerEntity = ({ entity, settings }) => {
 					"items-center",
 					"text-3xl",
 				)}>
-					<Icon name="code" />
+					<Icon name="speaker" />
 				</div>
 
 				<div className="font-semibold truncate text-ellipsis text-xl ml-2">
