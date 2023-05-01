@@ -121,7 +121,7 @@ const Settings = () => {
 				</h2>
 
 				<Entities
-					entities={topBarEntities.filter((entity_id) =>
+					entities={topBarEntities?.filter((entity_id) =>
 						entity_id.indexOf('sensor') > -1
 					)}
 				/>
