@@ -412,6 +412,30 @@ const Icon = ({ name, className }) => {
 		case 'speaker':
 			return <Speaker className={className} />
 
+		case 'play':
+			return <FontAwesomeIcon icon={solid('play')} className={className} />
+
+		case 'pause':
+			return <FontAwesomeIcon icon={solid('pause')} className={className} />
+
+		case 'stop':
+			return <FontAwesomeIcon icon={solid('stop')} className={className} />
+
+		case 'music':
+			return <FontAwesomeIcon icon={solid('music')} className={className} />
+
+		case 'backward-step':
+			return <FontAwesomeIcon icon={solid('backward-step')} className={className} />
+
+		case 'forward-step':
+			return <FontAwesomeIcon icon={solid('forward-step')} className={className} />
+
+		case 'shuffle':
+			return <FontAwesomeIcon icon={solid('shuffle')} className={className} />
+
+		case 'repeat':
+			return <FontAwesomeIcon icon={solid('repeat')} className={className} />
+
 		default:
 			return null;
 	};

@@ -37,6 +37,10 @@ const useEntityIcon = (entity) => {
 		if (entity_type === 'sensor') {
 			return 'lightbulb';
 		}
+
+		if (entity_type === 'media_player') {
+			return 'speaker';
+		}
 	};
 
 	const getCurrentRange = (icon) => {

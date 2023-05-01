@@ -600,4 +600,52 @@ export const IconsList = [
 		on: 'speaker',
 		off: 'speaker',
 	},
+	{
+		name: 'play',
+		preview: 'play',
+		on: 'play',
+		off: 'play',
+	},
+	{
+		name: 'pause',
+		preview: 'pause',
+		on: 'pause',
+		off: 'pause',
+	},
+	{
+		name: 'stop',
+		preview: 'stop',
+		on: 'stop',
+		off: 'stop',
+	},
+	{
+		name: 'music',
+		preview: 'music',
+		on: 'music',
+		off: 'music',
+	},
+	{
+		name: 'backward-step',
+		preview: 'backward-step',
+		on: 'backward-step',
+		off: 'backward-step',
+	},
+	{
+		name: 'forward-step',
+		preview: 'forward-step',
+		on: 'forward-step',
+		off: 'forward-step',
+	},
+	{
+		name: 'shuffle',
+		preview: 'shuffle',
+		on: 'shuffle',
+		off: 'shuffle',
+	},
+	{
+		name: 'repeat',
+		preview: 'repeat',
+		on: 'repeat',
+		off: 'repeat',
+	},
 ];
