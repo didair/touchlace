@@ -8,6 +8,7 @@ import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
 const EntitySensor = ({ entity, settings }) => {
+	const locale = window.navigator.userLanguage || window.navigator.language;
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
@@ -23,9 +24,9 @@ const EntitySensor = ({ entity, settings }) => {
 	}
 
 	if (entity.attributes.device_class === 'timestamp') {
-		value = new Date(entity.state).toLocaleTimeString({
+		value = new Date(entity.state).toLocaleTimeString(locale, {
 			hour: '2-digit',
-			minute:'2-digit'
+			minute:'2-digit',
 		});
 	}
 
