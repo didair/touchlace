@@ -133,23 +133,25 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 				// onClick={togglePlayPause}
 				onLongPress={() => setOpen(true)}
 			>
-				<div className="flex items-center">
-					<div className={cx(
-						"h-11",
-						"flex",
-						"items-center",
-						"text-3xl",
-					)}>
-						<Icon name="speaker" />
-					</div>
+				{mediaInfo == null ?
+					<div className="flex items-center">
+						<div className={cx(
+							"h-11",
+							"flex",
+							"items-center",
+							"text-3xl",
+						)}>
+							<Icon name="speaker" />
+						</div>
 
-					<div className="font-semibold truncate text-ellipsis text-xl ml-2">
-						{name}
-						{selected_group_members?.length > 0 ?
-							' +' + selected_group_members.length
-						: null}
+						<div className="font-semibold truncate text-ellipsis text-xl ml-2">
+							{name}
+							{selected_group_members?.length > 0 ?
+								' +' + selected_group_members.length
+							: null}
+						</div>
 					</div>
-				</div>
+				: null}
 
 				{mediaInfo != null ?
 					<div className="flex my-2 gap-x-2">
