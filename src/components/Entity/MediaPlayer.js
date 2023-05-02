@@ -154,7 +154,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 				: null}
 
 				{mediaInfo != null ?
-					<div className="flex mb-2 gap-x-2">
+					<div className="flex mb-2 gap-x-3">
 						<div>
 							<img
 								className="w-16 h-16 rounded-md"
