@@ -9,6 +9,7 @@
 * 90+ icons for your devices
 * Real time device updates using web sockets
 * Basic configuration of all cards
+* Excellent Sonos integration with grouping and media browser (WIP, promised feature)
 
 ### ... Also worth mentioning
 * ✓ All data lives on your device
