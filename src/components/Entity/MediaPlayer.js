@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useGetStatesQuery } from 'services/states/api';
 import { getBaseURI } from 'lib/config';
 import cx from 'classnames';
@@ -49,7 +49,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 			acc[key] = entity.attributes[key];
 			return acc;
 		}, {});
-	});
+	}, [entity]);
 
 	const togglePlayPause = () => {
 		callService({
@@ -79,10 +79,6 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 			});
 		}
 	};
-
-	useEffect(() => {
-		// console.log('media player', entity, mediaInfo);
-	}, []);
 
 	return (
 		<>
