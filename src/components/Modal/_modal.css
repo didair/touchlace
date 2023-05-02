@@ -51,6 +51,10 @@ body.ReactModal__Body--open {
 	@apply shadow-2xl;
 }
 
+.ReactModal__Content.type-big {
+	@apply max-w-5xl;
+}
+
 .ReactModal__Content--after-open {
 	@apply scale-100;
 	@apply opacity-100;

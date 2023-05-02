@@ -7,6 +7,7 @@ import Card from "components/Card";
 import Icon from "components/Icon";
 import Modal from 'components/Modal';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
+import MediaBrowser from 'components/MediaBrowser';
 
 const MediaPlayerEntity = ({ entity, settings, callService }) => {
 	const { data: entities } = useGetStatesQuery();
@@ -14,7 +15,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 	const [showSettings, setShowSettings] = useState(false);
 	const name = settings != null && settings.name != null && settings.name != '' ?
 		settings.name
-	: entity.attributes.friendly_name;
+		: entity.attributes.friendly_name;
 
 	const selected_group_members = useMemo(() => {
 		if (entity.attributes == null || entity.attributes.group_members == null) {
@@ -55,8 +56,6 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 			entity_id: entity.entity_id,
 			domain: 'media_player',
 			service: entity.state == 'playing' ? 'media_pause' : 'media_play',
-			fields: {
-			},
 		});
 	};
 
@@ -82,34 +81,40 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 	};
 
 	useEffect(() => {
-		console.log('media player', entity, mediaInfo);
+		// console.log('media player', entity, mediaInfo);
 	}, []);
 
 	return (
 		<>
-			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
+			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false) }} type="big">
 				<div className="flex items-center justify-center flex-col">
 					<h3 className="text-2xl">
 						{name}
 						{selected_group_members?.length > 0 ?
 							' +' + selected_group_members.length
-						: null}
+							: null}
 					</h3>
 				</div>
 
-				<div className="mt-8">
-					{speakers.map((speaker) => {
-						return (
-							<label className='block' key={speaker.entity_id}>
-								<input
-									type="checkbox"
-									checked={selected_group_members?.indexOf(speaker.entity_id) > -1}
-									onChange={() => updateGroupMember(speaker)}
-								/>
-								{speaker.attributes.friendly_name}
-							</label>
-						);
-					})}
+				<div className="flex my-8 gap-x-6">
+					<div className="flex-1">
+						<MediaBrowser entity={entity} />
+					</div>
+
+					<div className="w-1/5">
+						{speakers.map((speaker) => {
+							return (
+								<label className='block' key={speaker.entity_id}>
+									<input
+										type="checkbox"
+										checked={selected_group_members?.indexOf(speaker.entity_id) > -1}
+										onChange={() => updateGroupMember(speaker)}
+									/>
+									{speaker.attributes.friendly_name}
+								</label>
+							);
+						})}
+					</div>
 				</div>
 
 				<div className="flex items-center justify-center mt-8">
@@ -123,7 +128,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 
 				{showSettings ?
 					<EntitySettings entity={entity} />
-				: null}
+					: null}
 			</Modal>
 
 			<Card
@@ -148,10 +153,10 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 							{name}
 							{selected_group_members?.length > 0 ?
 								' +' + selected_group_members.length
-							: null}
+								: null}
 						</div>
 					</div>
-				: null}
+					: null}
 
 				{mediaInfo != null ?
 					<div className="flex mb-2 gap-x-3">
@@ -162,7 +167,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 							/>
 						</div>
 
-						<div style={{ width: 'calc(100% - 5rem)'}}>
+						<div style={{ width: 'calc(100% - 5rem)' }}>
 							<div className="font-semibold truncate">
 								{mediaInfo.media_title}
 							</div>
@@ -172,7 +177,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 							</div>
 						</div>
 					</div>
-				: null}
+					: null}
 
 				<div className="flex items-center justify-between">
 					<div className={cx({
@@ -201,7 +206,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 						<Icon name="repeat" />
 						{entity.attributes.repeat == 'one' ?
 							<span className="text-off-white bg-dark/60 rounded-full absolute text-sm -right-3 -top-2 w-5 h-5 text-center">1</span>
-						: null}
+							: null}
 					</div>
 				</div>
 
@@ -217,9 +222,9 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 								'translate-y-1': entity.state != 'playing' || mediaInfo == null
 							}
 						)}
-						style={ mediaInfo != null ?
-							{ width: Math.round((mediaInfo.media_position)/mediaInfo.media_duration * 100) + '%' }
-						: { width: '0%' }}
+						style={mediaInfo != null ?
+							{ width: Math.round((mediaInfo.media_position) / mediaInfo.media_duration * 100) + '%' }
+							: { width: '0%' }}
 					/>
 				</div>
 			</Card>

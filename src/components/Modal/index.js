@@ -61,6 +61,7 @@ Modal.propTypes = {
 	onOpen: PropTypes.func,
 	type: PropTypes.oneOf([
 		'small',
+		'big',
 	]),
 };
 
