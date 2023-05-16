@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 
 import roomsReducer from 'services/rooms/slice';
 import settingsReducer from 'services/settings/slice';
+import mediaBrowserReducer from 'services/mediabrowser/slice';
 import { configApi } from 'services/config/api';
 import { statesApi } from 'services/states/api';
 
@@ -19,6 +20,7 @@ const persistConfig = {
 const reducers = combineReducers({
 	rooms: roomsReducer,
 	settings: settingsReducer,
+	mediaBrowser: mediaBrowserReducer,
 	[configApi.reducerPath]: configApi.reducer,
 	[statesApi.reducerPath]: statesApi.reducer,
 });

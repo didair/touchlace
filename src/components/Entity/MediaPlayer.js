@@ -37,7 +37,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 	}, [entities]);
 
 	const mediaInfo = useMemo(() => {
-		if (entity.attributes.media_content_id == null) {
+		if (entity.attributes.media_content_id == null || entity.attributes.media_title == null) {
 			return null;
 		}
 
