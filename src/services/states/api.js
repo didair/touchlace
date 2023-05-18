@@ -61,15 +61,20 @@ export const statesApi = createApi({
 			},
 		}),
 		callEntityService: build.mutation({
-			query(data) {
-				return {
-					url: `services/${data.domain}/${data.service}`,
-					method: 'POST',
-					body: {
+			async queryFn(data) {
+				const connection = await getHassConnection();
+				const message = {
+					type: 'call_service',
+					domain: data.domain,
+					service: data.service,
+					service_data: {
 						entity_id: data.entity_id,
 						...data.fields
-					},
+					}
 				};
+
+				const result = await connection.sendMessagePromise(message);
+				return result;
 			},
 		}),
 	}),
