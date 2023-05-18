@@ -436,6 +436,18 @@ const Icon = ({ name, className }) => {
 		case 'repeat':
 			return <FontAwesomeIcon icon={solid('repeat')} className={className} />
 
+		case 'volume-xmark':
+			return <FontAwesomeIcon icon={solid('volume-xmark')} className={className} />
+
+		case 'volume-off':
+			return <FontAwesomeIcon icon={solid('volume-off')} className={className} />
+
+		case 'volume-low':
+			return <FontAwesomeIcon icon={solid('volume-low')} className={className} />
+
+		case 'volume-high':
+			return <FontAwesomeIcon icon={solid('volume-high')} className={className} />
+
 		default:
 			return null;
 	};
