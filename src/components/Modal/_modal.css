@@ -52,7 +52,7 @@ body.ReactModal__Body--open {
 }
 
 .ReactModal__Content.type-big {
-	@apply max-w-5xl;
+	@apply max-w-6xl;
 }
 
 .ReactModal__Content--after-open {
