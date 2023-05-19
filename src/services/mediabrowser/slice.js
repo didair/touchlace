@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getHassConnection } from "lib/hass";
-import { statesApi } from 'services/states/api';
 
 const indexedMediaClasses = [
 	'app',
@@ -41,6 +40,39 @@ async function fetchData(entity, child = null) {
 	}
 };
 
+export const playChild = createAsyncThunk('mediaBrowser/playChild',
+	async ({ child, entity }) => {
+		const connection = await getHassConnection();
+
+		if (connection == null) {
+			console.error('MEDIABROWSER: COULD NOT FETCH HASS CONNECTION');
+			return;
+		}
+
+		if (child == null || child.media_content_id == '' || child.media_content_type == '') {
+			console.error('MEDIABROWSER: PLAY_MEDIA - CHILD NOT PROVIDED');
+			return;
+		}
+
+		let message = {
+			type: 'call_service',
+			domain: 'media_player',
+			service: 'play_media',
+			service_data: {
+				entity_id: entity.entity_id,
+				media_content_id: child.media_content_id,
+				media_content_type: child.media_content_type,
+			}
+		};
+
+		const result = await connection.sendMessagePromise(message);
+
+		if (result != null) {
+			return result;
+		}
+	}
+);
+
 export const navigateDirectory = createAsyncThunk('mediaBrowser/fetchDirectory',
 	async ({ child, entity }, thunkAPI) => {
 		let response = null;
@@ -75,21 +107,6 @@ export const mediaBrowserSlice = createSlice({
 	name: 'mediaBrowser',
 	initialState,
 	reducers: {
-		playChild: (state, action) => {
-			const { entity, child } = action.payload;
-
-			console.log('play this child', child);
-
-			statesApi.endpoints.callEntityService.initiate({
-				entity_id: entity.entity_id,
-				domain: 'media_player',
-				service: 'play_media',
-				fields: {
-					media_content_id: child.media_content_id,
-					media_content_type: child.media_content_type,
-				},
-			});
-		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(navigateDirectory.fulfilled, (state, action) => {
@@ -123,9 +140,5 @@ export const mediaBrowserSlice = createSlice({
 		});
 	},
 });
-
-export const {
-	playChild,
-} = mediaBrowserSlice.actions;
 
 export default mediaBrowserSlice.reducer;

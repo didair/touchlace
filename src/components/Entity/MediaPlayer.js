@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { useGetStatesQuery } from 'services/states/api';
 import { getBaseURI } from 'lib/config';
 import cx from 'classnames';
 
@@ -8,9 +7,10 @@ import Icon from "components/Icon";
 import Modal from 'components/Modal';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 import MediaBrowser from 'components/MediaBrowser';
+import SpeakerGroupMembers from 'components/SpeakerGroupMembers';
+import SpeakerMediaControls from 'components/SpeakerMediaControls';
 
 const MediaPlayerEntity = ({ entity, settings, callService }) => {
-	const { data: entities } = useGetStatesQuery();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const name = settings != null && settings.name != null && settings.name != '' ?
@@ -24,17 +24,6 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 
 		return entity.attributes.group_members.filter((member) => member != entity.entity_id);
 	}, [entity]);
-
-	const speakers = useMemo(() => {
-		if (entities == null || entity.attributes.group_members == null) {
-			return [];
-		}
-
-		return entities.filter((ent) => {
-			const entity_type = ent.entity_id.split('.')[0];
-			return ent.entity_id != entity.entity_id && entity_type == 'media_player' && ent.attributes.group_members != null;
-		});
-	}, [entities]);
 
 	const mediaInfo = useMemo(() => {
 		if (entity.attributes.media_content_id == null || entity.attributes.media_title == null) {
@@ -50,35 +39,6 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 			return acc;
 		}, {});
 	}, [entity]);
-
-	const togglePlayPause = () => {
-		callService({
-			entity_id: entity.entity_id,
-			domain: 'media_player',
-			service: entity.state == 'playing' ? 'media_pause' : 'media_play',
-		});
-	};
-
-	const updateGroupMember = (member) => {
-		const inGroup = selected_group_members.indexOf(member.entity_id) > -1;
-
-		if (inGroup) {
-			callService({
-				entity_id: member.entity_id,
-				domain: 'media_player',
-				service: 'unjoin',
-			});
-		} else {
-			callService({
-				entity_id: entity.entity_id,
-				domain: 'media_player',
-				service: 'join',
-				fields: {
-					group_members: member.entity_id,
-				},
-			});
-		}
-	};
 
 	return (
 		<>
@@ -98,18 +58,11 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 					</div>
 
 					<div className="w-1/5">
-						{speakers.map((speaker) => {
-							return (
-								<label className='block' key={speaker.entity_id}>
-									<input
-										type="checkbox"
-										checked={selected_group_members?.indexOf(speaker.entity_id) > -1}
-										onChange={() => updateGroupMember(speaker)}
-									/>
-									{speaker.attributes.friendly_name}
-								</label>
-							);
-						})}
+						<SpeakerMediaControls entity={entity} showVolumeSlider showMediaInfo />
+
+						<div className="mt-4">
+							<SpeakerGroupMembers entity={entity} />
+						</div>
 					</div>
 				</div>
 
@@ -131,7 +84,6 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 				type="media"
 				className="col-span-2 overflow-hidden"
 				state={entity.state == 'playing' ? 'light' : 'dark'}
-				// onClick={togglePlayPause}
 				onLongPress={() => setOpen(true)}
 			>
 				{mediaInfo == null ?
@@ -175,36 +127,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 					</div>
 					: null}
 
-				<div className="flex items-center justify-between">
-					<div className={cx({
-						'text-blue': entity.attributes.shuffle
-					})}>
-						<Icon name="shuffle" />
-					</div>
-
-					<div className="flex items-center justify-center gap-x-4">
-						<div className="text-xl">
-							<Icon name="backward-step" />
-						</div>
-
-						<div className="text-3xl w-6 text-center" onClick={togglePlayPause}>
-							<Icon name={entity.state == 'playing' ? 'pause' : 'play'} />
-						</div>
-
-						<div className="text-xl">
-							<Icon name="forward-step" />
-						</div>
-					</div>
-
-					<div className={cx('relative', {
-						'text-blue': entity.attributes.repeat != 'off'
-					})}>
-						<Icon name="repeat" />
-						{entity.attributes.repeat == 'one' ?
-							<span className="text-off-white bg-dark/60 rounded-full absolute text-sm -right-3 -top-2 w-5 h-5 text-center">1</span>
-							: null}
-					</div>
-				</div>
+				<SpeakerMediaControls entity={entity} />
 
 				<div className="absolute bottom-0 left-0 w-full">
 					<div

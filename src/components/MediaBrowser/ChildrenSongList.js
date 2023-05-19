@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { useMemo } from 'react';
 import { capitalize } from 'lib/text';
 import { playChild } from 'services/mediabrowser/slice';
 import Icon from 'components/Icon';
@@ -6,6 +7,18 @@ import { useDispatch } from 'react-redux';
 
 const ChildrenSongList = ({ entity, directory }) => {
 	const dispatch = useDispatch();
+
+	const titleSize = useMemo(() => {
+		if (directory.title.length > 61) {
+			return 'text-3xl';
+		}
+
+		if (directory.title.length > 41) {
+			return 'text-4xl';
+		}
+
+		return 'text-6xl';
+	}, [directory]);
 
 	const onPlayChild = (child) => {
 		dispatch(playChild({ entity, child }))
@@ -25,12 +38,12 @@ const ChildrenSongList = ({ entity, directory }) => {
 							{capitalize(directory.media_class)}
 						</div>
 
-						<div className="text-6xl font-bold">
+						<div className={titleSize + " font-bold"}>
 							{directory.title}
 						</div>
 					</div>
 
-					<div>
+					<div className="mt-4">
 						<div
 							className={cx(
 								'cursor-pointer',
@@ -52,7 +65,7 @@ const ChildrenSongList = ({ entity, directory }) => {
 				</div>
 			</div>
 
-			<div className="-mx-3">
+			<div>
 				{directory.children.map((child, index) => {
 					return (
 						<div

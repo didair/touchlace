@@ -1,0 +1,26 @@
+.horizontal-slider {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	height: 25px;
+}
+
+.horizontal-slider .slider-track {
+	height: 3px;
+}
+
+.horizontal-slider .slider-track-0 {
+	background-color: white;
+}
+
+.horizontal-slider .slider-track-1 {
+	background-color: rgba(255, 255, 255, 0.35);
+}
+
+.horizontal-slider .slider-thumb {
+	/* transition: all 250ms ease-in-out; */
+	height: 25px;
+	width: 25px;
+	border-radius: 25px;
+	background-color: white;
+}
