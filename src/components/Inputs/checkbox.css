@@ -1,0 +1,6 @@
+input:checked + div {
+  @apply !border-bright-green;
+}
+input:checked + div svg {
+  @apply !opacity-100 !scale-100;
+}
