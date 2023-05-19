@@ -110,7 +110,7 @@ export const mediaBrowserSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(navigateDirectory.fulfilled, (state, action) => {
-			const { child, entity, directory } = action.payload;
+			const { child, directory } = action.payload;
 
 			state.currentlyNavigatedDirectory = child?.media_content_id;
 			state.currentDirectory = directory;

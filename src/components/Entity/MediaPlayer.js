@@ -110,6 +110,7 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 					<div className="flex mb-2 gap-x-3">
 						<div>
 							<img
+								alt=""
 								className="w-16 h-16 rounded-md"
 								src={getBaseURI() + mediaInfo.entity_picture}
 							/>
