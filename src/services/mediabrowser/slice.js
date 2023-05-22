@@ -28,7 +28,7 @@ async function fetchData(entity, child = null) {
 		entity_id: entity.entity_id,
 	};
 
-	if (child != null && child.media_content_id != '') {
+	if (child != null && (child.media_content_id != '' || child.media_content_type != '')) {
 		message.media_content_id = child.media_content_id;
 		message.media_content_type = child.media_content_type;
 	}
@@ -115,7 +115,7 @@ export const mediaBrowserSlice = createSlice({
 			state.currentlyNavigatedDirectory = child?.media_content_id;
 			state.currentDirectory = directory;
 
-			if (child != null && indexedMediaClasses.indexOf(child.media_class) > -1) {
+			if (child != null && child.media_content_id != '' && indexedMediaClasses.indexOf(child.media_class) > -1) {
 				const foundInState = state.directories.find((dir) =>
 					dir.childId == child.media_content_id
 				);

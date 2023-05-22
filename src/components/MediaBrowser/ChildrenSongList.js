@@ -21,7 +21,7 @@ const ChildrenSongList = ({ entity, directory }) => {
 	}, [directory]);
 
 	const onPlayChild = (child) => {
-		dispatch(playChild({ entity, child }))
+		dispatch(playChild({ entity, child }));
 	};
 
 	return (
