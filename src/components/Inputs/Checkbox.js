@@ -10,7 +10,7 @@ const Checkbox = (props) => {
 	delete cleanProps.type;
 
 	return (
-		<div class={`form-element ${props.className}`}>
+		<div className={`form-element ${props.className}`}>
 			<label htmlFor={id} className="flex items-center">
 				<input
 					type="checkbox"
