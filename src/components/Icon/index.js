@@ -448,6 +448,15 @@ const Icon = ({ name, className }) => {
 		case 'volume-high':
 			return <FontAwesomeIcon icon={solid('volume-high')} className={className} />
 
+		case 'radio':
+			return <FontAwesomeIcon icon={solid('radio')} className={className} />
+
+		case 'compact-disc':
+			return <FontAwesomeIcon icon={solid('compact-disc')} className={className} />
+
+		case 'file-audio':
+			return <FontAwesomeIcon icon={solid('file-audio')} className={className} />
+
 		default:
 			return null;
 	};

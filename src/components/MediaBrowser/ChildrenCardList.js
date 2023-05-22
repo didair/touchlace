@@ -1,10 +1,29 @@
 import cx from 'classnames';
+import { useMemo } from 'react';
 import { useDispatch } from "react-redux";
 import { navigateDirectory, playChild } from "services/mediabrowser/slice";
 import Icon from 'components/Icon';
 
 const ChildrenCardList = ({ directory, entity }) => {
 	const dispatch = useDispatch();
+
+	const placeholderIcon = (child) => {
+		if (child.media_class == 'playlist') {
+			return 'music';
+		}
+
+		if (child.media_class == 'album') {
+			return 'compact-disc';
+		}
+
+		if (child.media_class == 'track') {
+			return 'file-audio';
+		}
+
+		if (child.media_class == 'genre') {
+			return 'radio';
+		}
+	};
 
 	const onChildClick = (child) => {
 		if (child.can_expand) {
@@ -54,6 +73,12 @@ const ChildrenCardList = ({ directory, entity }) => {
 									)}
 								>
 									<Icon name="play" />
+								</div>
+							: null}
+
+							{child.thumbnail == null ?
+								<div className="text-5xl">
+									<Icon name={placeholderIcon(child)} />
 								</div>
 							: null}
 						</div>
