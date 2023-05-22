@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useCallEntityServiceMutation } from "services/states/api";
 import cx from 'classnames';
 import Icon from "components/Icon";
@@ -8,9 +8,6 @@ import { getBaseURI } from "lib/config";
 import './Inputs/horizontalSlider.css';
 
 const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider = false }) => {
-	const [volume, setVolume] = useState(entity.attributes.volume_level != null ?
-		entity.attributes.volume_level * 100
-	: 0);
 	const [callService] = useCallEntityServiceMutation();
 
 	const togglePlayPause = () => {
@@ -35,10 +32,6 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 			domain: 'media_player',
 			service: 'media_next_track',
 		});
-	};
-
-	const onSliderChange = (value) => {
-		setVolume(value);
 	};
 
 	const onVolumeChange = (value) => {
@@ -66,8 +59,6 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 			return acc;
 		}, {});
 	}, [entity]);
-
-	// console.log('entity', entity);
 
 	return (
 		<>
@@ -125,17 +116,14 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 			</div>
 
 			{showVolumeSlider ?
-				<div className="flex items-center mt-4">
-					<div className="text-lg mr-1 w-9">
-						<Icon name={volume > 50 ? "volume-high" : "volume-low"} />
-					</div>
-
+				<div className="relative mt-4">
 					<ReactSlider
 						className="horizontal-slider"
 						thumbClassName="slider-thumb"
 						trackClassName="slider-track"
-						value={volume}
-						onChange={onSliderChange}
+						defaultValue={entity.attributes.volume_level != null ?
+							entity.attributes.volume_level * 100
+						: 0}
 						onAfterChange={onVolumeChange}
 					/>
 				</div>
