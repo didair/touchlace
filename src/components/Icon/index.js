@@ -457,6 +457,9 @@ const Icon = ({ name, className }) => {
 		case 'file-audio':
 			return <FontAwesomeIcon icon={solid('file-audio')} className={className} />
 
+		case 'user':
+			return <FontAwesomeIcon icon={solid('user')} className={className} />
+
 		default:
 			return null;
 	};

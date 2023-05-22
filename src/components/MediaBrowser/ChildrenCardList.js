@@ -8,20 +8,25 @@ const ChildrenCardList = ({ directory, entity }) => {
 	const dispatch = useDispatch();
 
 	const placeholderIcon = (child) => {
-		if (child.media_class == 'playlist') {
+		const media_class = child.children_media_class != null ? child.children_media_class : child.media_class;
+		if (media_class == 'playlist') {
 			return 'music';
 		}
 
-		if (child.media_class == 'album') {
+		if (media_class == 'album') {
 			return 'compact-disc';
 		}
 
-		if (child.media_class == 'track') {
+		if (media_class == 'track') {
 			return 'file-audio';
 		}
 
-		if (child.media_class == 'genre') {
+		if (media_class == 'genre' || media_class == 'podcast') {
 			return 'radio';
+		}
+
+		if (media_class == 'artist') {
+			return 'user';
 		}
 	};
 
