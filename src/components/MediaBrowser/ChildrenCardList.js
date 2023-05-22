@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { useMemo } from 'react';
 import { useDispatch } from "react-redux";
 import { navigateDirectory, playChild } from "services/mediabrowser/slice";
 import Icon from 'components/Icon';

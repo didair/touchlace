@@ -53,11 +53,11 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 				</div>
 
 				<div className="flex my-8 gap-x-6">
-					<div className="flex-1">
+					<div className="w-9/12">
 						<MediaBrowser entity={entity} />
 					</div>
 
-					<div className="w-1/5">
+					<div className="w-3/12">
 						<SpeakerMediaControls entity={entity} showVolumeSlider showMediaInfo />
 
 						<div className="mt-4">
