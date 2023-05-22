@@ -11,12 +11,12 @@ const Checkbox = (props) => {
 
 	return (
 		<div class={`form-element ${props.className}`}>
-			<label htmlFor={id} class="flex items-center">
+			<label htmlFor={id} className="flex items-center">
 				<input
 					type="checkbox"
 					id={id}
 					name={props.label}
-					class="checkbox hidden opacity-0 absolute h-8 w-8"
+					className="checkbox hidden opacity-0 absolute h-8 w-8"
 					{...cleanProps}
 					{...props.input}
 				/>
