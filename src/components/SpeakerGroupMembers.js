@@ -63,6 +63,7 @@ const SpeakerGroupMembers = ({ entity }) => {
 						checked={selected_group_members?.indexOf(speaker.entity_id) > -1}
 						onChange={() => updateGroupMember(speaker)}
 						label={speaker.attributes.friendly_name}
+						key={speaker.entity_id}
 					/>
 				);
 			})}

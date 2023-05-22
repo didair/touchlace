@@ -92,7 +92,6 @@ export const navigateDirectory = createAsyncThunk('mediaBrowser/fetchDirectory',
 		if (response == null) {
 			// Not cached, fetch the data
 			response = await fetchData(entity, child);
-			console.log('response', response);
 		}
 
 		return {
@@ -111,6 +110,23 @@ export const mediaBrowserSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(navigateDirectory.fulfilled, (state, action) => {
 			const { child, directory } = action.payload;
+
+			if (state.currentDirectory != null) {
+				// History mgmt
+				const isChildrenOfPrevious = state.currentDirectory.children.find((c) => {
+					return c.media_content_type == child?.media_content_type && child?.media_content_id.indexOf(c.media_content_id) > -1
+				});
+
+				if (isChildrenOfPrevious != null) {
+					state.breadcrumbs.push(state.currentDirectory);
+				} else {
+					if (directory.media_content_type == 'root') {
+						state.breadcrumbs = [];
+					} else {
+						state.breadcrumbs.pop();
+					}
+				}
+			}
 
 			state.currentlyNavigatedDirectory = child?.media_content_id;
 			state.currentDirectory = directory;
