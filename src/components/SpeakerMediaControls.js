@@ -45,6 +45,42 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 		});
 	};
 
+	const toggleShuffle = () => {
+		callService({
+			entity_id: entity.entity_id,
+			domain: 'media_player',
+			service: 'shuffle_set',
+			fields: {
+				shuffle: !entity.attributes.shuffle
+			},
+		});
+	};
+
+	const nextRepeatMode = () => {
+		let newVal = '';
+
+		if (entity.attributes.repeat == 'off') {
+			newVal = 'all';
+		}
+
+		if (entity.attributes.repeat == 'all') {
+			newVal = 'one';
+		}
+
+		if (entity.attributes.repeat == 'one') {
+			newVal = 'off';
+		}
+
+		callService({
+			entity_id: entity.entity_id,
+			domain: 'media_player',
+			service: 'repeat_set',
+			fields: {
+				repeat: newVal
+			},
+		});
+	};
+
 	const mediaInfo = useMemo(() => {
 		if (entity.attributes.media_content_id == null || entity.attributes.media_title == null) {
 			return null;
@@ -85,7 +121,7 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 			: null}
 
 			<div className="flex items-center justify-between">
-				<div className={cx('text-xl', {
+				<div onClick={() => toggleShuffle()} className={cx('text-xl', {
 					'text-blue': entity.attributes.shuffle
 				})}>
 					<Icon name="shuffle" />
@@ -105,7 +141,7 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 					</div>
 				</div>
 
-				<div className={cx('relative text-xl', {
+				<div onClick={() => nextRepeatMode()} className={cx('relative text-xl', {
 					'text-blue': entity.attributes.repeat != 'off'
 				})}>
 					<Icon name="repeat" />
