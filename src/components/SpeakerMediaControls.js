@@ -35,13 +35,21 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 	};
 
 	const onVolumeChange = (value) => {
-		callService({
-			entity_id: entity.entity_id,
-			domain: 'media_player',
-			service: 'volume_set',
-			fields: {
-				volume_level: value/100,
-			},
+		let group_members = [entity.entity_id];
+
+		if (entity.attributes.group_members != null) {
+			group_members = entity.attributes.group_members;
+		}
+
+		group_members.forEach((entity_id) => {
+			callService({
+				entity_id: entity_id,
+				domain: 'media_player',
+				service: 'volume_set',
+				fields: {
+					volume_level: value/100,
+				},
+			});
 		});
 	};
 
