@@ -28,6 +28,11 @@ const Settings = () => {
 			values.id = uuidv4();
 			dispatch(createRoom(values));
 		} else {
+			// Clear out entities not found in entities data
+			values.entities = values.entities.filter((entity_id) => {
+				return entities.find((entity) => entity.entity_id == entity_id) != null;
+			});
+
 			dispatch(updateRoom(values));
 		}
 
