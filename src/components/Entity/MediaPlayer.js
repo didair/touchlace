@@ -107,6 +107,16 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 					: null}
 
 				{mediaInfo != null ?
+					<div className="flex items-center mb-2 text-light-gray/40">
+						<Icon name="speaker" className="mr-1" />
+						{name}
+						{selected_group_members?.length > 0 ?
+							' +' + selected_group_members.length
+							: null}
+					</div>
+				: null}
+
+				{mediaInfo != null ?
 					<div className="flex mb-2 gap-x-3">
 						<div>
 							<img
