@@ -1,14 +1,14 @@
 
 export interface Entity {
 	entity_id: string,
-	state: string,
+	state: string | number,
 	attributes: {
 		brightness?: number,
 		current_position?: number,
 		device_class?: string,
 		entity_picture?: string,
 		friendly_name: string,
-		group_members?: Array,
+		group_members?: Array<string>,
 		media_artist?: string,
 		media_content_id?: string,
 		media_duration?: number,

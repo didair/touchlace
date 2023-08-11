@@ -2,7 +2,10 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"baseUrl": "src",
-		"jsx": "react",
+		"jsx": "react-jsx",
 		"strict": false,
+		"esModuleInterop": true,
+		"strictInjectionParameters": false,
+		"strictTemplates":false
 	}
 }
