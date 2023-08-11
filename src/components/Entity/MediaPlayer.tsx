@@ -114,7 +114,13 @@ const MediaPlayerEntity = ({
 					: null}
 
 				{mediaInfo != null ?
-					<div className="flex items-center mb-2 text-light-gray/40">
+					<div className={cx(
+						"flex items-center mb-2",
+						{
+							"text-gray/70": entity.state == 'playing',
+							"text-light-gray/40": entity.state != 'playing',
+						}
+					)}>
 						<Icon name="speaker" className="mr-1" />
 						{name}
 						{selected_group_members?.length > 0 ?
