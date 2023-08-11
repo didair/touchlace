@@ -36,12 +36,26 @@ const Devices = () => {
 			: null}
 
 			{topBarEntities?.length > 0 ?
-				<div className="flex gap-2 mb-6">
-					<Entities
-						entities={topBarEntities.filter((entity_id) =>
-							entity_id.indexOf('sensor') > -1
-						)}
-					/>
+				<div className="mb-6">
+					<div className="flex gap-2">
+						<Entities
+							entities={topBarEntities.filter((entity_id) =>
+								entity_id.indexOf('sensor') > -1
+							)}
+						/>
+					</div>
+
+					{/* {topBarEntities.filter((entity_id) => entity_id.indexOf('sensor') == -1).length > 0 ?
+						<div className="mt-4">
+							<Grid>
+								<Entities
+									entities={topBarEntities.filter((entity_id) =>
+										entity_id.indexOf('sensor') == -1
+									)}
+								/>
+							</Grid>
+						</div>
+					: null} */}
 				</div>
 			: null}
 

@@ -46,7 +46,7 @@ const EntitiesSelect = (props) => {
 									onChange={() => onToggleEntity(entity)}
 									label={(
 										<div>
-											<div className="text-sm">
+											<div className="text-sm truncate">
 												{entity_type + ' • '}
 												{entity.attributes.friendly_name}
 											</div>
@@ -75,7 +75,7 @@ const EntitiesSelect = (props) => {
 			<div>
 				{currentValue.map((entity_id) => {
 					return (
-						<div key={entity_id} className="block p-2 mb-2 last-of-type:mb-0 border border-gray/40 bg-gray/10 rounded-md">
+						<div key={entity_id} className="block p-2 mb-2 last-of-type:mb-0 border border-gray/40 bg-gray/10 rounded-md truncate">
 							{entity_id}
 						</div>
 					);
