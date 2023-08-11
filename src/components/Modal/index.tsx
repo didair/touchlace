@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactElement, ReactNode } from 'react';
 import ReactModal from 'react-modal';
 
 import './_modal.css';
@@ -11,11 +10,25 @@ ReactModal.defaultStyles.overlay = {};
 // Set root element for accessibility
 ReactModal.setAppElement('#root');
 
-const Modal = (props) => {
+const Modal = ({
+	children = null,
+	onClose = () => null,
+	onOpen = () => null,
+	open = false,
+	title = null,
+	type = 'small',
+}: {
+	children: ReactNode,
+	onClose: Function,
+	onOpen: Function,
+	open: boolean,
+	title?: string | ReactElement,
+	type: 'small' | 'big',
+}) => {
 	const [canClose, setCanClose] = useState(false);
 
 	useEffect(() => {
-		if (props.open) {
+		if (open) {
 			setTimeout(() => {
 				setCanClose(true);
 			}, 1250);
@@ -24,45 +37,24 @@ const Modal = (props) => {
 				setCanClose(false);
 			}, 350);
 		}
-	}, [props.open]);
+	}, [open]);
 
 	return (
 		<ReactModal
-			isOpen={props.open}
-			onRequestClose={props.onClose}
-			onAfterOpen={props.onOpen}
+			isOpen={open}
+			onRequestClose={onClose}
+			onAfterOpen={onOpen}
 			// Animation timing
 			closeTimeoutMS={300}
-			className={`type-${props.type}`}
+			className={`type-${type}`}
 			shouldCloseOnOverlayClick={canClose}
 		>
 			<div className="max-h-[85vh] overflow-auto flex-1 px-10 py-7">
-				{props.children}
+				{children}
 			</div>
 		</ReactModal>
 	);
 
 }
-
-Modal.defaultProps = {
-	open: false,
-	title: null,
-	onOpen: () => {},
-	type: 'small',
-};
-
-Modal.propTypes = {
-	open: PropTypes.bool.isRequired,
-	title: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.element,
-	]),
-	onClose: PropTypes.func,
-	onOpen: PropTypes.func,
-	type: PropTypes.oneOf([
-		'small',
-		'big',
-	]),
-};
 
 export default Modal;
