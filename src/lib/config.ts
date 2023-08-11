@@ -4,7 +4,7 @@ export const getBaseURI = () => {
 	return localStorage.getItem('touchlace-base-uri') ?? '';
 };
 
-export const prepareHeaders = async (headers) => {
+export const prepareHeaders = async (headers: Headers) => {
 	const auth = await getHassAuth();
 	if (auth != null) {
 		if (auth.expired) {
