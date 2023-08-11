@@ -1,17 +1,36 @@
+import { Entity as EntityInterface } from "types";
 import cx from 'classnames';
 import Icon from 'components/Icon';
 import Entities from './Entities';
 
-const Room = (props) => {
-	const media_players = props.entities.filter((entity_id) =>
+const Room = ({
+	entities = [],
+	index = 0,
+	showSettings = false,
+	name,
+	moveLeft,
+	moveRight,
+	onEdit,
+	onDelete,
+}: {
+	entities: Array<EntityInterface>,
+	name: string,
+	index: number,
+	showSettings: boolean,
+	moveLeft: Function,
+	moveRight: Function,
+	onEdit: Function,
+	onDelete: Function,
+}) => {
+	const media_players = entities.filter((entity_id) =>
 		entity_id.indexOf('media_player') > -1
 	);
 
-	const sensors = props.entities.filter((entity_id) =>
+	const sensors = entities.filter((entity_id) =>
 		entity_id.indexOf('sensor') > -1
 	);
 
-	const devices = props.entities.filter((entity_id) =>
+	const devices = entities.filter((entity_id) =>
 		entity_id.indexOf('sensor') === -1 && entity_id.indexOf('media_player') === -1
 	);
 
@@ -25,28 +44,28 @@ const Room = (props) => {
 				'rounded-lg',
 				'text-md',
 			)}
-			data-index={props.index}
+			data-index={index}
 		>
 			<div className="flex items-center justify-between mb-4">
 				<h3 className="text-3xl font-semibold">
-					{props.name}
+					{name}
 				</h3>
 
-				{props.showSettings ?
+				{showSettings ?
 					<div>
-						<span className="cursor-pointer" onClick={props.moveLeft}>
+						<span className="cursor-pointer" onClick={moveLeft}>
 							<Icon name="arrow-left" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={props.moveRight}>
+						<span className="ml-3 cursor-pointer" onClick={moveRight}>
 							<Icon name="arrow-right" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={props.onEdit}>
+						<span className="ml-3 cursor-pointer" onClick={onEdit}>
 							<Icon name="pen" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={props.onDelete}>
+						<span className="ml-3 cursor-pointer" onClick={onDelete}>
 							<Icon name="trash-can" />
 						</span>
 					</div>
@@ -71,11 +90,6 @@ const Room = (props) => {
 		</div>
 	);
 
-};
-
-Room.defaultProps = {
-	entities: [],
-	showSettings: false,
 };
 
 export default Room;

@@ -5,6 +5,8 @@ import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 
+import { useUpdateEntityStateMutation } from 'services/states/api';
+
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import RangeSlider from 'components/Inputs/RangeSlider';
@@ -14,12 +16,11 @@ import EntitySettings from 'components/Forms/EntitySettingsForm';
 const EntityLight = ({
 	entity,
 	settings,
-	updateState,
 }: {
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
-	updateState: Function,
 }) => {
+	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);

@@ -4,6 +4,8 @@ import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 
+import { useCallEntityServiceMutation } from 'services/states/api';
+
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import RangeSlider from 'components/Inputs/RangeSlider';
@@ -13,12 +15,11 @@ import EntitySettings from 'components/Forms/EntitySettingsForm';
 const EntityCover = ({
 	entity,
 	settings,
-	callService
 }: {
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
-	callService: Function,
 }) => {
+	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 
