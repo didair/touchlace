@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import { getBaseURI } from 'lib/config';
 import cx from 'classnames';
 
@@ -10,7 +11,13 @@ import MediaBrowser from 'components/MediaBrowser';
 import SpeakerGroupMembers from 'components/SpeakerGroupMembers';
 import SpeakerMediaControls from 'components/SpeakerMediaControls';
 
-const MediaPlayerEntity = ({ entity, settings, callService }) => {
+const MediaPlayerEntity = ({
+	entity,
+	settings,
+}: {
+	entity: EntityInterface,
+	settings: EntitySettingsInterface,
+}) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const name = settings != null && settings.name != null && settings.name != '' ?

@@ -3,7 +3,7 @@
  * @param {string} url
  * @returns Parameter value
  */
-export const getParameterByName = (name, url) => {
+export const getParameterByName = (name: string, url: string) => {
 	if (!url) url = window.location.href;
 	name = name.replace(/[\[\]]/g, '\\$&');
 	var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),

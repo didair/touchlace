@@ -1,4 +1,4 @@
-const debounce = (callback, wait) => {
+const debounce = (callback: Function, wait: number) => {
 	var timeoutId = null;
 	return (...args) => {
 		window.clearTimeout(timeoutId);

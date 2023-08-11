@@ -1,3 +1,4 @@
+import { EntitySettings as EntitySettingsInterface } from "types";
 import { useSelector } from "react-redux";
 import { useCallEntityServiceMutation, useUpdateEntityStateMutation } from "services/states/api";
 
@@ -10,8 +11,8 @@ import MediaPlayerEntity from "./MediaPlayer";
 const Entity = (props) => {
 	const [updateState] = useUpdateEntityStateMutation();
 	const [callService] = useCallEntityServiceMutation();
-	const entity_type = props.entity.entity_id.split('.')[0];
-	const entitySettings = useSelector((state) => {
+	const entity_type: string = props.entity.entity_id.split('.')[0];
+	const entitySettings: EntitySettingsInterface = useSelector((state) => {
 		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
 

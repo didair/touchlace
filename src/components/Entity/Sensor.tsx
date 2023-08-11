@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -7,7 +8,13 @@ import Modal from 'components/Modal';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntitySensor = ({ entity, settings }) => {
+const EntitySensor = ({
+	entity,
+	settings
+}: {
+	entity: EntityInterface,
+	settings: EntitySettingsInterface,
+}) => {
 	const locale = window.navigator.userLanguage || window.navigator.language;
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
