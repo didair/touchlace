@@ -3,6 +3,9 @@ import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } 
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
+
+import { useUpdateEntityStateMutation } from 'services/states/api';
+
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
@@ -11,12 +14,11 @@ import EntitySettings from 'components/Forms/EntitySettingsForm';
 const EntitySwitch = ({
 	entity,
 	settings,
-	updateState,
 }: {
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
-	updateState: Function,
 }) => {
+	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
