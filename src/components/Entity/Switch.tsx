@@ -1,35 +1,30 @@
 import { useState } from 'react';
-import cx from 'classnames';
-import { lerp } from 'lib/numbers';
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
-
+import cx from 'classnames';
 import Card from 'components/Card';
 import Modal from 'components/Modal';
-import RangeSlider from 'components/Inputs/RangeSlider';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntityLight = ({ entity, settings, updateState }) => {
+const EntitySwitch = ({
+	entity,
+	settings,
+	updateState,
+}: {
+	entity: EntityInterface,
+	settings: EntitySettingsInterface,
+	updateState: Function,
+}) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
 
-	const updateBrightness = (event) => {
-		updateState({
-			entity_id: entity.entity_id,
-			domain: 'light',
-			state: 'on',
-			fields: {
-				brightness: event.target.value,
-			}
-		});
-	};
-
 	const toggleOnOff = () => {
 		updateState({
 			entity_id: entity.entity_id,
-			domain: 'light',
+			domain: 'switch',
 			state: entity.state == 'on' ? 'off' : 'on',
 		});
 	};
@@ -37,21 +32,12 @@ const EntityLight = ({ entity, settings, updateState }) => {
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
-				<div className="flex items-center justify-center flex-col">
+				<div className="mb-8">
 					<h3 className="text-2xl">
 						{settings != null && settings.name != null && settings.name != '' ?
 							settings.name
 						: entity.attributes.friendly_name}
 					</h3>
-
-					<div className="my-8">
-						<RangeSlider
-							min="1"
-							max="255"
-							onChange={updateBrightness}
-							value={entity.attributes.brightness}
-						/>
-					</div>
 				</div>
 
 				<div className="flex items-center justify-center">
@@ -81,7 +67,7 @@ const EntityLight = ({ entity, settings, updateState }) => {
 				onLongPress={() => setOpen(true)}
 				onClick={toggleOnOff}
 				state={entity.state == 'on' ? 'light' : 'dark'}
-				type="light"
+				type="switch"
 			>
 				<div className="flex justify-between">
 					<div className={cx(
@@ -92,50 +78,6 @@ const EntityLight = ({ entity, settings, updateState }) => {
 						{ 'text-gray': entity.state != 'on' }
 					)}>
 						<Icon name={icon_name} />
-					</div>
-
-					<div className={cx(
-						'transition-opacity',
-						'duration-300',
-						'ease-in-out',
-						'flex',
-						'items-center',
-						'justify-center',
-						'w-11 h-11',
-						'relative',
-						{
-							'opacity-0': entity.attributes.brightness == null,
-							'opacity-100': entity.attributes.brightness != null,
-						}
-					)}>
-						<svg viewBox="0 0 100 100" className="absolute">
-							<path
-								className={cx({
-									'stroke-light/20': entity.attributes.brightness == null,
-									'stroke-light-gray': entity.attributes.brightness != null,
-								})}
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-							/>
-							<path
-								className="transition-all duration-200 ease-in-out stroke-blue"
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-								style={{
-									strokeDasharray: "295.416, 295.416",
-									strokeDashoffset: entity.attributes.brightness != null ?
-										295 - lerp(0, 295, (entity.attributes.brightness / 255)) : 295,
-								}}
-							/>
-						</svg>
-
-						<span className="font-bold text-xs opacity-40">
-							{entity.attributes.brightness != null ?
-								Math.round((entity.attributes.brightness / 255) * 100) + '%'
-								: null}
-						</span>
 					</div>
 				</div>
 
@@ -162,4 +104,4 @@ const EntityLight = ({ entity, settings, updateState }) => {
 
 };
 
-export default EntityLight;
+export default EntitySwitch;

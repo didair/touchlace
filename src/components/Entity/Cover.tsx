@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
@@ -9,7 +10,15 @@ import RangeSlider from 'components/Inputs/RangeSlider';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntityCover = ({ entity, settings, callService }) => {
+const EntityCover = ({
+	entity,
+	settings,
+	callService
+}: {
+	entity: EntityInterface,
+	settings: EntitySettingsInterface,
+	callService: Function,
+}) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 

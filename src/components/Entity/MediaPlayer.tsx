@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import { getBaseURI } from 'lib/config';
 import cx from 'classnames';
 
@@ -10,7 +11,13 @@ import MediaBrowser from 'components/MediaBrowser';
 import SpeakerGroupMembers from 'components/SpeakerGroupMembers';
 import SpeakerMediaControls from 'components/SpeakerMediaControls';
 
-const MediaPlayerEntity = ({ entity, settings, callService }) => {
+const MediaPlayerEntity = ({
+	entity,
+	settings,
+}: {
+	entity: EntityInterface,
+	settings: EntitySettingsInterface,
+}) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const name = settings != null && settings.name != null && settings.name != '' ?
@@ -107,7 +114,13 @@ const MediaPlayerEntity = ({ entity, settings, callService }) => {
 					: null}
 
 				{mediaInfo != null ?
-					<div className="flex items-center mb-2 text-light-gray/40">
+					<div className={cx(
+						"flex items-center mb-2",
+						{
+							"text-gray/70": entity.state == 'playing',
+							"text-light-gray/40": entity.state != 'playing',
+						}
+					)}>
 						<Icon name="speaker" className="mr-1" />
 						{name}
 						{selected_group_members?.length > 0 ?

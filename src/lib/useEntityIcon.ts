@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { IconsList } from "constants/icons";
+import { Entity } from "types";
 
-const useEntityIcon = (entity) => {
+const useEntityIcon = (entity: Entity) => {
 	const entity_type = entity.entity_id.split('.')[0];
 	const entitySettings = useSelector((state) => {
 		return state.settings.entities.find(({ entity_id }) => entity_id == entity.entity_id)
