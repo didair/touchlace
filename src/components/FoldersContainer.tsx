@@ -18,7 +18,7 @@ const FoldersContainer = ({ children }: { children: ReactNode }) => {
 		if (element.current != null) {
 			animateChildrenIn();
 		}
-	}, [location]);
+	}, [location, children]);
 
 	return (
 		<div className="h-full w-min px-8 py-4 flex gap-x-10" ref={element}>
