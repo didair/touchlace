@@ -128,7 +128,9 @@ const MediaPlayerEntity = ({
 					"z-10",
 					"text-light",
 				)}>
-					<Icon name="speaker" />
+					{entity.attributes.device_class == 'tv' ?
+						<Icon name="tv" />
+					: <Icon name="speaker" />}
 				</div>
 			</Card>
 		</>

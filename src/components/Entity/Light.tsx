@@ -1,10 +1,13 @@
-import { useState } from 'react';
 import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+
+import { useState } from 'react';
 import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { favoriteEntity } from 'services/settings/slice';
 import { useUpdateEntityStateMutation } from 'services/states/api';
 
 import Card from 'components/Card';
@@ -20,10 +23,12 @@ const EntityLight = ({
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
 }) => {
+	const dispatch = useDispatch();
 	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
 	const updateBrightness = (event) => {
 		updateState({
@@ -42,6 +47,10 @@ const EntityLight = ({
 			domain: 'light',
 			state: entity.state == 'on' ? 'off' : 'on',
 		});
+	};
+
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
 	};
 
 	return (
@@ -79,6 +88,13 @@ const EntityLight = ({
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
+					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
 					</span>
 				</div>
 

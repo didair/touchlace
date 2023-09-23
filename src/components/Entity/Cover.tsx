@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import cx from 'classnames';
 import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 
 import { useCallEntityServiceMutation } from 'services/states/api';
+import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
@@ -19,9 +21,11 @@ const EntityCover = ({
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
 }) => {
+	const dispatch = useDispatch();
 	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
 	const updatePosition = (event) => {
 		callService({
@@ -43,6 +47,10 @@ const EntityCover = ({
 				position: entity.attributes.current_position > 0 ? 0 : 100,
 			},
 		});
+	};
+
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
 	};
 
 	return (
@@ -80,6 +88,13 @@ const EntityCover = ({
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
+					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
 					</span>
 				</div>
 
