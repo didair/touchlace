@@ -34,8 +34,6 @@ const Room = (props) => {
 		return null;
 	}
 
-	console.log('room props', room, devices);
-
 	return (
 		<FoldersContainer>
 			{devices != null && devices.length > 0 ?

@@ -45,6 +45,11 @@ code {
 	height: 1.2em;
 }
 
+.folder.should-animate {
+	opacity: 0;
+	transform: translateX(.75rem);
+}
+
 .responsive-grid-rows {
 	grid-template-rows: repeat(2, minmax(0, 1fr));
 }
