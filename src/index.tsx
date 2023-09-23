@@ -14,6 +14,7 @@ import {
 
 import App from 'containers/App';
 import Home from 'containers/pages/Home';
+import Media from 'containers/pages/Media';
 import Room from 'containers/pages/Room';
 import Settings from 'containers/pages/Settings';
 import Devices from 'containers/pages/Devices';
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Home />,
+			},
+			{
+				path: '/media',
+				element: <Media />
 			},
 			{
 				path: '/room/:id',
