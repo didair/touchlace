@@ -4,10 +4,8 @@ import { setTopEntities } from "services/settings/slice";
 import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/slice";
 import { useGetStatesQuery } from "services/states/api";
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
 
 import Entities from "components/Entities";
-import Grid from "components/Grid";
 import Room from "components/Room";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
@@ -66,7 +64,7 @@ const Settings = () => {
 	};
 
 	return (
-		<div>
+		<div className="px-8 h-full overflow-y-scroll">
 			<Modal open={room != null} onClose={() => setSelectedRoom(null)}>
 				<div className="mb-4">
 					{room != null ?
@@ -92,15 +90,9 @@ const Settings = () => {
 				/>
 			</Modal>
 
-			<Link to="/" className="flex items-center text-3xl mb-6">
-				<span style={{ position: 'relative', top: 2 }}>
-					<Icon name="arrow-left" />
-				</span>
-
-				<h1 className="text-5xl ml-2">
-					Settings
-				</h1>
-			</Link>
+			<h1 className="text-5xl mb-6">
+				Settings
+			</h1>
 
 			{entities != null ?
 				<h3 className="text-lg mt-1 mb-4">
@@ -145,22 +137,20 @@ const Settings = () => {
 					</span>
 				</h2>
 
-				<Grid>
-					{rooms.map((room, index) => {
-						return (
-							<Room
-								key={room.id}
-								onEdit={() => setSelectedRoom(room)}
-								onDelete={() => onRoomDelete(room)}
-								moveLeft={() => onMoveRoom(room)}
-								moveRight={() => onMoveRoom(room, 'right')}
-								showSettings={true}
-								index={index}
-								{...room}
-							/>
-						);
-					})}
-				</Grid>
+				{rooms.map((room, index) => {
+					return (
+						<Room
+							key={room.id}
+							onEdit={() => setSelectedRoom(room)}
+							onDelete={() => onRoomDelete(room)}
+							moveLeft={() => onMoveRoom(room)}
+							moveRight={() => onMoveRoom(room, 'right')}
+							showSettings={true}
+							index={index}
+							{...room}
+						/>
+					);
+				})}
 			</div>
 		</div>
 	);
