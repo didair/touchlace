@@ -47,7 +47,7 @@ function App() {
 					</div>
 
 					<div className="flex flex-1 h-full overflow-scroll">
-						<div className="w-64">
+						<div className="w-64 flex-shrink-0">
 							<Sidebar />
 						</div>
 
