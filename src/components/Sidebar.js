@@ -39,12 +39,16 @@ const Sidebar = () => {
 	}, [location]);
 
 	return (
-		<div className="flex flex-col gap-y-2" id="sidebar">
+		<div className="flex flex-col" id="sidebar">
 			<SidebarItem to="/">
 				Home
 			</SidebarItem>
 
-			<div className="bg-gray rounded-full mx-8" style={{ height: 1 }} />
+			<SidebarItem to="/media">
+				Media
+			</SidebarItem>
+
+			<div className="bg-gray rounded-full mx-8 my-4" style={{ height: 1 }} />
 
 			{rooms.map((room) => {
 				return (
