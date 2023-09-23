@@ -99,7 +99,7 @@ const MediaPlayerEntity = ({
 						<div
 							className="w-full h-full bg-cover bg-center bg-blend-overlay"
 							style={{
-								'background-image': `url("${getBaseURI() + mediaInfo.entity_picture}"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6))`
+								backgroundImage: `url("${getBaseURI() + mediaInfo.entity_picture}"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6))`
 							}}
 						/>
 					</div>
