@@ -1,14 +1,26 @@
+import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import { useSelector, useDispatch } from "react-redux";
 import { setEntitySettings } from "services/settings/slice";
+import { setEntityRoom } from "services/rooms/slice";
 import Input from 'components/Inputs/Input';
 import IconSelect from "components/Inputs/IconSelect";
+import React, { useMemo } from "react";
+import { _clone } from 'lib/store';
 
-const EntitySettings = ({ entity }) => {
+const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 	const dispatch = useDispatch();
 	const setSettings = (value) => dispatch(setEntitySettings(value));
-	const entitySettings = useSelector((state) => {
+	const rooms = useSelector((state) => state.rooms.list);
+
+	const entitySettings: EntitySettingsInterface = useSelector((state) => {
 		return state.settings.entities.find((_ent) => _ent.entity_id == entity.entity_id)
 	});
+
+	const entityRoom = useMemo(() => {
+		return rooms.find((room) => room.entities.find((entity_id) =>
+			entity_id == entity.entity_id
+		));
+	}, [entity, rooms]);
 
 	const updateName = (event) => {
 		setSettings({
@@ -32,6 +44,13 @@ const EntitySettings = ({ entity }) => {
 			entity_id: entity.entity_id,
 			icon,
 		});
+	};
+
+	const onRoomChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		dispatch(setEntityRoom({
+			roomId: event.target.value,
+			entityId: entity.entity_id,
+		}));
 	};
 
 	return (
@@ -59,6 +78,16 @@ const EntitySettings = ({ entity }) => {
 				entity={entity}
 				value={entitySettings?.icon ?? null}
 			/>
+
+			<div className="text-dark">
+				<select onChange={onRoomChange} value={entityRoom.id}>
+					{rooms.map((room) => {
+						return <option key={room.id} value={room.id}>
+							{room.name}
+						</option>
+					})}
+				</select>
+			</div>
 
 			<label className="block mt-4 mb-2">Entity ID</label>
 			<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">

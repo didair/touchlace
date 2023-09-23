@@ -52,25 +52,29 @@ const Room = ({
 				</h3>
 
 				{showSettings ?
-					<div>
+					<div className="text-2xl flex items-center gap-x-5">
 						<span className="cursor-pointer" onClick={moveLeft}>
-							<Icon name="arrow-left" />
+							<Icon name="arrow-up" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={moveRight}>
-							<Icon name="arrow-right" />
+						<span className="cursor-pointer" onClick={moveRight}>
+							<Icon name="arrow-down" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={onEdit}>
+						<span className="cursor-pointer" onClick={onEdit}>
 							<Icon name="pen" />
 						</span>
 
-						<span className="ml-3 cursor-pointer" onClick={onDelete}>
+						<span className="cursor-pointer" onClick={onDelete}>
 							<Icon name="trash-can" />
 						</span>
 					</div>
 				: null}
 			</div>
+
+			{showSettings ?
+				<div style={{ height: 1 }} className="w-full bg-light-gray mb-2" />
+			: null}
 
 			{sensors?.length > 0 && !showSettings ?
 				<div className="grid grid-cols-2 gap-4 mb-4">
