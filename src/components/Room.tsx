@@ -72,21 +72,23 @@ const Room = ({
 				: null}
 			</div>
 
-			{sensors?.length > 0 ?
+			{sensors?.length > 0 && !showSettings ?
 				<div className="grid grid-cols-2 gap-4 mb-4">
 					<Entities entities={sensors} />
 				</div>
 			: null}
 
-			{media_players?.length > 0 ?
+			{media_players?.length > 0 && !showSettings ?
 				<div className="grid grid-cols-2 gap-4 mb-4">
 					<Entities entities={media_players} />
 				</div>
 			: null}
 
-			<div className="grid grid-cols-2 gap-4">
-				<Entities entities={devices} />
-			</div>
+			{!showSettings ?
+				<div className="grid grid-cols-2 gap-4">
+					<Entities entities={devices} />
+				</div>
+			: null}
 		</div>
 	);
 

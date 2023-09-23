@@ -1,7 +1,12 @@
 import cx from 'classnames';
 import useLongPress from 'lib/useLongPress';
+import { useEffect } from 'react';
 
 const Card = (props) => {
+
+	useEffect(() => {
+		window.dispatchEvent(new Event('resize'));
+	}, []);
 
 	const onLongPress = () => {
 		if (props.onLongPress != null && typeof props.onLongPress == 'function') {
@@ -31,8 +36,7 @@ const Card = (props) => {
 		<div
 			{...cleanProps}
 			{...clickEvents}
-		>
-			<div style={props.type != 'media' ? { paddingTop: '100%' } : {}} className={cx(
+			className={cx(
 				'relative',
 				'transition-all',
 				'ease-in-out',
@@ -43,28 +47,30 @@ const Card = (props) => {
 				'cursor-pointer',
 				'backdrop-blur-lg',
 				'select-none',
+				'calculated-square square-h',
 				{
 					'bg-light': props.state == 'light',
 					'bg-light/20': props.state == 'dark',
 				},
 				props.className,
 				props.type,
-			)}>
-				<div className={cx(
-					"top-0",
-					"left-0",
+			)}
+		>
+			<div
+				className={cx(
 					"h-full",
 					"w-full",
 					"flex",
 					"flex-col",
 					"justify-between",
 					"p-4",
+					"inset-0",
 					{
 						"absolute": props.type != 'media'
 					}
-				)}>
-					{props.children}
-				</div>
+				)}
+			>
+				{props.children}
 			</div>
 		</div>
 	);

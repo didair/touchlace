@@ -71,33 +71,32 @@ const EntitySwitch = ({
 				state={entity.state == 'on' ? 'light' : 'dark'}
 				type="switch"
 			>
-				<div className="flex justify-between">
-					<div className={cx(
-						"h-11",
-						"flex",
-						"items-center",
-						"text-3xl",
-						{ 'text-gray': entity.state != 'on' }
-					)}>
-						<Icon name={icon_name} />
-					</div>
-				</div>
-
-				<div>
+				<div className="text-sm">
 					{settings != null && settings.note != '' ?
-						<div className="font-semibold text-sm">
+						<div>
 							{settings.note}
 						</div>
 					: null}
 
-					<div className="font-semibold truncate text-ellipsis h-6">
+					<div className="font-semibold text-base truncate text-ellipsis">
 						{settings != null && settings.name != null && settings.name != '' ?
 							settings.name
 						: entity.attributes.friendly_name}
 					</div>
 
-					<div className="font-semibold">
+					<div>
 						{capitalize(entity.state)}
+					</div>
+				</div>
+
+				<div className="flex justify-between">
+					<div className={cx(
+						"flex",
+						"items-center",
+						"text-2xl",
+						{ 'text-gray': entity.state != 'on' }
+					)}>
+						<Icon name={icon_name} />
 					</div>
 				</div>
 			</Card>

@@ -26,7 +26,7 @@ const Badge = (props) => {
 		<Link
 			{...clickEvents}
 			to={props.to}
-			className="bg-gray/30 inline-flex flex-col p-2 px-4 border border-gray rounded-md select-none text-light-gray/90"
+			className="bg-gray/30 inline-flex flex-col p-2 px-4 border border-gray rounded-full select-none text-light-gray/90"
 		>
 			{props.meta != null ?
 				<div className="text-xs font-semibold">
@@ -34,9 +34,11 @@ const Badge = (props) => {
 				</div>
 			: null}
 
-			<div>
+			<div className="flex items-center">
 				{props.icon != null ?
-					<Icon name={props.icon} className="mr-2" />
+					<div className="flex items-center justify-center rounded-full w-7 h-7 mr-2 bg-light text-center">
+						<Icon name={props.icon} className="text-dark" />
+					</div>
 				: null}
 
 				{props.children}
