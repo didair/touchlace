@@ -13,12 +13,19 @@ const Room = (props) => {
 		return rooms.find((room) => room.id == id);
 	}, [rooms, id]);
 
-	// Fetch entitites
 	const devices = useMemo(() => {
 		if (room == null) return null;
 
 		return room.entities.filter((entity_id) => {
 			return entity_id.includes('light.') || entity_id.includes('switch.');
+		});
+	}, [room]);
+
+	const climate = useMemo(() => {
+		if (room == null) return null;
+
+		return room.entities.filter((entity_id) => {
+			return entity_id.includes('cover.');
 		});
 	}, [room]);
 
@@ -36,6 +43,12 @@ const Room = (props) => {
 
 	return (
 		<FoldersContainer>
+			{climate != null && climate.length > 0 ?
+				<FolderContainer title="Climate">
+					<Entities entities={climate} />
+				</FolderContainer>
+			: null}
+
 			{devices != null && devices.length > 0 ?
 				<FolderContainer title="Devices">
 					<Entities entities={devices} />
