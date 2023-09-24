@@ -30,7 +30,7 @@ const Badge = (props) => {
 			className={cx(
 				"bg-gray/30",
 				"inline-flex flex-shrink-0 flex-col",
-				"py-2 px-4",
+				"py-1 px-2 pr-4",
 				"rounded-full",
 				"select-none",
 				"text-light-gray/90",
