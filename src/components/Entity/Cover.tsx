@@ -135,7 +135,7 @@ const EntityCover = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-gray': entity.state == 'open' }
+						{ 'text-light': entity.state == 'open' }
 					)}>
 						<Icon
 							name={'arrow-up'}

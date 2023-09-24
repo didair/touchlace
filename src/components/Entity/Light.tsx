@@ -135,7 +135,7 @@ const EntityLight = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-gray': entity.state != 'on' }
+						{ 'text-light': entity.state != 'on' }
 					)}>
 						<Icon name={icon_name} />
 					</div>
