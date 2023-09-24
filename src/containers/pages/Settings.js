@@ -24,6 +24,10 @@ const Settings = () => {
 	const onRoomSubmit = (values) => new Promise((resolve) => {
 		if (values.id == null || values.id == 'new') {
 			values.id = uuidv4();
+			if (values.entities == null) {
+				values.entities = [];
+			}
+
 			dispatch(createRoom(values));
 		} else {
 			// Clear out entities not found in entities data
