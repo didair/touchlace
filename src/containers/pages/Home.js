@@ -21,28 +21,27 @@ const Home = () => {
 			});
 		}
 
-		const media_players = entities.filter((entity) => entity.entity_id.includes('media_player.'));
+		const media_players = entities
+			.filter((entity) => entity.entity_id.includes('media_player.'))
+			.filter((entity) => entity.state != 'unavailable' && entity.state != 'idle' && entity.state != 'off');
 
 		if (media_players != null && media_players.length > 0) {
 			sections.push({
 				title: 'Media',
-				entities: media_players
-					.filter((entity) => entity.state != 'unavailable' && entity.state != 'idle' && entity.state != 'off')
-					.map((entity) => entity.entity_id),
+				entities: media_players.map((entity) => entity.entity_id),
 			});
 		}
 
 		const scenes = entities?.filter((entity) => entity.entity_id.includes('scene.'));
 		if (scenes != null && scenes.length > 0) {
 			sections.push({
-				title: 'Scenes',
-				entities: scenes
-					.map((entity) => entity.entity_id),
+				title: 'Automations',
+				entities: scenes.map((entity) => entity.entity_id),
 			});
 		}
+
 		return sections;
 	}, [entities, favorites]);
-
 
 	return (
 		<FoldersContainer>
