@@ -63,10 +63,23 @@ const Card = (props) => {
 				<div className='absolute inset-0 w-full h-full z-0 bg-dark/50'>
 					<div
 						className={cx(
-							"w-full h-full bg-cover bg-center bg-blend-overlay transition-all",
+							"absolute inset-0 w-full h-full bg-cover bg-center",
 						)}
 						style={{
-							backgroundImage: `url("${props.backgroundImage}"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6))`
+							backgroundImage: `url("${props.backgroundImage}")`
+						}}
+					/>
+
+					<div
+						className={cx(
+							"absolute inset-0 w-full h-full bg-cover bg-center transition-all ease-in-out duration-300",
+							{
+								'opacity-30': props.state == 'light',
+								'opacity-100': props.state == 'dark',
+							}
+						)}
+						style={{
+							backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6))`
 						}}
 					/>
 				</div>

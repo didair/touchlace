@@ -136,7 +136,10 @@ const EntityLight = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-light': entity.state != 'on' }
+						{
+							'text-dark': entity.state == 'on',
+							'text-dark': settings?.backgroundUrl != null && entity.state == 'off',
+						}
 					)}>
 						<Icon name={icon_name} />
 					</div>
