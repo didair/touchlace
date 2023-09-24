@@ -13,7 +13,7 @@ const Room = (props) => {
 		return rooms.find((room) => room.id == id);
 	}, [rooms, id]);
 
-	const devices = useMemo(() => {
+	const lights = useMemo(() => {
 		if (room == null) return null;
 
 		return room.entities.filter((entity_id) => {
@@ -49,9 +49,9 @@ const Room = (props) => {
 				</FolderContainer>
 			: null}
 
-			{devices != null && devices.length > 0 ?
-				<FolderContainer title="Devices">
-					<Entities entities={devices} />
+			{lights != null && lights.length > 0 ?
+				<FolderContainer title="Lights">
+					<Entities entities={lights} />
 				</FolderContainer>
 			: null}
 
