@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import cx from 'classnames';
 import useLongPress from 'lib/useLongPress';
 import Icon from './Icon';
 
@@ -26,22 +27,31 @@ const Badge = (props) => {
 		<Link
 			{...clickEvents}
 			to={props.to}
-			className="bg-gray/30 inline-flex flex-col p-2 px-4 border border-gray rounded-full select-none text-light-gray/90"
+			className={cx(
+				"bg-gray/30",
+				"inline-flex flex-shrink-0 flex-col",
+				"py-2 px-4",
+				"border border-gray rounded-full",
+				"select-none",
+				"text-light-gray/90",
+			)}
 		>
-			{props.meta != null ?
-				<div className="text-xs font-semibold">
-					{props.meta}
-				</div>
-			: null}
-
 			<div className="flex items-center">
 				{props.icon != null ?
-					<div className="flex items-center justify-center rounded-full w-7 h-7 mr-2 bg-light text-center">
+					<div className="flex flex-shrink-0 items-center justify-center rounded-full w-7 h-7 mr-2 bg-light text-center">
 						<Icon name={props.icon} className="text-dark" />
 					</div>
 				: null}
 
-				{props.children}
+				<div className="text-xs">
+					{props.meta != null ?
+						<div className="font-semibold">
+							{props.meta}
+						</div>
+					: null}
+
+					{props.children}
+				</div>
 			</div>
 		</Link>
 	);
