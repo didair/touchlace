@@ -85,6 +85,7 @@ const EntitySwitch = ({
 				onClick={toggleOnOff}
 				state={entity.state == 'on' ? 'light' : 'dark'}
 				type="switch"
+				backgroundImage={settings?.backgroundUrl}
 			>
 				<div className="text-sm">
 					{settings != null && settings.note != '' ?

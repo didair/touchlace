@@ -7,6 +7,7 @@ import Select from 'components/Inputs/Select';
 import IconSelect from "components/Inputs/IconSelect";
 import React, { useMemo } from "react";
 import { _clone } from 'lib/store';
+import ImageSelect from 'components/Inputs/ImageSelect';
 
 const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 	const dispatch = useDispatch();
@@ -47,6 +48,14 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 		});
 	};
 
+	const updateImage = (image) => {
+		setSettings({
+			...entitySettings,
+			entity_id: entity.entity_id,
+			backgroundUrl: image,
+		});
+	};
+
 	const onRoomChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		dispatch(setEntityRoom({
 			roomId: event.target.value,
@@ -78,6 +87,10 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 				onSelect={updateIcon}
 				entity={entity}
 				value={entitySettings?.icon ?? null}
+			/>
+
+			<ImageSelect
+				onSelect={updateImage}
 			/>
 
 			<Select label="Room" onChange={onRoomChange} value={entityRoom?.id}>

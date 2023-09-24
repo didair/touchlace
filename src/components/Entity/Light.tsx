@@ -108,6 +108,7 @@ const EntityLight = ({
 				onClick={toggleOnOff}
 				state={entity.state == 'on' ? 'light' : 'dark'}
 				type="light"
+				backgroundImage={settings?.backgroundUrl}
 			>
 				<div className="text-sm">
 					{settings != null && settings.note != '' ?

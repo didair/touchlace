@@ -31,6 +31,8 @@ const MediaBrowser = ({ entity }) => {
 		);
 	}
 
+	console.log('currentDirectory', currentDirectory);
+
 	return (
 		<div>
 			{breadcrumbs.length > 0 ?

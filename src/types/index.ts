@@ -25,4 +25,5 @@ export interface EntitySettings {
 	name: string,
 	note: string,
 	icon: string,
+	backgroundUrl: string,
 };

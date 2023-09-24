@@ -31,6 +31,7 @@ const Card = (props) => {
 	delete cleanProps.onClick;
 	delete cleanProps.state;
 	delete cleanProps.type;
+	delete cleanProps.backgroundImage;
 
 	return (
 		<div
@@ -41,14 +42,16 @@ const Card = (props) => {
 				'transition-all',
 				'ease-in-out',
 				'duration-200',
-				'text-dark',
 				'rounded-xl',
 				'text-md',
 				'cursor-pointer',
 				'backdrop-blur-lg',
 				'select-none',
 				'calculated-square square-h',
+				'overflow-hidden',
 				{
+					'text-dark': props.backgroundImage == null,
+					'text-light': props.backgroundImage != null,
 					'bg-light': props.state == 'light',
 					'bg-light/20': props.state == 'dark',
 				},
@@ -56,6 +59,19 @@ const Card = (props) => {
 				props.type,
 			)}
 		>
+			{props.backgroundImage != null ?
+				<div className='absolute inset-0 w-full h-full z-0 bg-dark/50'>
+					<div
+						className={cx(
+							"w-full h-full bg-cover bg-center bg-blend-overlay transition-all",
+						)}
+						style={{
+							backgroundImage: `url("${props.backgroundImage}"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6))`
+						}}
+					/>
+				</div>
+			: null}
+
 			<div
 				className={cx(
 					"h-full",
@@ -65,9 +81,8 @@ const Card = (props) => {
 					"justify-between",
 					"p-4",
 					"inset-0",
-					{
-						"absolute": props.type != 'media'
-					}
+					"absolute",
+					"z-10",
 				)}
 			>
 				{props.children}

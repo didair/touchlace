@@ -90,7 +90,6 @@ const MediaPlayerEntity = ({
 
 			<Card
 				type="media"
-				className="overflow-hidden"
 				state={entity.state == 'playing' ? 'light' : 'dark'}
 				onClick={() => setOpen(true)}
 			>

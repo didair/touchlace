@@ -108,6 +108,7 @@ const EntityCover = ({
 				onClick={toggleUpDown}
 				state={entity.state == 'closed' ? 'light' : 'dark'}
 				type="light"
+				backgroundImage={settings?.backgroundUrl}
 			>
 				<div className="text-sm">
 					{settings != null && settings.note != '' ?
