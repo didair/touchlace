@@ -17,7 +17,7 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 	});
 
 	const entityRoom = useMemo(() => {
-		return rooms.find((room) => room.entities.find((entity_id) =>
+		return rooms.find((room) => room.entities?.find((entity_id) =>
 			entity_id == entity.entity_id
 		));
 	}, [entity, rooms]);
@@ -80,7 +80,8 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 			/>
 
 			<div className="text-dark">
-				<select onChange={onRoomChange} value={entityRoom.id}>
+				<select onChange={onRoomChange} value={entityRoom?.id}>
+					<option value="">Select room</option>
 					{rooms.map((room) => {
 						return <option key={room.id} value={room.id}>
 							{room.name}
