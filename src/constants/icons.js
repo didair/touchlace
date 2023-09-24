@@ -517,6 +517,12 @@ export const IconsList = [
 		off: 'RoutinesLeavingHome',
 	},
 	{
+		name: 'house',
+		preview: 'house',
+		on: 'house',
+		off: 'house',
+	},
+	{
 		name: 'RoutinesLocation',
 		preview: 'RoutinesLocation',
 		on: 'RoutinesLocation',

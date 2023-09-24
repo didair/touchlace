@@ -461,6 +461,9 @@ const Icon = ({ name, className }) => {
 		case 'user':
 			return <FontAwesomeIcon icon={solid('user')} className={className} />
 
+		case 'house':
+			return <FontAwesomeIcon icon={solid('house')} className={className} />
+
 		case 'star':
 			return <Star className={className} />
 
