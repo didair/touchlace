@@ -130,13 +130,13 @@ const EntityLight = ({
 					</div>
 				</div>
 
-				<div className="flex justify-between">
+				<div className="flex justify-between text-light">
 					<div className={cx(
 						"flex",
 						"items-center",
 						"text-2xl",
 						{
-							'text-dark': entity.state == 'on' || (settings?.backgroundUrl != null && entity.state == 'off'),
+							'text-dark': entity.state == 'on' && settings?.backgroundUrl == null,
 						}
 					)}>
 						<Icon name={icon_name} />
