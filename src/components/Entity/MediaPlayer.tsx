@@ -91,19 +91,9 @@ const MediaPlayerEntity = ({
 			<Card
 				type="media"
 				state={entity.state == 'playing' ? 'light' : 'dark'}
+				backgroundImage={mediaInfo != null ? getBaseURI() + mediaInfo.entity_picture : null}
 				onClick={() => setOpen(true)}
 			>
-				{mediaInfo != null ?
-					<div className='absolute inset-0 w-full h-full z-0 bg-dark/50'>
-						<div
-							className="w-full h-full bg-cover bg-center bg-blend-overlay"
-							style={{
-								backgroundImage: `url("${getBaseURI() + mediaInfo.entity_picture}"), linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6))`
-							}}
-						/>
-					</div>
-				: null}
-
 				<div className="text-sm z-10 text-light">
 					<div className="font-semibold text-base truncate text-ellipsis">
 						{name}
