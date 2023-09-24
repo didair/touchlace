@@ -26,9 +26,7 @@ const Footer = () => {
 				/>
 			: null}
 
-			<Badge to="/settings" icon="gear">
-				Settings
-			</Badge>
+			<Badge to="/settings" icon="gear" meta="Settings" />
 		</div>
 	);
 

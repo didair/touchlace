@@ -8,7 +8,6 @@ import FolderContainer from "components/FolderContainer";
 
 const Home = () => {
 	const { data: entities } = useGetStatesQuery();
-	const rooms = useSelector((state) => state.rooms.list);
 	const favorites = useSelector((state) => state.settings.favorites);
 
 	const sections = useMemo(() => {
@@ -33,8 +32,17 @@ const Home = () => {
 			});
 		}
 
+		const scenes = entities?.filter((entity) => entity.entity_id.includes('scene.'));
+		if (scenes != null && scenes.length > 0) {
+			sections.push({
+				title: 'Scenes',
+				entities: scenes
+					.map((entity) => entity.entity_id),
+			});
+		}
 		return sections;
 	}, [entities, favorites]);
+
 
 	return (
 		<FoldersContainer>

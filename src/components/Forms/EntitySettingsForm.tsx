@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setEntitySettings } from "services/settings/slice";
 import { setEntityRoom } from "services/rooms/slice";
 import Input from 'components/Inputs/Input';
+import Select from 'components/Inputs/Select';
 import IconSelect from "components/Inputs/IconSelect";
 import React, { useMemo } from "react";
 import { _clone } from 'lib/store';
@@ -79,16 +80,14 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 				value={entitySettings?.icon ?? null}
 			/>
 
-			<div className="text-dark">
-				<select onChange={onRoomChange} value={entityRoom?.id}>
-					<option value="">Select room</option>
-					{rooms.map((room) => {
-						return <option key={room.id} value={room.id}>
-							{room.name}
-						</option>
-					})}
-				</select>
-			</div>
+			<Select label="Room" onChange={onRoomChange} value={entityRoom?.id}>
+				<option value="">Select room</option>
+				{rooms.map((room) => {
+					return <option key={room.id} value={room.id}>
+						{room.name}
+					</option>
+				})}
+			</Select>
 
 			<label className="block mt-4 mb-2">Entity ID</label>
 			<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">

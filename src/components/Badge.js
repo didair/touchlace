@@ -31,15 +31,15 @@ const Badge = (props) => {
 				"bg-gray/30",
 				"inline-flex flex-shrink-0 flex-col",
 				"py-2 px-4",
-				"border border-gray rounded-full",
+				"rounded-full",
 				"select-none",
 				"text-light-gray/90",
 			)}
 		>
 			<div className="flex items-center">
 				{props.icon != null ?
-					<div className="flex flex-shrink-0 items-center justify-center rounded-full w-7 h-7 mr-2 bg-light text-center">
-						<Icon name={props.icon} className="text-dark" />
+					<div className="flex flex-shrink-0 items-center justify-center rounded-full w-7 h-7 mr-2 bg-bright-green/70 text-center">
+						<Icon name={props.icon} className="text-light" />
 					</div>
 				: null}
 

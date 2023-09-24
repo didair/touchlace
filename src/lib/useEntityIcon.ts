@@ -42,6 +42,10 @@ const useEntityIcon = (entity: Entity) => {
 		if (entity_type === 'media_player') {
 			return 'speaker';
 		}
+
+		if (entity_type === 'scene') {
+			return 'RoutinesComingHome';
+		}
 	};
 
 	const getCurrentRange = (icon) => {

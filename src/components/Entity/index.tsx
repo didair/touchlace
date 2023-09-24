@@ -6,6 +6,7 @@ import EntitySwitch from './Switch';
 import EntityCover from "./Cover";
 import EntitySensor from './Sensor';
 import MediaPlayerEntity from "./MediaPlayer";
+import EntityScene from "./Scene";
 
 const Entity = (props) => {
 	const entity_type: string = props.entity.entity_id.split('.')[0];
@@ -48,6 +49,15 @@ const Entity = (props) => {
 	if (entity_type === 'switch') {
 		return (
 			<EntitySwitch
+				settings={entitySettings}
+				{...props}
+			/>
+		);
+	}
+
+	if (entity_type === 'scene') {
+		return (
+			<EntityScene
 				settings={entitySettings}
 				{...props}
 			/>
