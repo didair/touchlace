@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import cx from 'classnames';
-import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 
 import { useCallEntityServiceMutation } from 'services/states/api';

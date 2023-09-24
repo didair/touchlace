@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
-import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 

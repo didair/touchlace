@@ -6,7 +6,6 @@ import Input from 'components/Inputs/Input';
 import Select from 'components/Inputs/Select';
 import IconSelect from "components/Inputs/IconSelect";
 import React, { useMemo } from "react";
-import { _clone } from 'lib/store';
 import ImageSelect from 'components/Inputs/ImageSelect';
 
 const EntitySettings = ({ entity }: { entity: EntityInterface }) => {

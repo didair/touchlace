@@ -2,7 +2,6 @@ import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } 
 
 import { useState } from 'react';
 import cx from 'classnames';
-import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 
@@ -137,8 +136,7 @@ const EntityLight = ({
 						"items-center",
 						"text-2xl",
 						{
-							'text-dark': entity.state == 'on',
-							'text-dark': settings?.backgroundUrl != null && entity.state == 'off',
+							'text-dark': entity.state == 'on' || (settings?.backgroundUrl != null && entity.state == 'off'),
 						}
 					)}>
 						<Icon name={icon_name} />
