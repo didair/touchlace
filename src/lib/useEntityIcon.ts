@@ -9,7 +9,7 @@ const useEntityIcon = (entity: Entity) => {
 	});
 
 	const getState = () => {
-		if (entity_type === 'light' || entity_type === 'switch') {
+		if (entity_type === 'light' || entity_type === 'switch' || entity_type === 'binary_sensor') {
 			return entity.state === 'on';
 		}
 
@@ -33,6 +33,10 @@ const useEntityIcon = (entity: Entity) => {
 
 		if (entity_type === 'cover') {
 			return 'arrow-up-down';
+		}
+
+		if (entity_type === 'binary_sensor') {
+			return 'door';
 		}
 
 		if (entity_type === 'sensor') {

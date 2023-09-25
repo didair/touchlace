@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import EntityLight from "./Light";
 import EntitySwitch from './Switch';
 import EntityCover from "./Cover";
+import EntityBinarySensor from "./BinarySensor";
 import EntitySensor from './Sensor';
 import MediaPlayerEntity from "./MediaPlayer";
 import EntityScene from "./Scene";
@@ -16,6 +17,13 @@ const Entity = (props) => {
 
 	if (entity_type === 'media_player') {
 		return <MediaPlayerEntity
+			settings={entitySettings}
+			{...props}
+		/>
+	}
+
+	if (entity_type === 'binary_sensor') {
+		return <EntityBinarySensor
 			settings={entitySettings}
 			{...props}
 		/>
