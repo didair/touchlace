@@ -90,11 +90,11 @@ const MediaPlayerEntity = ({
 
 			<Card
 				type="media"
-				state={entity.state == 'playing' ? 'light' : 'dark'}
+				state={entity.state == 'playing' || (entity.attributes.device_class == 'tv' && entity.state == 'on') ? 'light' : 'dark'}
 				backgroundImage={mediaInfo != null ? getBaseURI() + mediaInfo.entity_picture : null}
 				onClick={() => setOpen(true)}
 			>
-				<div className="text-sm z-10 text-light">
+				<div className="text-sm z-10">
 					<div className="font-semibold text-base truncate text-ellipsis">
 						{name}
 						{selected_group_members?.length > 0 ?
@@ -115,7 +115,10 @@ const MediaPlayerEntity = ({
 					"items-center",
 					"text-2xl",
 					"z-10",
-					"text-light",
+					{
+						"text-light": !entity.attributes.device_class == 'tv' && entity.state == 'on',
+						"text-dark": entity.attributes.device_class == 'tv' && entity.state == 'on',
+					}
 				)}>
 					{entity.attributes.device_class == 'tv' ?
 						<Icon name="tv" />
