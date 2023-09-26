@@ -23,7 +23,12 @@ const Home = () => {
 
 		const media_players = entities
 			.filter((entity) => entity.entity_id.includes('media_player.'))
-			.filter((entity) => entity.state != 'unavailable' && entity.state != 'idle' && entity.state != 'off');
+			.filter((entity) =>
+				entity.state != 'unavailable' &&
+				entity.state != 'idle' &&
+				entity.state != 'off' &&
+				entity.attributes.entity_picture != null
+			);
 
 		if (media_players != null && media_players.length > 0) {
 			sections.push({

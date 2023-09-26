@@ -1,29 +1,19 @@
-import { ReactNode, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { ReactNode, Children, cloneElement } from "react";
 
 const FoldersContainer = ({ children }: { children: ReactNode }) => {
-	const location = useLocation();
-	const element = useRef<HTMLDivElement>(null);
-	const interval = 75; // In ms
-
-	const animateChildrenIn = () => {
-		element.current?.querySelectorAll('.folder').forEach((folder, index) => {
-			setTimeout(function () { // Stagger effect
-				folder.classList.remove('should-animate');
-			}, index * interval);
-		});
-	};
-
-	useEffect(() => {
-		if (element.current != null) {
-			animateChildrenIn();
-		}
-	}, [location, children]);
+	const childrenArray = Children.toArray(children);
 
 	return (
-		<div className="h-full w-min px-8 py-4 flex gap-x-10" ref={element}>
-			{children}
-		</div>
+		<AnimatePresence>
+			<div className="h-full w-min px-8 py-4 flex gap-x-10">
+				{Children.map(childrenArray, (child, index) => {
+					return cloneElement(child, {
+						index,
+					});
+				})}
+			</div>
+		</AnimatePresence>
 	);
 };
 

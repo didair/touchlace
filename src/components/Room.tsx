@@ -72,6 +72,10 @@ const Room = ({
 				: null}
 			</div>
 
+			{showSettings && entities != null ?
+				`${entities.length} entities`
+			: null}
+
 			{showSettings ?
 				<div style={{ height: 1 }} className="w-full bg-light-gray mb-2" />
 			: null}

@@ -15,14 +15,12 @@ const EntityBinarySensor = ({
 	entity: EntityInterface,
 	settings: EntitySettingsInterface,
 }) => {
-	const locale = window.navigator.userLanguage || window.navigator.language;
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
 	const name = settings != null && settings.name != null && settings.name != '' ?
 		settings.name
 	: entity.attributes.friendly_name;
-	let unit = null;
 	let value = entity.state === 'on' ? 'Open' : 'Closed';
 
 	return (

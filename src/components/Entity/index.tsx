@@ -1,5 +1,6 @@
 import { EntitySettings as EntitySettingsInterface } from "types";
 import { useSelector } from "react-redux";
+import { getEntityType } from "lib/entity";
 
 import EntityLight from "./Light";
 import EntitySwitch from './Switch';
@@ -10,7 +11,7 @@ import MediaPlayerEntity from "./MediaPlayer";
 import EntityScene from "./Scene";
 
 const Entity = (props) => {
-	const entity_type: string = props.entity.entity_id.split('.')[0];
+	const entity_type = getEntityType(props.entity);
 	const entitySettings: EntitySettingsInterface = useSelector((state) => {
 		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
