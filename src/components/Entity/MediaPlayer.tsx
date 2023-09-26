@@ -115,10 +115,7 @@ const MediaPlayerEntity = ({
 					"items-center",
 					"text-2xl",
 					"z-10",
-					{
-						"text-light": !entity.attributes.device_class == 'tv' && entity.state == 'on',
-						"text-dark": entity.attributes.device_class == 'tv' && entity.state == 'on',
-					}
+					"text-light",
 				)}>
 					{entity.attributes.device_class == 'tv' ?
 						<Icon name="tv" />
