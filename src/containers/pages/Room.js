@@ -17,7 +17,7 @@ const Room = (props) => {
 	useEffect(() => {
 		if (id != currentRoom) {
 			setCurrentRoom(null);
-			setTimeout(() => { // Animation timing
+			setTimeout(() => { // Animation (FoldersContainer stagger) timing
 				setCurrentRoom(id);
 			}, 50);
 		}

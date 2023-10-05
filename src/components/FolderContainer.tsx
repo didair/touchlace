@@ -1,7 +1,14 @@
+import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import cx from 'classnames';
 
-const FolderContainer = ({ title = null, index, children }) => {
+const FolderContainer = ({
+	title = null,
+	children
+}: {
+	title?: string,
+	children: ReactNode,
+}) => {
 
 	const listVariant = {
 		hidden: {
