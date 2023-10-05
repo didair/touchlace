@@ -48,6 +48,10 @@ const Home = () => {
 		return sections;
 	}, [entities, favorites]);
 
+	if (sections.length == 0) {
+		return null;
+	}
+
 	return (
 		<FoldersContainer>
 			{sections.map((section) =>
@@ -55,8 +59,6 @@ const Home = () => {
 					<Entities entities={section.entities} />
 				</FolderContainer>
 			)}
-
-
 		</FoldersContainer>
 	);
 }

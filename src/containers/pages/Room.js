@@ -19,7 +19,7 @@ const Room = (props) => {
 			setCurrentRoom(null);
 			setTimeout(() => { // Animation timing
 				setCurrentRoom(id);
-			}, 500);
+			}, 50);
 		}
 	}, [id]);
 
@@ -46,6 +46,10 @@ const Room = (props) => {
 			return entity_id.includes('media_player.');
 		});
 	}, [room]);
+
+	if (currentRoom == null) {
+		return null;
+	}
 
 	return (
 		<FoldersContainer>
