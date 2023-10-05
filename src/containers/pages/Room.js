@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -8,10 +8,20 @@ import FoldersContainer from "components/FoldersContainer";
 
 const Room = (props) => {
 	const { id } = useParams();
+	const [currentRoom, setCurrentRoom] = useState(null);
 	const rooms = useSelector((state) => state.rooms.list);
 	const room = useMemo(() => {
-		return rooms.find((room) => room.id == id);
-	}, [rooms, id]);
+		return rooms.find((room) => room.id == currentRoom);
+	}, [rooms, currentRoom]);
+
+	useEffect(() => {
+		if (id != currentRoom) {
+			setCurrentRoom(null);
+			setTimeout(() => { // Animation timing
+				setCurrentRoom(id);
+			}, 500);
+		}
+	}, [id]);
 
 	const lights = useMemo(() => {
 		if (room == null) return null;
@@ -37,26 +47,22 @@ const Room = (props) => {
 		});
 	}, [room]);
 
-	if (room == null) {
-		return null;
-	}
-
 	return (
 		<FoldersContainer>
 			{climate != null && climate.length > 0 ?
-				<FolderContainer title="Climate">
+				<FolderContainer title="Climate" key="climate">
 					<Entities entities={climate} />
 				</FolderContainer>
 			: null}
 
 			{lights != null && lights.length > 0 ?
-				<FolderContainer title="Lights">
+				<FolderContainer title="Lights" key="lights">
 					<Entities entities={lights} />
 				</FolderContainer>
 			: null}
 
 			{media != null && media.length > 0 ?
-				<FolderContainer title="Media">
+				<FolderContainer title="Media" key="media">
 					<Entities entities={media} />
 				</FolderContainer>
 			: null}
