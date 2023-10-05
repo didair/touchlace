@@ -8,13 +8,13 @@ const FoldersContainer = ({ children }: { children: ReactNode }) => {
 		hidden: {
 			transition: {
 				when: "beforeChildren", //use this instead of delay
-				staggerChildren: 0.3, //apply stagger on the parent tag
+				staggerChildren: 0.2, //apply stagger on the parent tag
 			},
 		},
 		visible: {
 			transition: {
 				when: "beforeChildren", //use this instead of delay
-				staggerChildren: 0.3, //apply stagger on the parent tag
+				staggerChildren: 0.2, //apply stagger on the parent tag
 			},
 		},
 	};
