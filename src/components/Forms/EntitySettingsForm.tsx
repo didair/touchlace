@@ -7,10 +7,12 @@ import Select from 'components/Inputs/Select';
 import IconSelect from "components/Inputs/IconSelect";
 import React, { useMemo } from "react";
 import ImageSelect from 'components/Inputs/ImageSelect';
+import { getEntityType } from 'lib/entity';
 
 const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 	const dispatch = useDispatch();
 	const setSettings = (value) => dispatch(setEntitySettings(value));
+	const entity_type = getEntityType(entity);
 	const rooms = useSelector((state) => state.rooms.list);
 
 	const entitySettings: EntitySettingsInterface = useSelector((state) => {
@@ -62,6 +64,14 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 		}));
 	};
 
+	const onSensorTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		dispatch(setSettings({
+			...entitySettings,
+			entityId: entity.entity_id,
+			sensorType: event.target.value,
+		}));
+	};
+
 	return (
 		<div className="mt-4">
 			<label htmlFor="name" className="block mb-2">Entity name</label>
@@ -100,6 +110,22 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 					</option>
 				})}
 			</Select>
+
+			{entity_type == 'binary_sensor' ?
+				<Select label="Sensor type" onChange={onSensorTypeChange} value={entitySettings?.sensorType}>
+					<option value="">Select type</option>
+					<option value="door">Door</option>
+					<option value="lock">Lock</option>
+					<option value="window">Window</option>
+				</Select>
+			: null}
+
+			{entity_type == 'sensor' ?
+				<Select label="Sensor type" onChange={onSensorTypeChange} value={entitySettings?.sensorType}>
+					<option value="">Select type</option>
+					<option value="temperature">Temperature</option>
+				</Select>
+			: null}
 
 			<label className="block mt-4 mb-2">Entity ID</label>
 			<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">
