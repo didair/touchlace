@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Entity as EntityInterface } from "types";
-import { getEntityType } from "lib/entity";
+import { getEntityType, getEntitySettings } from "lib/entity";
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 
@@ -21,6 +21,63 @@ const badgeTypes = [
 			return getEntityType(entity) == 'media_player' && entity.state == 'playing';
 		},
 	},
+	{
+		id: 'open_doors',
+		labelFunc: (matchingEntities: [EntityInterface]) => `Doors`,
+		statusFunc: (matchingEntities: [EntityInterface]) => {
+			return `${matchingEntities.length} open doors`;
+		},
+		iconFunc: (matchingEntities: [EntityInterface]) => 'door-open',
+		matchFunc: (entity: EntityInterface) => {
+			return getEntityType(entity) == 'binary_sensor' &&
+			entity.state == 'on' &&
+			getEntitySettings(entity.entity_id)?.sensorType == 'door'
+		},
+	},
+	{
+		id: 'open_doors',
+		labelFunc: (matchingEntities: [EntityInterface]) => `Doors`,
+		statusFunc: (matchingEntities: [EntityInterface]) => {
+			return `All doors closed`;
+		},
+		iconFunc: (matchingEntities: [EntityInterface]) => 'door-closed',
+		matchFunc: (entity: EntityInterface) => {
+			return getEntityType(entity) == 'binary_sensor' &&
+			entity.state == 'off' &&
+			getEntitySettings(entity.entity_id)?.sensorType == 'door'
+		},
+	},
+	{
+		id: 'temperature',
+		labelFunc: (matchingEntities: [EntityInterface]) => `Temperature`,
+		statusFunc: (matchingEntities: [EntityInterface]) => {
+			if (matchingEntities.length == 1) {
+				return `${matchingEntities[0].state}${matchingEntities[0].attributes.unit_of_measurement}`;
+			}
+
+			const min = matchingEntities.reduce((prev, current) => {
+				if (prev == null || parseFloat(current.state) < prev)
+					return parseFloat(current.state);
+
+				return prev;
+			}, null);
+
+			const max = matchingEntities.reduce((prev, current) => {
+				if (prev == null || parseFloat(current.state) > prev)
+					return parseFloat(current.state);
+
+				return prev;
+			}, null);
+
+			return `Between ${min}-${max}${matchingEntities[0].attributes.unit_of_measurement}`;
+		},
+		iconFunc: (matchingEntities: [EntityInterface]) => 'temperature-three-quarters',
+		matchFunc: (entity: EntityInterface) => {
+			return getEntityType(entity) == 'sensor' &&
+			getEntitySettings(entity.entity_id)?.sensorType == 'temperature'
+		},
+	},
+
 ];
 
 const Footer = () => {
@@ -29,10 +86,15 @@ const Footer = () => {
 
 	const calculatedBadges = useMemo(() => {
 		let result = [];
+		let added_ids = [];
 
 		if (entities == null) return result;
 
 		badgeTypes.forEach((badge) => {
+			if (added_ids.includes(badge.id)) {
+				return false;
+			}
+
 			const matchingEntities = entities.filter(badge.matchFunc);
 
 			if (matchingEntities.length > 0) {
@@ -43,6 +105,7 @@ const Footer = () => {
 					status: badge.statusFunc(matchingEntities),
 				};
 
+				added_ids.push(badge.id);
 				result.push(entry);
 			}
 		});
