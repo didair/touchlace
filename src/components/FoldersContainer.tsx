@@ -1,18 +1,34 @@
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, Children, cloneElement } from "react";
+import Delay from "./Delay";
 
 const FoldersContainer = ({ children }: { children: ReactNode }) => {
-	const childrenArray = Children.toArray(children);
+
+	const boxVariant = {
+		hidden: {
+			transition: {
+				when: "beforeChildren", //use this instead of delay
+				staggerChildren: 0.3, //apply stagger on the parent tag
+			},
+		},
+		visible: {
+			transition: {
+				when: "beforeChildren", //use this instead of delay
+				staggerChildren: 0.3, //apply stagger on the parent tag
+			},
+		},
+	};
 
 	return (
 		<AnimatePresence>
-			<div className="h-full w-min px-8 py-4 flex gap-x-10">
-				{Children.map(childrenArray, (child, index) => {
-					return cloneElement(child, {
-						index,
-					});
-				})}
-			</div>
+			<motion.div
+				className="h-full w-min px-8 py-4 flex gap-x-10"
+				variants={boxVariant}
+				initial="hidden"
+				animate="visible"
+			>
+				{children}
+			</motion.div>
 		</AnimatePresence>
 	);
 };
