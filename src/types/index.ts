@@ -22,8 +22,9 @@ export interface Entity {
 };
 
 export interface EntitySettings {
-	name: string,
-	note: string,
-	icon: string,
-	backgroundUrl: string,
+	name?: string,
+	note?: string,
+	icon?: string,
+	backgroundUrl?: string,
+	sensorType?: 'door' | 'window' | 'lock' | 'temperature',
 };
