@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	entities: [],
-	topEntities: [],
 	favorites: [],
 };
 
@@ -20,9 +19,6 @@ export const settingsSlice = createSlice({
 			} else {
 				state.entities.push(action.payload);
 			}
-		},
-		setTopEntities: (state, action) => {
-			state.topEntities = action.payload;
 		},
 		favoriteEntity: (state, action) => {
 			if (state.favorites == null) {
@@ -42,7 +38,6 @@ export const settingsSlice = createSlice({
 
 export const {
 	setEntitySettings,
-	setTopEntities,
 	favoriteEntity,
 } = settingsSlice.actions;
 

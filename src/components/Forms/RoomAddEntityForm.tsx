@@ -5,7 +5,7 @@ import { useGetStatesQuery } from 'services/states/api';
 import { getEntityRoom, getEntityType } from 'lib/entity';
 import { capitalize } from 'lib/text';
 
-import { Form, Field } from 'react-final-form';
+import { Form } from 'react-final-form';
 import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Inputs/Input';

@@ -33,7 +33,7 @@ const Room = (props) => {
 	}, [id]);
 
 	const lights = useMemo(() => {
-		if (room == null) return null;
+		if (room == null) return [];
 
 		return room.entities.filter((entity_id) => {
 			return entity_id.includes('light.') || entity_id.includes('switch.');
@@ -41,15 +41,15 @@ const Room = (props) => {
 	}, [room]);
 
 	const climate = useMemo(() => {
-		if (room == null) return null;
+		if (room == null) return [];
 
 		return room.entities.filter((entity_id) => {
-			return entity_id.includes('cover.');
+			return entity_id.includes('cover.') || entity_id.includes('sensor.');
 		});
 	}, [room]);
 
 	const media = useMemo(() => {
-		if (room == null) return null;
+		if (room == null) return [];
 
 		return room.entities.filter((entity_id) => {
 			return entity_id.includes('media_player.');
@@ -103,19 +103,19 @@ const Room = (props) => {
 			), document.getElementById('header-right'))}
 
 			<FoldersContainer>
-				{climate != null && climate.length > 0 ?
+				{climate.length > 0 ?
 					<FolderContainer title="Climate" key={room.id + "climate"}>
 						<Entities entities={climate} />
 					</FolderContainer>
 				: null}
 
-				{lights != null && lights.length > 0 ?
+				{lights.length > 0 ?
 					<FolderContainer title="Lights" key={room.id + "lights"}>
 						<Entities entities={lights} />
 					</FolderContainer>
 				: null}
 
-				{media != null && media.length > 0 ?
+				{media.length > 0 ?
 					<FolderContainer title="Media" key={room.id + "media"}>
 						<Entities entities={media} />
 					</FolderContainer>

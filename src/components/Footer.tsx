@@ -1,13 +1,11 @@
 import { AnimatePresence } from "framer-motion";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import { Entity as EntityInterface } from "types";
 import { getEntityType, getEntitySettings } from "lib/entity";
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 
 import Badge from "./Badge";
-import Entities from "./Entities";
 
 const badgeTypes = [
 	{
@@ -82,7 +80,6 @@ const badgeTypes = [
 
 const Footer = () => {
 	const { data: entities } = useGetStatesQuery();
-	const topBarEntities: [EntityInterface] = useSelector((state) => state.settings.topEntities);
 
 	const calculatedBadges = useMemo(() => {
 		let result = [];
@@ -133,14 +130,6 @@ const Footer = () => {
 					);
 				})}
 			</AnimatePresence>
-
-			{topBarEntities?.length > 0 ?
-				<Entities
-					entities={topBarEntities.filter((entity_id) =>
-						entity_id.indexOf('sensor') > -1
-					)}
-				/>
-			: null}
 
 			<Badge to="/settings" icon="gear" meta="Settings" />
 		</div>

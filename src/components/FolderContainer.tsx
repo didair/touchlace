@@ -34,7 +34,7 @@ const FolderContainer = ({
 		>
 			{title != null ?
 				<div className="mb-5">
-					<h3 className="text-xl font-semibold text-light-gray">
+					<h3 className="text-xl font-semibold">
 						{title}
 					</h3>
 				</div>
