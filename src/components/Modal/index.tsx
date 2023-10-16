@@ -49,7 +49,13 @@ const Modal = ({
 			className={`type-${type}`}
 			shouldCloseOnOverlayClick={canClose}
 		>
-			<div className="max-h-[85vh] overflow-auto flex-1 px-10 py-7">
+			{title != null ?
+				<div className="flex items-center px-7 py-2 border-b border-b-gray/40">
+					{title}
+				</div>
+			: null}
+
+			<div className="max-h-[85vh] overflow-auto flex-1 p-7">
 				{children}
 			</div>
 		</ReactModal>
