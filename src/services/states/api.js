@@ -77,6 +77,30 @@ export const statesApi = createApi({
 				return result;
 			},
 		}),
+		getEntityStatistics: build.query({
+			async queryFn(data = {}) {
+				const connection = await getHassConnection();
+				const date = new Date();
+				date.setHours(date.getHours() - 4);
+				const current_time = date.toISOString();
+				const message = {
+					type: 'recorder/statistics_during_period',
+					start_time: data.start_time ?? current_time,
+					period: data.period ?? '5minute',
+					statistic_ids: [
+						data.entity_id,
+					],
+					types: data.types ?? [
+						'state',
+						'mean',
+					],
+				};
+
+				const result = await connection.sendMessagePromise(message);
+				console.log('result', result);
+				return { data: result[data.entity_id] };
+			},
+		}),
 	}),
 });
 
@@ -85,4 +109,5 @@ export const {
 	useGetStatesQuery,
 	useUpdateEntityStateMutation,
 	useCallEntityServiceMutation,
+	useGetEntityStatisticsQuery,
 } = statesApi;

@@ -3,7 +3,7 @@ import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } 
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
-import Badge from "components/Badge";
+import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
@@ -46,13 +46,38 @@ const EntityBinarySensor = ({
 				: null}
 			</Modal>
 
-			<Badge
-				meta={name}
+			<Card
 				onLongPress={() => setOpen(true)}
-				icon={icon_name}
+				state="dark"
+				type="sensor"
+				backgroundImage={settings?.backgroundUrl}
 			>
-				{value}
-			</Badge>
+				<div className="text-sm">
+					{settings != null && settings.note != '' ?
+						<div>
+							{settings.note}
+						</div>
+					: null}
+
+					<div className="font-semibold text-base truncate text-ellipsis">
+						{name}
+					</div>
+
+					<div>
+						{value}
+					</div>
+				</div>
+
+				<div className="flex justify-between">
+					<div className={cx(
+						"flex",
+						"items-center",
+						"text-2xl text-light",
+					)}>
+						<Icon name={icon_name} />
+					</div>
+				</div>
+			</Card>
 		</>
 	);
 };
