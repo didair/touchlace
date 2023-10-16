@@ -45,7 +45,6 @@ const Card = (props) => {
 				'rounded-xl',
 				'text-md',
 				'cursor-pointer',
-				'backdrop-blur-lg',
 				'select-none',
 				'calculated-square square-h',
 				'overflow-hidden',
