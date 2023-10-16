@@ -52,10 +52,6 @@ const EntitySensor = ({
 		}
 	}, [entity, settings]);
 
-	if (statistics != null) {
-		console.log('done!', statistics);
-	}
-
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
