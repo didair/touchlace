@@ -5,9 +5,8 @@ import cx from 'classnames';
 
 import { useGetEntityStatisticsQuery } from 'services/states/api';
 
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import Card from 'components/Card';
-import Badge from "components/Badge";
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
