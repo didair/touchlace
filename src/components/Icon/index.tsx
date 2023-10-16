@@ -1,3 +1,4 @@
+import { IconNames } from 'constants/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import {
@@ -75,7 +76,10 @@ import {
 	UicontrolsNoMotion,
 } from './library';
 
-const Icon = ({ name, className }) => {
+const Icon = ({ name, className }: {
+	name: IconNames,
+	className: string,
+}) => {
 	switch (name) {
 		case 'circle-plus':
 			return <FontAwesomeIcon icon={solid('circle-plus')} className={className} />

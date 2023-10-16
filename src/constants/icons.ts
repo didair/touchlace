@@ -653,10 +653,12 @@ export const IconsList = [
 		preview: 'repeat',
 		on: 'repeat',
 		off: 'repeat',
-	},	{
+	}, {
 		name: 'star',
 		preview: 'star',
 		on: 'star',
 		off: 'star',
 	},
 ];
+
+export type IconNames = typeof IconsList[number]['name'];

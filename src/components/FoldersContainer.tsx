@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, Children, cloneElement } from "react";
-import Delay from "./Delay";
+import { ReactNode } from "react";
 
 const FoldersContainer = ({ children }: { children: ReactNode }) => {
 
@@ -8,13 +7,13 @@ const FoldersContainer = ({ children }: { children: ReactNode }) => {
 		hidden: {
 			transition: {
 				when: "beforeChildren", //use this instead of delay
-				staggerChildren: 0.2, //apply stagger on the parent tag
+				staggerChildren: 0.1, //apply stagger on the parent tag
 			},
 		},
 		visible: {
 			transition: {
 				when: "beforeChildren", //use this instead of delay
-				staggerChildren: 0.2, //apply stagger on the parent tag
+				staggerChildren: 0.1, //apply stagger on the parent tag
 			},
 		},
 	};

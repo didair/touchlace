@@ -9,7 +9,7 @@ import React, { useMemo } from "react";
 import ImageSelect from 'components/Inputs/ImageSelect';
 import { getEntityType } from 'lib/entity';
 
-const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
+const EntitySettings = ({ entity, hideRoomInput = false }: { entity: EntityInterface }) => {
 	const dispatch = useDispatch();
 	const setSettings = (value) => dispatch(setEntitySettings(value));
 	const entity_type = getEntityType(entity);
@@ -73,8 +73,8 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 	};
 
 	return (
-		<div className="mt-4">
-			<label htmlFor="name" className="block mb-2">Entity name</label>
+		<div>
+			<label htmlFor="name" className="block mb-2 font-bold">Entity name</label>
 
 			<Input
 				id="name"
@@ -83,7 +83,7 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 				onChange={updateName}
 			/>
 
-			<label htmlFor="note" className="block mb-2">Entity note</label>
+			<label htmlFor="note" className="block mb-2 font-bold">Entity note</label>
 
 			<Input
 				id="note"
@@ -102,14 +102,16 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 				onSelect={updateImage}
 			/>
 
-			<Select label="Room" onChange={onRoomChange} value={entityRoom?.id}>
-				<option value="">Select room</option>
-				{rooms.map((room) => {
-					return <option key={room.id} value={room.id}>
-						{room.name}
-					</option>
-				})}
-			</Select>
+			{!hideRoomInput ?
+				<Select label="Room" onChange={onRoomChange} value={entityRoom?.id}>
+					<option value="">Select room</option>
+					{rooms.map((room) => {
+						return <option key={room.id} value={room.id}>
+							{room.name}
+						</option>
+					})}
+				</Select>
+			: null}
 
 			{entity_type == 'binary_sensor' ?
 				<Select label="Sensor type" onChange={onSensorTypeChange} value={entitySettings?.sensorType}>
@@ -127,8 +129,8 @@ const EntitySettings = ({ entity }: { entity: EntityInterface }) => {
 				</Select>
 			: null}
 
-			<label className="block mt-4 mb-2">Entity ID</label>
-			<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md">
+			<label className="block mt-4 mb-2 font-bold">Entity ID</label>
+			<code className="block p-2 border border-gray/40 bg-gray/10 rounded-md overflow-x-scroll whitespace-nowrap">
 				{entity.entity_id}
 			</code>
 		</div>

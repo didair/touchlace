@@ -42,8 +42,6 @@ body.ReactModal__Body--open {
 	@apply rounded-lg;
 	@apply border border-gray/40;
 	@apply -translate-y-1/2 -translate-x-1/2;
-	@apply scale-50;
-	@apply opacity-0;
 	@apply transition;
 	@apply ease-in-out;
 	@apply duration-300;
@@ -55,12 +53,38 @@ body.ReactModal__Body--open {
 	@apply max-w-6xl;
 }
 
+/* From middle (default) */
+/* Initial state */
+.ReactModal__Content {
+	@apply scale-50;
+	@apply opacity-0;
+}
+
+/* Open animation */
 .ReactModal__Content--after-open {
 	@apply scale-100;
 	@apply opacity-100;
 }
 
+/* Close animation */
 .ReactModal__Content--before-close {
 	@apply scale-50;
 	@apply opacity-0;
+}
+
+/* From bottom slide in */
+/* Initial state */
+.ReactModal__Content.fromBottom {
+	@apply scale-100 duration-500;
+	@apply translate-y-[100vh];
+}
+
+/* Open animation */
+.ReactModal__Content--after-open.fromBottom {
+	@apply -translate-y-1/2;
+}
+
+/* Close animation */
+.ReactModal__Content--before-close.fromBottom {
+	@apply translate-y-[100vh];
 }
