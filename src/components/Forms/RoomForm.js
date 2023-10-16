@@ -1,5 +1,4 @@
 import Button from 'components/Inputs/Button';
-import EntitiesSelect from 'components/Inputs/EntitiesSelect';
 import Input from 'components/Inputs/Input';
 import { Form, Field } from 'react-final-form';
 
@@ -15,12 +14,6 @@ const RoomForm = (props) => {
 						component={Input}
 						label="Room name"
 						placeholder="Living room"
-					/>
-
-					<Field
-						name="entities"
-						component={EntitiesSelect}
-						label="Entities"
 					/>
 
 					<Button type="submit">

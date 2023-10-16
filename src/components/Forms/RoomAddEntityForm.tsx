@@ -8,11 +8,13 @@ import { capitalize } from 'lib/text';
 import { Form, Field } from 'react-final-form';
 import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
+import Input from 'components/Inputs/Input';
 import EntitySettingsForm from './EntitySettingsForm';
 
 const RoomAddEntityForm = (props) => {
 	const { data: entities } = useGetStatesQuery();
-	const [ selectedEntity, setSelectedEntity ] = useState(null);
+	const [selectedEntity, setSelectedEntity] = useState(null);
+	const [filter, setFilter] = useState('');
 
 	const types_map = useMemo(() => {
 		if (props.type == null) return null;
@@ -43,35 +45,51 @@ const RoomAddEntityForm = (props) => {
 
 	const step1 = () => {
 		return (
-			<div className="bg-gray/10 border border-gray/40 rounded-md px-2">
-				{entities.map((entity: IEntity) => {
-					const entity_type = getEntityType(entity);
-					if (types_map.indexOf(entity_type) == -1) return null;
-					const entity_room = getEntityRoom(entity.entity_id);
-					if (entity_room != null) return null;
+			<>
+				<Input
+					value={filter}
+					onChange={(e) => setFilter(e.target.value.toLowerCase())}
+					placeholder="light.bulb"
+					label="Filter"
+				/>
 
-					return (
-						<div
-							key={entity.entity_id}
-							className="flex items-center justify-between py-2 border-b border-b-gray/40 last-of-type:border-b-0 cursor-pointer"
-							onClick={() => setSelectedEntity(entity)}
-						>
-							<div className="truncate">
-								<div className="text-sm">
-									{capitalize(entity_type) + ' • '}
-									{entity.attributes.friendly_name}
+				<div className="bg-gray/10 border border-gray/40 rounded-md px-2">
+
+					{entities.map((entity: IEntity) => {
+						const entity_type = getEntityType(entity);
+						if (types_map.indexOf(entity_type) == -1) return null;
+						const entity_room = getEntityRoom(entity.entity_id);
+						if (entity_room != null) return null;
+
+						if (filter != '') {
+							if (entity.entity_id.indexOf(filter) == -1) {
+								return null;
+							}
+						}
+
+						return (
+							<div
+								key={entity.entity_id}
+								className="flex items-center justify-between py-2 border-b border-b-gray/40 last-of-type:border-b-0 cursor-pointer"
+								onClick={() => setSelectedEntity(entity)}
+							>
+								<div className="truncate">
+									<div className="text-sm">
+										{capitalize(entity_type) + ' • '}
+										{entity.attributes.friendly_name}
+									</div>
+
+									{entity.entity_id}
 								</div>
 
-								{entity.entity_id}
+								<div>
+									<Icon name="arrow-right" />
+								</div>
 							</div>
-
-							<div>
-								<Icon name="arrow-right" />
-							</div>
-						</div>
-					);
-				})}
-			</div>
+						);
+					})}
+				</div>
+			</>
 		);
 	};
 
@@ -91,21 +109,21 @@ const RoomAddEntityForm = (props) => {
 		<Form
 			onSubmit={onSubmit}
 			initialValues={props.initialValues}
-			render={({handleSubmit}) => (
+			render={({ handleSubmit }) => (
 				<form onSubmit={handleSubmit}>
 					{selectedEntity == null ?
 						step1()
-					: null}
+						: null}
 
 					{selectedEntity != null ?
 						step2()
-					: null}
+						: null}
 
 					{selectedEntity != null ?
 						<Button type="submit" className="mt-4">
 							Save
 						</Button>
-					: null}
+						: null}
 				</form>
 			)}
 		/>
