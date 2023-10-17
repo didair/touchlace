@@ -148,7 +148,7 @@ const Footer = () => {
 				"overflow-y-hidden overflow-x-scroll"
 			)}
 		>
-			<Modal open={selected != null} title={selected?.label} onClose={() => setSelected(null)}>
+			<Modal open={selected != null} title={selected?.label} closeButtonText="Done" onClose={() => setSelected(null)}>
 				<div className="grid grid-cols-3 gap-5 relative cards-grid">
 					{selected != null ?
 						<Entities entities={selected.entities} />
