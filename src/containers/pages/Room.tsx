@@ -56,6 +56,14 @@ const Room = (props) => {
 		});
 	}, [room]);
 
+	const scenes = useMemo(() => {
+		if (room == null) return [];
+
+		return room.entities.filter((entity_id) => {
+			return entity_id.includes('scene.');
+		});
+	}, [room]);
+
 	const items = useMemo<IDropdownItem[]>(() => {
 		return [
 			{
@@ -118,6 +126,12 @@ const Room = (props) => {
 				{media.length > 0 ?
 					<FolderContainer title="Media" key={room.id + "media"}>
 						<Entities entities={media} />
+					</FolderContainer>
+				: null}
+
+				{scenes.length > 0 ?
+					<FolderContainer title="Scenes" key={room.id + "scenes"}>
+						<Entities entities={scenes} />
 					</FolderContainer>
 				: null}
 			</FoldersContainer>
