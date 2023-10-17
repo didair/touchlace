@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import cx from 'classnames';
+import Icon from './Icon';
 
 const SidebarItem = ({ to, children }) => (
 	<NavLink
@@ -11,6 +12,7 @@ const SidebarItem = ({ to, children }) => (
 			'py-4 px-8',
 			'text-lg',
 			'font-semibold',
+			'navitem',
 			{
 				'is-active': isActive,
 			}
@@ -26,7 +28,7 @@ const Sidebar = () => {
 
 	useEffect(() => {
 		const indicator = document.getElementById('sidebar-active-indicator');
-		const active = document.querySelector(`#sidebar a[href="${location.pathname}"]`);
+		const active = document.querySelector(`#sidebar a[href="${location.pathname}"].navitem`);
 
 		if (active != null) {
 			const activeRect = active.getBoundingClientRect();
@@ -49,6 +51,18 @@ const Sidebar = () => {
 			</SidebarItem>
 
 			<div className="bg-gray rounded-full mx-8 my-4" style={{ height: 1 }} />
+
+			{rooms == null || rooms.length == 0 ?
+				<div className="flex items-center justify-center text-green">
+					<span className="mr-2">
+						<Icon name="circle-plus" />
+					</span>
+
+					<Link to="/settings" className="font-bold ml-1">
+						Add a room in settings
+					</Link>
+				</div>
+			: null}
 
 			{rooms.map((room) => {
 				return (
