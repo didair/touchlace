@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getBaseURI } from "lib/config";
+import { resolveMedia } from 'services/mediabrowser/slice';
 
 const initialState = {
 	entities: [],
@@ -34,6 +36,19 @@ export const settingsSlice = createSlice({
 			}
 		},
 	},
+	extraReducers: (builder) => {
+		builder.addCase(resolveMedia.fulfilled, (state, action) => {
+			const { media } = action.payload;
+
+			state.entities = state.entities.map((entity) => {
+				if (entity.backgroundImageId == media.media_content_id) {
+					entity['backgroundUrl'] = getBaseURI() + media.url;
+				}
+
+				return entity;
+			});
+		});
+	}
 });
 
 export const {

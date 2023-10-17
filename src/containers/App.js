@@ -1,13 +1,18 @@
 import { Outlet } from 'react-router-dom';
 import { useGetConfigQuery } from "services/config/api";
+import { resolveMedia } from 'services/mediabrowser/slice';
 
 import Time from 'components/Time';
 import Sidebar from "components/Sidebar";
 import Footer from 'components/Footer';
 import ScrollToTop from 'components/ScrollToTop';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
+	let mounted = false;
+	const dispatch = useDispatch();
+	const settings = useSelector((state) => state.settings.entities);
 	const { data: config } = useGetConfigQuery();
 
 	const onResize = () => {
@@ -27,7 +32,18 @@ function App() {
 	};
 
 	useEffect(() => {
+		if (!mounted) {
+			settings.forEach((entity) => {
+				if (entity.backgroundImageId != null) {
+					dispatch(resolveMedia({
+						media_content_id: entity.backgroundImageId,
+					}));
+				}
+			});
+		}
+
 		window.addEventListener('resize', onResize);
+		mounted = true;
 		return () => window.removeEventListener('resize', onResize);
 	}, []);
 

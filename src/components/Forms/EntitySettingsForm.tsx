@@ -53,7 +53,7 @@ const EntitySettings = ({ entity, hideRoomInput = false }: { entity: EntityInter
 		setSettings({
 			...entitySettings,
 			entity_id: entity.entity_id,
-			backgroundUrl: image,
+			backgroundImageId: image,
 		});
 	};
 
@@ -100,6 +100,7 @@ const EntitySettings = ({ entity, hideRoomInput = false }: { entity: EntityInter
 
 			<ImageSelect
 				onSelect={updateImage}
+				settings={entitySettings}
 			/>
 
 			{!hideRoomInput ?

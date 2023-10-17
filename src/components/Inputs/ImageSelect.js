@@ -6,8 +6,8 @@ import ImagePicker from 'components/MediaBrowser/ImagePicker';
 const ImageSelect = (props) => {
 	const [open, setOpen] = useState(false);
 
-	const onImageSelect = (url) => {
-		props.onSelect(url);
+	const onImageSelect = (media_content_id) => {
+		props.onSelect(media_content_id);
 		setOpen(false);
 	};
 
@@ -24,6 +24,13 @@ const ImageSelect = (props) => {
 					<Icon name="pen" />
 				</span>
 			</label>
+
+			{props.settings != null && props.settings.backgroundUrl != null ?
+				<div
+					className="w-24 aspect-square bg-cover bg-no-repeat bg-center rounded-md mb-2"
+					style={{ backgroundImage: `url(${props.settings.backgroundUrl})` }}
+				/>
+			: null}
 		</div>
 	);
 

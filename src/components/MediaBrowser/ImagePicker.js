@@ -12,7 +12,7 @@ const ImagePicker = ({ onSelect }) => {
 	}, []);
 
 	const onChildClick = (child) => {
-		onSelect(getBaseURI() + child.url);
+		onSelect(child.media_content_id);
 	};
 
 	if (currentDirectory == null) {
@@ -24,20 +24,20 @@ const ImagePicker = ({ onSelect }) => {
 	}
 
 	return (
-		<div className="flex">
+		<div className="flex gap-5">
 			{currentDirectory.children?.map((child, index) => {
 				return (
 					<div
 						onClick={() => onChildClick(child)}
 						key={child.media_content_id + '-' + index}
-						className="cursor-pointer rounded-lg p-4 bg-gray/10 hover:bg-gray/20 transition-colors"
+						className="cursor-pointer rounded-lg p-4 bg-gray/10 hover:bg-gray/20 transition-colors w-40"
 					>
 						<div
-							className="w-full aspect-square bg-cover bg-no-repeat bg-center rounded-md mb-2 flex items-center justify-center"
+							className="w-full aspect-square bg-cover bg-no-repeat bg-center rounded-md mb-2"
 							style={{ backgroundImage: `url(${getBaseURI() + child.url})` }}
 						/>
 
-						<div className="font-semibold">
+						<div className="font-semibold truncate">
 							{child.title}
 						</div>
 					</div>
