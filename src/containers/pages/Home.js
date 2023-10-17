@@ -40,7 +40,7 @@ const Home = () => {
 		const scenes = entities?.filter((entity) => entity.entity_id.includes('scene.'));
 		if (scenes != null && scenes.length > 0) {
 			sections.push({
-				title: 'Automations',
+				title: 'Scenes',
 				entities: scenes.map((entity) => entity.entity_id),
 			});
 		}

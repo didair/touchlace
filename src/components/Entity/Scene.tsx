@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCallEntityServiceMutation } from "services/states/api";
 import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
@@ -19,12 +20,20 @@ const EntityScene = ({
 	settings: EntitySettingsInterface,
 }) => {
 	const dispatch = useDispatch();
+	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
+	// Activated in the past 60 seconds?
+	const state = (new Date() - new Date(entity.state)) < 60 * 1000;
 
-	const toggleOnOff = () => {
+	const activateScene = () => {
+		callService({
+			entity_id: entity.entity_id,
+			domain: 'scene',
+			service: 'turn_on',
+		});
 	};
 
 	const toggleFavorite = () => {
@@ -65,8 +74,8 @@ const EntityScene = ({
 
 			<Card
 				onLongPress={() => setOpen(true)}
-				onClick={toggleOnOff}
-				state={entity.state == 'on' ? 'light' : 'dark'}
+				onClick={activateScene}
+				state={state ? 'light' : 'dark'}
 				type="switch"
 				backgroundImage={settings?.backgroundUrl}
 			>
@@ -89,7 +98,7 @@ const EntityScene = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-light': entity.state != 'on' }
+						{ 'text-light': !state }
 					)}>
 						<Icon name={icon_name} />
 					</div>
