@@ -9,7 +9,8 @@
 * 90+ icons for your devices
 * Real time device updates using web sockets
 * Basic configuration of all cards
-* Excellent Sonos integration with grouping and media browser (WIP, promised feature)
+* Excellent Sonos integration with grouping and media browser (WIP)
+* Set up your entire dashboard with GUI - No YAML required!
 
 ### ... Also worth mentioning
 * ✓ All data lives on your device
@@ -19,9 +20,9 @@
 - [x] Light
 - [x] Switch
 - [x] Cover (Blinds etc)
-- [ ] Scene
+- [x] Scene
 - [x] Sensor
-- [ ] Binary sensor
+- [x] Binary sensor
 - [ ] Person
 - [x] Media player
 
