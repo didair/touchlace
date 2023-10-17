@@ -29,6 +29,11 @@
 ### Note
 Since all data (including preferences and authentication) lives locally on your devices it will not sync between app/browsers. Please be careful to not clear the cache once all settings are made.
 
+#### Adding backgrounds on entities
+Add images under "My Media" in hass. Before uploading them it is highly recommended to compress them using [imagecompressor.com](https://imagecompressor.com/) or similar.
+
+It should be enough if the images are a resolution of 300x300px. Note that this feature can reduce the lifespan of SD cards since it adds additional reads and writes. My tip is to keep all images as small as possible.
+
 ## Installation
 ### Expose Home Assistant
 To access Touchlace via the production env (touchlace.aekstrom.me) you need to expose your Home Assistant installation to the internet **with** SSL encryption. The easiest way to accomplish this is to get [Home Assistant Cloud](https://www.nabucasa.com/) or using the [DuckDNS addon and Let's Encrypt](https://www.home-assistant.io/blog/2017/09/27/effortless-encryption-with-lets-encrypt-and-duckdns/).
