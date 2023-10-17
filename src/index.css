@@ -60,3 +60,9 @@ code {
 		grid-template-rows: repeat(4, minmax(0, 1fr));
 	}
 }
+
+.cards-grid .calculated-square {
+	width: auto !important;
+	height: auto !important;
+	padding-top: 100%;
+}

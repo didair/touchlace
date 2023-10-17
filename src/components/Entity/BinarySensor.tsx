@@ -48,7 +48,7 @@ const EntityBinarySensor = ({
 
 			<Card
 				onLongPress={() => setOpen(true)}
-				state="dark"
+				state={entity.state === 'on' ? 'light' : 'dark'}
 				type="sensor"
 				backgroundImage={settings?.backgroundUrl}
 			>

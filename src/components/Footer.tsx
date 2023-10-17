@@ -1,54 +1,56 @@
 import { AnimatePresence } from "framer-motion";
-import { useMemo } from "react";
-import { Entity as EntityInterface } from "types";
+import { useMemo, useState } from "react";
+import { Entity as IEntity } from "types";
 import { getEntityType, getEntitySettings } from "lib/entity";
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';
 
 import Badge from "./Badge";
+import Modal from "./Modal";
+import Entities from "./Entities";
 
 const badgeTypes = [
 	{
 		id: 'active_media',
-		labelFunc: (matchingEntities: [EntityInterface]) => 'Active Media',
-		statusFunc: (matchingEntities: [EntityInterface]) => {
+		labelFunc: (matchingEntities: [IEntity]) => 'Active Media',
+		statusFunc: (matchingEntities: [IEntity]) => {
 			return `${matchingEntities.length} Playing`;
 		},
-		iconFunc: (matchingEntities: [EntityInterface]) => 'speaker',
-		matchFunc: (entity: EntityInterface) => {
+		iconFunc: (matchingEntities: [IEntity]) => 'speaker',
+		matchFunc: (entity: IEntity) => {
 			return getEntityType(entity) == 'media_player' && entity.state == 'playing';
 		},
 	},
 	{
 		id: 'open_doors',
-		labelFunc: (matchingEntities: [EntityInterface]) => `Doors`,
-		statusFunc: (matchingEntities: [EntityInterface]) => {
+		labelFunc: (matchingEntities: [IEntity]) => `Doors`,
+		statusFunc: (matchingEntities: [IEntity]) => {
 			return `${matchingEntities.length} open doors`;
 		},
-		iconFunc: (matchingEntities: [EntityInterface]) => 'door-open',
-		matchFunc: (entity: EntityInterface) => {
+		iconFunc: (matchingEntities: [IEntity]) => 'door-open',
+		matchFunc: (entity: IEntity) => {
 			return getEntityType(entity) == 'binary_sensor' &&
-			entity.state == 'on' &&
-			getEntitySettings(entity.entity_id)?.sensorType == 'door'
+				entity.state == 'on' &&
+				getEntitySettings(entity.entity_id)?.sensorType == 'door'
 		},
 	},
 	{
 		id: 'open_doors',
-		labelFunc: (matchingEntities: [EntityInterface]) => `Doors`,
-		statusFunc: (matchingEntities: [EntityInterface]) => {
+		labelFunc: (matchingEntities: [IEntity]) => `Doors`,
+		statusFunc: (matchingEntities: [IEntity]) => {
 			return `All doors closed`;
 		},
-		iconFunc: (matchingEntities: [EntityInterface]) => 'door-closed',
-		matchFunc: (entity: EntityInterface) => {
+		iconFunc: (matchingEntities: [IEntity]) => 'door-closed',
+		matchFunc: (entity: IEntity) => {
 			return getEntityType(entity) == 'binary_sensor' &&
-			entity.state == 'off' &&
-			getEntitySettings(entity.entity_id)?.sensorType == 'door'
+				entity.state == 'off' &&
+				getEntitySettings(entity.entity_id)?.sensorType == 'door'
 		},
 	},
 	{
 		id: 'temperature',
-		labelFunc: (matchingEntities: [EntityInterface]) => `Temperature`,
-		statusFunc: (matchingEntities: [EntityInterface]) => {
+		labelFunc: (matchingEntities: [IEntity]) => `Temperature`,
+		statusFunc: (matchingEntities: [IEntity]) => {
 			if (matchingEntities.length == 1) {
 				return `${matchingEntities[0].state}${matchingEntities[0].attributes.unit_of_measurement}`;
 			}
@@ -69,17 +71,41 @@ const badgeTypes = [
 
 			return `Between ${min}-${max}${matchingEntities[0].attributes.unit_of_measurement}`;
 		},
-		iconFunc: (matchingEntities: [EntityInterface]) => 'temperature-three-quarters',
-		matchFunc: (entity: EntityInterface) => {
+		iconFunc: (matchingEntities: [IEntity]) => 'temperature-three-quarters',
+		matchFunc: (entity: IEntity) => {
 			return getEntityType(entity) == 'sensor' &&
-			getEntitySettings(entity.entity_id)?.sensorType == 'temperature'
+				getEntitySettings(entity.entity_id)?.sensorType == 'temperature'
 		},
 	},
-
+	{
+		id: 'lights',
+		labelFunc: (matchingEntities: [IEntity]) => `Lights`,
+		statusFunc: (matchingEntities: [IEntity]) => {
+			return `${matchingEntities.length} on`;
+		},
+		iconFunc: (matchingEntities: [IEntity]) => 'lightbulb',
+		matchFunc: (entity: IEntity) => {
+			return getEntityType(entity) == 'light' &&
+				entity.state == 'on'
+		},
+	},
+	{
+		id: 'lights',
+		labelFunc: (matchingEntities: [IEntity]) => `Lights`,
+		statusFunc: (matchingEntities: [IEntity]) => {
+			return `All off`;
+		},
+		iconFunc: (matchingEntities: [IEntity]) => 'lightbulb',
+		matchFunc: (entity: IEntity) => {
+			return getEntityType(entity) == 'light' &&
+				entity.state == 'off'
+		},
+	},
 ];
 
 const Footer = () => {
 	const { data: entities } = useGetStatesQuery();
+	const [selected, setSelected] = useState(null);
 
 	const calculatedBadges = useMemo(() => {
 		let result = [];
@@ -92,7 +118,7 @@ const Footer = () => {
 				return false;
 			}
 
-			const matchingEntities = entities.filter(badge.matchFunc);
+			const matchingEntities: [IEntity] = entities.filter(badge.matchFunc);
 
 			if (matchingEntities.length > 0) {
 				let entry = {
@@ -100,6 +126,7 @@ const Footer = () => {
 					icon: badge.iconFunc(matchingEntities),
 					label: badge.labelFunc(matchingEntities),
 					status: badge.statusFunc(matchingEntities),
+					entities: matchingEntities.map((entity) => entity.entity_id),
 				};
 
 				added_ids.push(badge.id);
@@ -121,10 +148,23 @@ const Footer = () => {
 				"overflow-y-hidden overflow-x-scroll"
 			)}
 		>
+			<Modal open={selected != null} title={selected?.label} onClose={() => setSelected(null)}>
+				<div className="grid grid-cols-3 gap-5 relative cards-grid">
+					{selected != null ?
+						<Entities entities={selected.entities} />
+						: null}
+				</div>
+			</Modal>
+
 			<AnimatePresence>
 				{calculatedBadges.map((badge) => {
 					return (
-						<Badge to="/" icon={badge.icon} meta={badge.label} key={badge.id}>
+						<Badge
+							icon={badge.icon}
+							meta={badge.label}
+							key={badge.id}
+							onClick={() => setSelected(badge)}
+						>
 							{badge.status}
 						</Badge>
 					);
@@ -135,6 +175,6 @@ const Footer = () => {
 		</div>
 	);
 
-}
+};
 
 export default Footer;

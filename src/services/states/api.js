@@ -97,7 +97,6 @@ export const statesApi = createApi({
 				};
 
 				const result = await connection.sendMessagePromise(message);
-				console.log('result', result);
 				return { data: result[data.entity_id] };
 			},
 		}),

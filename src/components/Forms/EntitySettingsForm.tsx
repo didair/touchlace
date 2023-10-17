@@ -126,6 +126,7 @@ const EntitySettings = ({ entity, hideRoomInput = false }: { entity: EntityInter
 				<Select label="Sensor type" onChange={onSensorTypeChange} value={entitySettings?.sensorType}>
 					<option value="">Select type</option>
 					<option value="temperature">Temperature</option>
+					<option value="price">Price</option>
 				</Select>
 			: null}
 

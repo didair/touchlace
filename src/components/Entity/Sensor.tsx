@@ -46,7 +46,7 @@ const EntitySensor = ({
 	}
 
 	useEffect(() => {
-		if (settings?.sensorType == 'temperature') {
+		if (settings?.sensorType == 'temperature' || settings?.sensorType == 'price') {
 			setFetchStatistics(true);
 		}
 	}, [entity, settings]);
@@ -106,7 +106,7 @@ const EntitySensor = ({
 							<AreaChart
 								data={statistics.map((stat) => ({
 									time: stat.start,
-									uv: stat.mean,
+									uv: stat.state ?? stat.mean,
 								}))}
 								margin={0}
 							>

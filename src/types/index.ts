@@ -26,5 +26,5 @@ export interface EntitySettings {
 	note?: string,
 	icon?: string,
 	backgroundUrl?: string,
-	sensorType?: 'door' | 'window' | 'lock' | 'temperature',
+	sensorType?: 'door' | 'window' | 'lock' | 'temperature' | 'price',
 };
