@@ -129,27 +129,27 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 			: null}
 
 			<div className="flex items-center justify-between">
-				<div onClick={() => toggleShuffle()} className={cx('text-xl', {
+				<div onClick={() => toggleShuffle()} className={cx('text-xl cursor-pointer', {
 					'text-blue': entity.attributes.shuffle
 				})}>
 					<Icon name="shuffle" />
 				</div>
 
 				<div className="flex items-center justify-center gap-x-4">
-					<div className="text-2xl" onClick={onPrev}>
+					<div className="text-2xl cursor-pointer" onClick={onPrev}>
 						<Icon name="backward-step" />
 					</div>
 
-					<div className="text-4xl w-6 text-center" onClick={togglePlayPause}>
+					<div className="text-4xl w-6 text-center cursor-pointer" onClick={togglePlayPause}>
 						<Icon name={entity.state == 'playing' ? 'pause' : 'play'} />
 					</div>
 
-					<div className="text-2xl" onClick={onNext}>
+					<div className="text-2xl cursor-pointer" onClick={onNext}>
 						<Icon name="forward-step" />
 					</div>
 				</div>
 
-				<div onClick={() => nextRepeatMode()} className={cx('relative text-xl', {
+				<div onClick={() => nextRepeatMode()} className={cx('relative text-xl cursor-pointer', {
 					'text-blue': entity.attributes.repeat != 'off'
 				})}>
 					<Icon name="repeat" />
