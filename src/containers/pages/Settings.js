@@ -4,7 +4,6 @@ import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/sli
 import { useGetStatesQuery } from "services/states/api";
 import { v4 as uuidv4 } from 'uuid';
 
-import Room from "components/Room";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import RoomForm from "components/Forms/RoomForm";
@@ -101,16 +100,35 @@ const Settings = () => {
 
 				{rooms.map((room, index) => {
 					return (
-						<Room
-							key={room.id}
-							onEdit={() => setSelectedRoom(room)}
-							onDelete={() => onRoomDelete(room)}
-							moveLeft={() => onMoveRoom(room)}
-							moveRight={() => onMoveRoom(room, 'right')}
-							showSettings={true}
-							index={index}
-							{...room}
-						/>
+						<div className="flex items-center justify-between mb-2 pb-2 border-b border-b-gray/60">
+							<div className="flex items-center gap-x-4">
+								<h3 className="text-2xl font-semibold">
+									{room.name}
+								</h3>
+
+								<div className="bg-green text-dark py-1 px-2 text-sm rounded-full">
+									{room.entities.length} entities
+								</div>
+							</div>
+
+							<div className="text-2xl flex items-center gap-x-5">
+								<span className="cursor-pointer" onClick={() => onMoveRoom(room)}>
+									<Icon name="arrow-up" />
+								</span>
+
+								<span className="cursor-pointer" onClick={() => onMoveRoom(room, 'right')}>
+									<Icon name="arrow-down" />
+								</span>
+
+								<span className="cursor-pointer" onClick={() => setSelectedRoom(room)}>
+									<Icon name="pen" />
+								</span>
+
+								<span className="cursor-pointer" onClick={() => onRoomDelete(room)}>
+									<Icon name="trash-can" />
+								</span>
+							</div>
+						</div>
 					);
 				})}
 			</div>
