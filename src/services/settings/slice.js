@@ -5,6 +5,7 @@ import { resolveMedia } from 'services/mediabrowser/slice';
 const initialState = {
 	entities: [],
 	favorites: [],
+	groups: [],
 };
 
 export const settingsSlice = createSlice({
@@ -35,6 +36,23 @@ export const settingsSlice = createSlice({
 				state.favorites.push(action.payload);
 			}
 		},
+		addGroup: (state, action) => {
+			if (state.groups == null) {
+				state.groups = [];
+			}
+
+			state.groups.push(action.payload);
+		},
+		updateGroup: (state, action) => {
+			const { payload: group } = action.payload;
+			const groupIndex = state.groups.findIndex((g) =>
+				g.id == group.id
+			);
+
+			if (groupIndex > -1) {
+				state.groups.splice(groupIndex, 1, group);
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(resolveMedia.fulfilled, (state, action) => {
@@ -48,12 +66,14 @@ export const settingsSlice = createSlice({
 				return entity;
 			});
 		});
-	}
+	},
 });
 
 export const {
 	setEntitySettings,
 	favoriteEntity,
+	addGroup,
+	updateGroup,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
