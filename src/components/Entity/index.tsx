@@ -1,4 +1,4 @@
-import { EntitySettings as EntitySettingsInterface } from "types";
+import { IEntitySettings } from "types";
 import { useSelector } from "react-redux";
 import { getEntityType } from "lib/entity";
 
@@ -12,7 +12,7 @@ import EntityScene from "./Scene";
 
 const Entity = (props) => {
 	const entity_type = getEntityType(props.entity);
-	const entitySettings: EntitySettingsInterface = useSelector((state) => {
+	const entitySettings: IEntitySettings = useSelector((state) => {
 		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
 	});
 

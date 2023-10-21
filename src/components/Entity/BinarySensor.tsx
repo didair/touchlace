@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -12,8 +12,8 @@ const EntityBinarySensor = ({
 	entity,
 	settings
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -15,8 +15,8 @@ const EntitySensor = ({
 	entity,
 	settings
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const [fetchStatistics, setFetchStatistics] = useState(false);
 	const { data: statistics } = useGetEntityStatisticsQuery({

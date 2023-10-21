@@ -1,4 +1,4 @@
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 
 import { useState } from 'react';
 import cx from 'classnames';
@@ -19,8 +19,8 @@ const EntityLight = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
 	const [updateState] = useUpdateEntityStateMutation();

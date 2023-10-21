@@ -1,4 +1,4 @@
-import { Entity as IEntity } from 'types';
+import { IEntity } from 'types';
 
 import { useMemo, useState } from 'react';
 import { useGetStatesQuery } from 'services/states/api';

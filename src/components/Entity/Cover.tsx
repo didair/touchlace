@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import cx from 'classnames';
 import { capitalize } from 'lib/text';
 
@@ -17,8 +17,8 @@ const EntityCover = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
 	const [callService] = useCallEntityServiceMutation();

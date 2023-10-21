@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallEntityServiceMutation } from "services/states/api";
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -16,8 +16,8 @@ const EntityScene = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
 	const [callService] = useCallEntityServiceMutation();

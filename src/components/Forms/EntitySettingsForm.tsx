@@ -1,4 +1,4 @@
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import { useSelector, useDispatch } from "react-redux";
 import { setEntitySettings } from "services/settings/slice";
 import { setEntityRoom } from "services/rooms/slice";
@@ -9,13 +9,13 @@ import React, { useMemo } from "react";
 import ImageSelect from 'components/Inputs/ImageSelect';
 import { getEntityType } from 'lib/entity';
 
-const EntitySettings = ({ entity, hideRoomInput = false }: { entity: EntityInterface }) => {
+const EntitySettings = ({ entity, hideRoomInput = false }: { entity: IEntity }) => {
 	const dispatch = useDispatch();
 	const setSettings = (value) => dispatch(setEntitySettings(value));
 	const entity_type = getEntityType(entity);
 	const rooms = useSelector((state) => state.rooms.list);
 
-	const entitySettings: EntitySettingsInterface = useSelector((state) => {
+	const entitySettings: IEntitySettings = useSelector((state) => {
 		return state.settings.entities.find((_ent) => _ent.entity_id == entity.entity_id)
 	});
 

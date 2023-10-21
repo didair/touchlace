@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion";
 import { useMemo, useState } from "react";
-import { Entity as IEntity } from "types";
+import { IEntity } from "types";
 import { getEntityType, getEntitySettings } from "lib/entity";
 import { useGetStatesQuery } from "services/states/api";
 import cx from 'classnames';

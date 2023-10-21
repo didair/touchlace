@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import { getBaseURI } from 'lib/config';
 import { capitalize } from 'lib/text';
 import cx from 'classnames';
@@ -16,8 +16,8 @@ const MediaPlayerEntity = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
@@ -17,8 +17,8 @@ const EntitySwitch = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
 	const [updateState] = useUpdateEntityStateMutation();

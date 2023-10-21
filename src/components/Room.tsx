@@ -1,4 +1,4 @@
-import { Entity as EntityInterface } from "types";
+import { IEntity } from "types";
 import cx from 'classnames';
 import Icon from 'components/Icon';
 import Entities from './Entities';
@@ -13,7 +13,7 @@ const Room = ({
 	onEdit,
 	onDelete,
 }: {
-	entities: Array<EntityInterface>,
+	entities: Array<IEntity>,
 	name: string,
 	index: number,
 	showSettings: boolean,
