@@ -1,5 +1,5 @@
 
-export interface Entity {
+export interface IEntity {
 	entity_id: string,
 	state: string | number,
 	attributes: {
@@ -21,11 +21,18 @@ export interface Entity {
 	},
 };
 
-export interface EntitySettings {
+export interface IEntitySettings {
 	name?: string,
 	note?: string,
 	icon?: string,
 	backgroundImageId?: string,
 	backgroundUrl?: string,
 	sensorType?: 'door' | 'window' | 'lock' | 'temperature' | 'price',
+};
+
+export interface IEntityGroup {
+	name: string,
+	backgroundImageId?: string,
+	backgroundUrl?: string,
+	entities: Array<string>,
 };
