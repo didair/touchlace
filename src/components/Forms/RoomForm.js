@@ -2,11 +2,14 @@ import Button from 'components/Inputs/Button';
 import Input from 'components/Inputs/Input';
 import { Form, Field } from 'react-final-form';
 
-const RoomForm = (props) => {
+const RoomForm = ({
+	onSubmit = () => new Promise((r) => r(1)),
+	initialValues = null,
+}) => {
 	return (
 		<Form
-			onSubmit={props.onSubmit}
-			initialValues={props.initialValues}
+			onSubmit={onSubmit}
+			initialValues={initialValues}
 			render={({handleSubmit}) => (
 				<form onSubmit={handleSubmit}>
 					<Field
@@ -23,10 +26,6 @@ const RoomForm = (props) => {
 			)}
 		/>
 	);
-};
-
-RoomForm.defaultProps = {
-	onSubmit: () => new Promise((r) => r(1)),
 };
 
 export default RoomForm;
