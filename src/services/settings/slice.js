@@ -44,13 +44,26 @@ export const settingsSlice = createSlice({
 			state.groups.push(action.payload);
 		},
 		updateGroup: (state, action) => {
-			const { payload: group } = action.payload;
+			const { payload: group } = action;
 			const groupIndex = state.groups.findIndex((g) =>
 				g.id == group.id
 			);
 
 			if (groupIndex > -1) {
 				state.groups.splice(groupIndex, 1, group);
+			}
+		},
+		deleteGroup: (state, action) => {
+			const groupIndex = state.groups.findIndex((group) => {
+				if (typeof action.payload == 'object') {
+					return group.id == action.payload.id;
+				}
+
+				return group.id == action.payload;
+			});
+
+			if (groupIndex > -1) {
+				state.groups.splice(groupIndex, 1);
 			}
 		},
 	},
@@ -74,6 +87,7 @@ export const {
 	favoriteEntity,
 	addGroup,
 	updateGroup,
+	deleteGroup,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
