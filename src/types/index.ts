@@ -31,6 +31,7 @@ export interface IEntitySettings {
 };
 
 export interface IEntityGroup {
+	id: string,
 	name: string,
 	backgroundImageId?: string,
 	backgroundUrl?: string,

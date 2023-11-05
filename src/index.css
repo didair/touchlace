@@ -83,3 +83,8 @@ code {
 	height: auto !important;
 	padding-top: 100%;
 }
+
+.group .range-slider {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
