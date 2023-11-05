@@ -238,7 +238,7 @@ const Icon = ({ name, className }: {
 			return <BulbGeneralGroup />
 
 		case 'BulbGroup':
-			return <BulbGroup />
+			return <BulbGroup className={className} />
 
 		case 'BulbsClassic':
 			return <BulbsClassic />
