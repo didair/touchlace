@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useState, useRef } from 'react';
 import ReactSlider from 'react-slider';
 import './rangeSlider.css';
 
@@ -12,22 +12,25 @@ const RangeSlider = ({
 	const [internalValue, setInternalValue] = useState(parseInt(value));
 	const percentage = (internalValue / parseInt(max)) * 100;
 	const id = useId();
+	const sliderRef = useRef(null)
+
+	useEffect(() => {
+		if (sliderRef.current != null) {
+			sliderRef.current.resize()
+		}
+
+		setTimeout(() => {
+			if (sliderRef.current != null) {
+				sliderRef.current.resize()
+			}
+		}, 100);
+	}, [sliderRef.current])
 
 	useEffect(() => {
 		if (value != internalValue) {
 			setInternalValue(value);
 		}
 	}, [value]);
-
-	useEffect(() => {
-		setTimeout(() => {
-		setInternalValue(internalValue);
-		window.dispatchEvent(new Event('resize'));
-		}, 250)
-
-
-		window.dispatchEvent(new Event('resize'));
-	}, []);
 
 	const onSliderAfterChange = (value) => {
 		onChange(value);
@@ -46,12 +49,13 @@ const RangeSlider = ({
 			: null}
 
 			<ReactSlider
+				ref={sliderRef}
 				orientation="vertical"
 				invert={true}
 				className="range-slider"
 				thumbClassName="slider-thumb"
 				trackClassName="slider-track"
-				value={internalValue}
+				defaultValue={internalValue}
 				onAfterChange={onSliderAfterChange}
 				onChange={onSliderChange}
 				min={parseInt(min)}
