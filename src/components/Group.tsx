@@ -134,7 +134,7 @@ const Group = ({ group }: {
 						/>
 					</div>
 
-					<div className="flex items-center px-4 py-2 mt-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }} onClick={onToggleAll}>
+					<div className="flex items-center px-4 py-3 mt-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }} onClick={onToggleAll}>
 						<Icon name="BulbGroup" className="mr-1" />
 						{lightsOnCount > 0 ?
 							"Turn off all lights"
