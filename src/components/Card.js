@@ -21,17 +21,22 @@ const Card = (props) => {
 	};
 
 	const options = {
-		shouldPreventDefault: true,
+		shouldPreventDefault: false,
 		delay: 350,
 	};
 
-	const clickEvents = useLongPress(onLongPress, onClick, options);
+	let clickEvents = useLongPress(onLongPress, onClick, options);
 	const cleanProps = {...props};
 	delete cleanProps.onLongPress;
 	delete cleanProps.onClick;
 	delete cleanProps.state;
 	delete cleanProps.type;
 	delete cleanProps.backgroundImage;
+	delete cleanProps.disableClickEvents;
+
+	if (props.disableClickEvents) {
+		clickEvents = undefined;
+	}
 
 	return (
 		<div
@@ -46,8 +51,8 @@ const Card = (props) => {
 				'text-md',
 				'cursor-pointer',
 				'select-none',
-				'calculated-square square-h',
 				'overflow-hidden',
+				'calculated-square square-h',
 				{
 					'text-dark': props.backgroundImage == null,
 					'text-light': props.backgroundImage != null,
@@ -107,6 +112,7 @@ Card.defaultProps = {
 	className: '',
 	type: '',
 	state: 'dark',
+	disableClickEvents: false,
 };
 
 export default Card;
