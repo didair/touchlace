@@ -17,18 +17,6 @@ const Group = ({ group }: {
 		return entities.find((entity) => entity.entity_id == entity_id);
 	};
 
-	const defaultValue = useMemo(() => {
-		let highest = 0;
-
-		group.entities.forEach((entity_id) => {
-			let entity = findEntity(entity_id);
-			if (entity.attributes.brightness != null && highest < entity.attributes.brightness) {
-				highest = entity.attributes.brightness;
-			}
-		});
-
-		return highest;
-	}, [group, entities]);
 
 	const hasLights = useMemo(() => {
 		if (group != null && group.entities != null) {
@@ -57,6 +45,23 @@ const Group = ({ group }: {
 			}
 		});
 		return result;
+	}, [group, entities]);
+
+	const defaultValue = useMemo(() => {
+		let highest = 0;
+
+		if (lightsOnCount == 0) {
+			return 0;
+		}
+
+		group.entities.forEach((entity_id) => {
+			let entity = findEntity(entity_id);
+			if (entity.attributes.brightness != null && highest < entity.attributes.brightness) {
+				highest = entity.attributes.brightness;
+			}
+		});
+
+		return highest;
 	}, [group, entities]);
 
 	const turnOnLights = (brightness) => {
