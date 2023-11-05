@@ -70,7 +70,7 @@ const EntityLight = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="py-4" style={{ height: 288, width: 144 }}>
+					<div className="py-4 w-28 h-72">
 						<RangeSlider
 							min={0}
 							max={255}
