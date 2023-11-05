@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useGetStatesQuery } from "services/states/api";
 import { useSelector } from "react-redux";
 
+import Group from "components/Group";
 import Entities from "components/Entities";
 import FoldersContainer from "components/FoldersContainer";
 import FolderContainer from "components/FolderContainer";
@@ -9,6 +10,7 @@ import FolderContainer from "components/FolderContainer";
 const Home = () => {
 	const { data: entities } = useGetStatesQuery();
 	const favorites = useSelector((state) => state.settings.favorites);
+	const groups = useSelector((state) => state.settings.groups);
 
 	const sections = useMemo(() => {
 		let sections = [];
@@ -59,6 +61,14 @@ const Home = () => {
 					<Entities entities={section.entities} />
 				</FolderContainer>
 			)}
+
+			{groups != null && groups.length > 0 ?
+				<FolderContainer title="Grupper">
+					{groups.map((group) => {
+						return <Group group={group} />
+					})}
+				</FolderContainer>
+			: null}
 		</FoldersContainer>
 	);
 }
