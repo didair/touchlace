@@ -24,8 +24,16 @@ function App() {
 					square.style.width = square.scrollHeight + 'px';
 				}
 
+				if (square.classList.contains('square-h-half')) {
+					square.style.width = (square.scrollHeight / 2) + 'px';
+				}
+
 				if (square.classList.contains('square-w')) {
 					square.style.width = square.scrollWidth + 'px';
+				}
+
+				if (square.classList.contains('square-w-half')) {
+					square.style.width = (square.scrollWidth / 2) + 'px';
 				}
 			});
 		}
