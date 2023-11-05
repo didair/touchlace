@@ -29,15 +29,23 @@ const EntityLight = ({
 	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
-	const updateBrightness = (event) => {
-		updateState({
-			entity_id: entity.entity_id,
-			domain: 'light',
-			state: 'on',
-			fields: {
-				brightness: event.target.value,
-			}
-		});
+	const updateBrightness = (value) => {
+		if (value > 0) {
+			updateState({
+				entity_id: entity.entity_id,
+				domain: 'light',
+				state: 'on',
+				fields: {
+					brightness: value,
+				}
+			});
+		} else {
+			updateState({
+				entity_id: entity.entity_id,
+				domain: 'light',
+				state: 'off',
+			});
+		}
 	};
 
 	const toggleOnOff = () => {
@@ -62,10 +70,10 @@ const EntityLight = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="my-8">
+					<div className="py-4" style={{ height: 288, width: 144 }}>
 						<RangeSlider
-							min="1"
-							max="255"
+							min={0}
+							max={255}
 							onChange={updateBrightness}
 							value={entity.attributes.brightness}
 						/>
