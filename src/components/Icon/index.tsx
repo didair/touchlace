@@ -168,9 +168,6 @@ const Icon = ({ name, className }: {
 		case 'computer':
 			return <FontAwesomeIcon icon={solid('computer')} className={className} />
 
-		case 'champagne-glasses':
-			return <FontAwesomeIcon icon={solid('champagne-glasses')} className={className} />
-
 		case 'ArchetypesBollard':
 			return <ArchetypesBollard />
 
@@ -476,6 +473,42 @@ const Icon = ({ name, className }: {
 
 		case 'rotate':
 			return <FontAwesomeIcon icon={solid('rotate')} className={className} />
+
+		case 'blender':
+			return <FontAwesomeIcon icon={solid('blender')} className={className} />
+
+		case 'mug':
+			return <FontAwesomeIcon icon={solid('mug-hot')} className={className} />
+
+		case 'beer':
+			return <FontAwesomeIcon icon={solid('beer-mug-empty')} className={className} />
+
+		case 'wine-glass':
+			return <FontAwesomeIcon icon={solid('wine-glass')} className={className} />
+
+		case 'wine-bottle':
+			return <FontAwesomeIcon icon={solid('wine-bottle')} className={className} />
+
+		case 'whiskey-glass':
+			return <FontAwesomeIcon icon={solid('whiskey-glass')} className={className} />
+
+		case 'martini-citrus':
+			return <FontAwesomeIcon icon={solid('martini-glass-citrus')} className={className} />
+
+		case 'martini':
+			return <FontAwesomeIcon icon={solid('martini-glass')} className={className} />
+
+		case 'champagne-glasses':
+			return <FontAwesomeIcon icon={solid('champagne-glasses')} className={className} />
+
+		case 'glass-water':
+			return <FontAwesomeIcon icon={solid('glass-water')} className={className} />
+
+		case 'burger':
+			return <FontAwesomeIcon icon={solid('burger')} className={className} />
+
+		case 'pizza-slice':
+			return <FontAwesomeIcon icon={solid('pizza-slice')} className={className} />
 
 		default:
 			return null;
