@@ -1,10 +1,12 @@
+import { IEntity, IEntitySettings } from 'types';
+
 import { useState } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
 import cx from 'classnames';
-import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { favoriteEntity } from 'services/settings/slice';
 import { useUpdateEntityStateMutation } from 'services/states/api';
 
 import Card from 'components/Card';
@@ -17,23 +19,33 @@ const EntityLight = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
+	const dispatch = useDispatch();
 	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
-	const updateBrightness = (event) => {
-		updateState({
-			entity_id: entity.entity_id,
-			domain: 'light',
-			state: 'on',
-			fields: {
-				brightness: event.target.value,
-			}
-		});
+	const updateBrightness = (value) => {
+		if (value > 0) {
+			updateState({
+				entity_id: entity.entity_id,
+				domain: 'light',
+				state: 'on',
+				fields: {
+					brightness: value,
+				}
+			});
+		} else {
+			updateState({
+				entity_id: entity.entity_id,
+				domain: 'light',
+				state: 'off',
+			});
+		}
 	};
 
 	const toggleOnOff = () => {
@@ -42,6 +54,10 @@ const EntityLight = ({
 			domain: 'light',
 			state: entity.state == 'on' ? 'off' : 'on',
 		});
+	};
+
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
 	};
 
 	return (
@@ -54,10 +70,10 @@ const EntityLight = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="my-8">
+					<div className="py-4 w-28 h-72">
 						<RangeSlider
-							min="1"
-							max="255"
+							min={0}
+							max={255}
 							onChange={updateBrightness}
 							value={entity.attributes.brightness}
 						/>
@@ -80,6 +96,13 @@ const EntityLight = ({
 					>
 						<Icon name="gear" />
 					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
+					</span>
 				</div>
 
 				{showSettings ?
@@ -92,78 +115,39 @@ const EntityLight = ({
 				onClick={toggleOnOff}
 				state={entity.state == 'on' ? 'light' : 'dark'}
 				type="light"
+				backgroundImage={settings?.backgroundUrl}
 			>
-				<div className="flex justify-between">
-					<div className={cx(
-						"h-11",
-						"flex",
-						"items-center",
-						"text-3xl",
-						{ 'text-gray': entity.state != 'on' }
-					)}>
-						<Icon name={icon_name} />
-					</div>
-
-					<div className={cx(
-						'transition-opacity',
-						'duration-300',
-						'ease-in-out',
-						'flex',
-						'items-center',
-						'justify-center',
-						'w-11 h-11',
-						'relative',
-						{
-							'opacity-0': entity.attributes.brightness == null,
-							'opacity-100': entity.attributes.brightness != null,
-						}
-					)}>
-						<svg viewBox="0 0 100 100" className="absolute">
-							<path
-								className={cx({
-									'stroke-light/20': entity.attributes.brightness == null,
-									'stroke-light-gray': entity.attributes.brightness != null,
-								})}
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-							/>
-							<path
-								className="transition-all duration-200 ease-in-out stroke-blue"
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-								style={{
-									strokeDasharray: "295.416, 295.416",
-									strokeDashoffset: entity.attributes.brightness != null ?
-										295 - lerp(0, 295, (entity.attributes.brightness / 255)) : 295,
-								}}
-							/>
-						</svg>
-
-						<span className="font-bold text-xs opacity-40">
-							{entity.attributes.brightness != null ?
-								Math.round((entity.attributes.brightness / 255) * 100) + '%'
-								: null}
-						</span>
-					</div>
-				</div>
-
-				<div>
+				<div className="text-sm">
 					{settings != null && settings.note != '' ?
-						<div className="font-semibold text-sm">
+						<div>
 							{settings.note}
 						</div>
 					: null}
 
-					<div className="font-semibold truncate text-ellipsis h-6">
+					<div className="font-semibold text-base truncate text-ellipsis">
 						{settings != null && settings.name != null && settings.name != '' ?
 							settings.name
 						: entity.attributes.friendly_name}
 					</div>
 
-					<div className="font-semibold">
+					<div className="">
 						{capitalize(entity.state)}
+						{entity.attributes.brightness != null && entity.state == 'on' ?
+							' • ' + Math.round((entity.attributes.brightness / 255) * 100) + '%'
+						: null}
+					</div>
+				</div>
+
+				<div className="flex justify-between text-light">
+					<div className={cx(
+						"flex",
+						"items-center",
+						"text-2xl",
+						{
+							'text-dark': entity.state == 'on' && settings?.backgroundUrl == null,
+						}
+					)}>
+						<Icon name={icon_name} />
 					</div>
 				</div>
 			</Card>

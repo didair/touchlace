@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { useDispatch, useSelector } from 'react-redux';
+import { IEntity, IEntitySettings } from 'types';
 import cx from 'classnames';
-import { lerp } from 'lib/numbers';
 import { capitalize } from 'lib/text';
 
 import { useCallEntityServiceMutation } from 'services/states/api';
+import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
@@ -16,12 +17,14 @@ const EntityCover = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
+	const dispatch = useDispatch();
 	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
 	const updatePosition = (event) => {
 		callService({
@@ -43,6 +46,10 @@ const EntityCover = ({
 				position: entity.attributes.current_position > 0 ? 0 : 100,
 			},
 		});
+	};
+
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
 	};
 
 	return (
@@ -81,6 +88,13 @@ const EntityCover = ({
 					>
 						<Icon name="gear" />
 					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
+					</span>
 				</div>
 
 				{showSettings ?
@@ -93,14 +107,35 @@ const EntityCover = ({
 				onClick={toggleUpDown}
 				state={entity.state == 'closed' ? 'light' : 'dark'}
 				type="light"
+				backgroundImage={settings?.backgroundUrl}
 			>
+				<div className="text-sm">
+					{settings != null && settings.note != '' ?
+						<div>
+							{settings.note}
+						</div>
+					: null}
+
+					<div className="font-semibold text-base truncate text-ellipsis">
+						{settings != null && settings.name != null && settings.name != '' ?
+							settings.name
+						: entity.attributes.friendly_name}
+					</div>
+
+					<div>
+						{capitalize(entity.state)}
+						{entity.attributes.current_position != null ?
+							' • ' + entity.attributes.current_position + '%'
+							: null}
+					</div>
+				</div>
+
 				<div className="flex justify-between">
 					<div className={cx(
-						"h-11",
 						"flex",
 						"items-center",
-						"text-3xl",
-						{ 'text-gray': entity.state == 'open' }
+						"text-2xl",
+						{ 'text-light': entity.state == 'open' }
 					)}>
 						<Icon
 							name={'arrow-up'}
@@ -112,69 +147,6 @@ const EntityCover = ({
 								}
 							)}
 						/>
-					</div>
-
-					<div className={cx(
-						'transition-opacity',
-						'duration-300',
-						'ease-in-out',
-						'flex',
-						'items-center',
-						'justify-center',
-						'w-11 h-11',
-						'relative',
-					)}>
-						<svg viewBox="0 0 100 100" className="absolute">
-							<path
-								className={cx({
-									'stroke-light/20': entity.state == 'open',
-									'stroke-light-gray': entity.state != 'open',
-								})}
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-							/>
-							<path
-								className="transition-all duration-200 ease-in-out stroke-light-gray/20"
-								d="M 50,50 m 0,-47 a 47,47 0 1 1 0,94 a 47,47 0 1 1 0,-94"
-								strokeWidth="6"
-								fillOpacity="0"
-								style={{
-									strokeDasharray: "295.416, 295.416",
-									strokeDashoffset: entity.attributes.current_position != null ?
-										295 - lerp(0, 295, (entity.attributes.current_position / 100)) : 295,
-								}}
-							/>
-						</svg>
-
-						<span className={cx("font-bold text-xs opacity-40",
-						{
-							'text-light-gray': entity.state == 'open',
-							'text-dark': entity.state != 'open',
-						}
-						)}>
-							{entity.attributes.current_position != null ?
-								entity.attributes.current_position + '%'
-								: null}
-						</span>
-					</div>
-				</div>
-
-				<div>
-					{settings != null && settings.note != '' ?
-						<div className="font-semibold text-sm">
-							{settings.note}
-						</div>
-					: null}
-
-					<div className="font-semibold truncate text-ellipsis h-6">
-						{settings != null && settings.name != null && settings.name != '' ?
-							settings.name
-						: entity.attributes.friendly_name}
-					</div>
-
-					<div className="font-semibold">
-						{capitalize(entity.state)}
 					</div>
 				</div>
 			</Card>

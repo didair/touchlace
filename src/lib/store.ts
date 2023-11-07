@@ -37,6 +37,10 @@ export const store = configureStore({
 	),
 });
 
+export const _clone = (item) => {
+	return JSON.parse(JSON.stringify(item));
+};
+
 export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);

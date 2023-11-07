@@ -1,57 +1,70 @@
-import { useId, useState, useMemo, useEffect } from 'react';
-import debounce from 'lib/debounce';
+import { useEffect, useId, useState, useRef } from 'react';
+import ReactSlider from 'react-slider';
 import './rangeSlider.css';
 
-const RangeSlider = (props) => {
-	const [value, setValue] = useState(parseInt(props.value));
-	const percentage = (parseInt(value) / parseInt(props.max)) * 100;
+const RangeSlider = ({
+	value = 0,
+	onChange = () => null,
+	min = 0,
+	max = 100,
+	showLabel = true,
+}) => {
+	const [internalValue, setInternalValue] = useState(parseInt(value));
+	const percentage = (internalValue / parseInt(max)) * 100;
 	const id = useId();
+	const sliderRef = useRef(null)
 
 	useEffect(() => {
-		if (props.value !== value) {
-			setValue(props.value);
+		if (sliderRef.current != null) {
+			sliderRef.current.resize()
 		}
-	}, [props.value]);
 
-	const updateParent = useMemo(() => debounce((event) => {
-		props.onChange(event);
-	}, 250), []);
+		setTimeout(() => {
+			if (sliderRef.current != null) {
+				sliderRef.current.resize()
+			}
+		}, 100);
+	}, [sliderRef.current])
 
-	const onChange = (event) => {
-		setValue(parseInt(event.target.value));
-		updateParent(event);
+	useEffect(() => {
+		if (value != internalValue) {
+			setInternalValue(value);
+		}
+	}, [value]);
+
+	const onSliderAfterChange = (value) => {
+		onChange(value);
+	};
+
+	const onSliderChange = (value) => {
+		setInternalValue(value);
 	};
 
 	return (
-		<div className="text-center">
-			<label htmlFor={id} className="block mb-4">
-				{Math.round(percentage) + '%'}
-			</label>
+		<div className="h-full flex flex-col items-center">
+			{showLabel ?
+				<label htmlFor={id} className="block mb-4">
+					{Math.round(percentage) + '%'}
+				</label>
+			: null}
 
-			<div style={{ height: 225 }}>
-				<input
-					id={id}
-					min={props.min}
-					max={props.max}
-					value={value}
-					onChange={onChange}
-					type="range"
-					className="slider"
-					style={{
-						backgroundImage: `linear-gradient(90deg, var(--bg-value-color) 0%, var(--bg-value-color) ${percentage}%, var(--bg-range-color) ${percentage}%, var(--bg-range-color) 100%)`
-					}}
-				/>
-			</div>
+			<ReactSlider
+				ref={sliderRef}
+				orientation="vertical"
+				invert={true}
+				className="range-slider"
+				thumbClassName="slider-thumb"
+				trackClassName="slider-track"
+				value={internalValue}
+				onAfterChange={onSliderAfterChange}
+				onChange={onSliderChange}
+				min={parseInt(min)}
+				max={parseInt(max)}
+				id={id}
+			/>
 		</div>
 	);
 
-};
-
-RangeSlider.defaultProps = {
-	onChange: () => null,
-	value: '0',
-	min: '0',
-	max: '100',
 };
 
 export default RangeSlider;

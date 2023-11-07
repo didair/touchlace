@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useGetStatesQuery } from "services/states/api";
+import { getEntityType } from 'lib/entity';
 import Checkbox from 'components/Inputs/Checkbox';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
@@ -10,6 +11,7 @@ const EntitiesSelect = (props) => {
 	const [open, setOpen] = useState(false);
 	const [filter, setFilter] = useState('');
 	const currentValue = typeof props.input.value == 'string' ? [] : props.input.value;
+
 	const onToggleEntity = (entity) => {
 		if (currentValue.indexOf(entity.entity_id) == -1) {
 			props.input.onChange([...currentValue, entity.entity_id]);
@@ -20,10 +22,28 @@ const EntitiesSelect = (props) => {
 		}
 	};
 
+	const filteredEntities = useMemo(() => {
+		let result = entities;
+
+		if (props.allowedTypes != null && Array.isArray(props.allowedTypes)) {
+			result = result.filter((entity) =>
+				props.allowedTypes.indexOf(getEntityType(entity)) > -1
+			);
+		}
+
+		if (filter != '') {
+			result = result.filter((entity) =>
+				entity.entity_id.indexOf(filter) > -1
+			);
+		}
+
+		return result;
+	}, [filter, props.allowedTypes]);
+
 	return (
 		<div className="form-element mb-4 last-of-type:mb-0">
 			{entities != null ?
-				<Modal open={open} onClose={() => setOpen(false)}>
+				<Modal open={open} onClose={() => setOpen(false)} title="Select entities" closeButtonText="Save">
 					<Input
 						value={filter}
 						onChange={(e) => setFilter(e.target.value.toLowerCase())}
@@ -31,14 +51,8 @@ const EntitiesSelect = (props) => {
 						label="Filter"
 					/>
 
-					{entities.map((entity) => {
-						const entity_type = entity.entity_id.split('.')[0];
-						if (filter != '') {
-							if (entity.entity_id.indexOf(filter) == -1) {
-								return null;
-							}
-						}
-
+					{filteredEntities.map((entity) => {
+						const entity_type = getEntityType(entity);
 						return (
 							<div key={entity.entity_id} className="block p-2 mb-2 last-of-type:mb-0 border border-gray/40 bg-gray/10 rounded-md">
 								<Checkbox

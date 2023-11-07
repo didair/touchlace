@@ -16,6 +16,7 @@ const Modal = ({
 	onOpen = () => null,
 	open = false,
 	title = null,
+	closeButtonText = null,
 	type = 'small',
 }: {
 	children: ReactNode,
@@ -23,6 +24,7 @@ const Modal = ({
 	onOpen: Function,
 	open: boolean,
 	title?: string | ReactElement,
+	closeButtonText?: string | ReactElement,
 	type: 'small' | 'big',
 }) => {
 	const [canClose, setCanClose] = useState(false);
@@ -49,7 +51,19 @@ const Modal = ({
 			className={`type-${type}`}
 			shouldCloseOnOverlayClick={canClose}
 		>
-			<div className="max-h-[85vh] overflow-auto flex-1 px-10 py-7">
+			{title != null ?
+				<div className="flex items-center justify-between px-7 py-2 border-b border-b-gray/40">
+					{title}
+
+					{closeButtonText != null ?
+						<div onClick={() => onClose()} className="cursor-pointer uppercase text-sm font-semibold text-green">
+							{closeButtonText}
+						</div>
+					: null}
+				</div>
+			: null}
+
+			<div className="max-h-[85vh] overflow-auto flex-1 p-7">
 				{children}
 			</div>
 		</ReactModal>

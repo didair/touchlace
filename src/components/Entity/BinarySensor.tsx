@@ -1,39 +1,31 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { IEntity, IEntitySettings } from 'types';
-import { capitalize } from 'lib/text';
+import { useDispatch, useSelector } from 'react-redux';
+import { favoriteEntity } from 'services/settings/slice';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
-
-import { useUpdateEntityStateMutation } from 'services/states/api';
-import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntitySwitch = ({
+const EntityBinarySensor = ({
 	entity,
-	settings,
+	settings
 }: {
 	entity: IEntity,
 	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
-	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
-	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
-
-	const toggleOnOff = () => {
-		updateState({
-			entity_id: entity.entity_id,
-			domain: 'switch',
-			state: entity.state == 'on' ? 'off' : 'on',
-		});
-	};
+	const icon_name = useEntityIcon(entity);
+	const name = settings != null && settings.name != null && settings.name != '' ?
+		settings.name
+	: entity.attributes.friendly_name;
+	let value = entity.state === 'on' ? 'Open' : 'Closed';
 
 	const toggleFavorite = () => {
 		dispatch(favoriteEntity(entity.entity_id));
@@ -42,24 +34,13 @@ const EntitySwitch = ({
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
-				<div className="mb-8">
+				<div className="flex items-center justify-center flex-col">
 					<h3 className="text-2xl">
-						{settings != null && settings.name != null && settings.name != '' ?
-							settings.name
-						: entity.attributes.friendly_name}
+						{name}
 					</h3>
 				</div>
 
-				<div className="flex items-center justify-center">
-					<input
-						id="onOff"
-						type="checkbox"
-						checked={entity.state == 'on'}
-						onChange={toggleOnOff}
-					/>
-
-					<label htmlFor="onOff" className="ml-2">{capitalize(entity.state)}</label>
-
+				<div className="flex items-center justify-center mt-8">
 					<span
 						className={cx("ml-4 text-xl", { 'text-blue/90': showSettings })}
 						onClick={() => setShowSettings(!showSettings)}
@@ -82,9 +63,8 @@ const EntitySwitch = ({
 
 			<Card
 				onLongPress={() => setOpen(true)}
-				onClick={toggleOnOff}
-				state={entity.state == 'on' ? 'light' : 'dark'}
-				type="switch"
+				state={entity.state === 'on' ? 'light' : 'dark'}
+				type="sensor"
 				backgroundImage={settings?.backgroundUrl}
 			>
 				<div className="text-sm">
@@ -95,13 +75,11 @@ const EntitySwitch = ({
 					: null}
 
 					<div className="font-semibold text-base truncate text-ellipsis">
-						{settings != null && settings.name != null && settings.name != '' ?
-							settings.name
-						: entity.attributes.friendly_name}
+						{name}
 					</div>
 
 					<div>
-						{capitalize(entity.state)}
+						{value}
 					</div>
 				</div>
 
@@ -109,8 +87,7 @@ const EntitySwitch = ({
 					<div className={cx(
 						"flex",
 						"items-center",
-						"text-2xl",
-						{ 'text-light': entity.state != 'on' }
+						"text-2xl text-light",
 					)}>
 						<Icon name={icon_name} />
 					</div>
@@ -118,7 +95,6 @@ const EntitySwitch = ({
 			</Card>
 		</>
 	);
-
 };
 
-export default EntitySwitch;
+export default EntityBinarySensor;

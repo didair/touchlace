@@ -13,8 +13,10 @@ import {
 } from 'react-router-dom';
 
 import App from 'containers/App';
+import Home from 'containers/pages/Home';
+import Media from 'containers/pages/Media';
+import Room from 'containers/pages/Room';
 import Settings from 'containers/pages/Settings';
-import Devices from 'containers/pages/Devices';
 import Setup from 'containers/pages/Setup';
 
 import './index.css';
@@ -26,7 +28,15 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: <Devices />,
+				element: <Home />,
+			},
+			{
+				path: '/media',
+				element: <Media />
+			},
+			{
+				path: '/room/:id',
+				element: <Room />,
 			},
 			{
 				path: '/settings',

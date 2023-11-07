@@ -45,6 +45,24 @@ export const roomsSlice = createSlice({
 				window.dispatchEvent(roomsChange);
 			}, 1000)
 		},
+		setEntityRoom: (state, action) => {
+			state.list = state.list.map((room) => {
+				room.entities = room.entities?.filter((entity_id) => entity_id != action.payload.entityId);
+				return room;
+			});
+
+			state.list = state.list.map((room) => {
+				if (room.entities == null) {
+					room.entities = [];
+				}
+
+				if (room.id == action.payload.roomId) {
+					room.entities.push(action.payload.entityId);
+				}
+
+				return room;
+			});
+		},
 	},
 });
 
@@ -53,6 +71,7 @@ export const {
 	updateRoom,
 	deleteRoom,
 	moveRoom,
+	setEntityRoom,
 } = roomsSlice.actions;
 
 export default roomsSlice.reducer;

@@ -4,6 +4,23 @@
 
 * {
 	box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #b8b8b8 #b1b1b1;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 14px;
+}
+
+*::-webkit-scrollbar-track {
+	background: #b1b1b1;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: #b8b8b8;
+	border-radius: 10px;
+	border: 2px none #ffffff;
 }
 
 html {
@@ -43,4 +60,39 @@ code {
 	display: inline;
 	width: 1.2em;
 	height: 1.2em;
+}
+
+.responsive-grid-rows {
+	grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.responsive-grid-rows .group {
+	order: -1;
+}
+
+@media (min-height: 720px) {
+	.responsive-grid-rows {
+		grid-template-rows: repeat(3, minmax(0, 1fr));
+	}
+
+	.responsive-grid-rows .group {
+		order: 0;
+	}
+}
+
+@media (min-height: 980px) {
+	.responsive-grid-rows {
+		grid-template-rows: repeat(4, minmax(0, 1fr));
+	}
+}
+
+.cards-grid .calculated-square {
+	width: auto !important;
+	height: auto !important;
+	padding-top: 100%;
+}
+
+.group .range-slider {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }

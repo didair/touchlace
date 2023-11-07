@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getBaseURI } from "lib/config";
+import { resolveMedia } from 'services/mediabrowser/slice';
 
 const initialState = {
 	entities: [],
-	topEntities: [],
+	favorites: [],
+	groups: [],
 };
 
 export const settingsSlice = createSlice({
@@ -20,15 +23,71 @@ export const settingsSlice = createSlice({
 				state.entities.push(action.payload);
 			}
 		},
-		setTopEntities: (state, action) => {
-			state.topEntities = action.payload;
+		favoriteEntity: (state, action) => {
+			if (state.favorites == null) {
+				state.favorites = [];
+			}
+
+			if (state.favorites.includes(action.payload)) {
+				state.favorites = state.favorites.filter((entity_id) =>
+					entity_id != action.payload
+				);
+			} else {
+				state.favorites.push(action.payload);
+			}
 		},
+		addGroup: (state, action) => {
+			if (state.groups == null) {
+				state.groups = [];
+			}
+
+			state.groups.push(action.payload);
+		},
+		updateGroup: (state, action) => {
+			const { payload: group } = action;
+			const groupIndex = state.groups.findIndex((g) =>
+				g.id == group.id
+			);
+
+			if (groupIndex > -1) {
+				state.groups.splice(groupIndex, 1, group);
+			}
+		},
+		deleteGroup: (state, action) => {
+			const groupIndex = state.groups.findIndex((group) => {
+				if (typeof action.payload == 'object') {
+					return group.id == action.payload.id;
+				}
+
+				return group.id == action.payload;
+			});
+
+			if (groupIndex > -1) {
+				state.groups.splice(groupIndex, 1);
+			}
+		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(resolveMedia.fulfilled, (state, action) => {
+			const { media } = action.payload;
+
+			state.entities = state.entities.map((entity) => {
+				if (entity.backgroundImageId == media.media_content_id) {
+					entity['backgroundUrl'] = getBaseURI() + media.url;
+				}
+
+				return entity;
+			});
+		});
 	},
 });
 
 export const {
 	setEntitySettings,
-	setTopEntities,
+	favoriteEntity,
+	addGroup,
+	updateGroup,
+	deleteGroup,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

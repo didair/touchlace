@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCallEntityServiceMutation } from "services/states/api";
 import { IEntity, IEntitySettings } from 'types';
-import { capitalize } from 'lib/text';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
-import { useUpdateEntityStateMutation } from 'services/states/api';
 import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
@@ -13,7 +12,7 @@ import Modal from 'components/Modal';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
-const EntitySwitch = ({
+const EntityScene = ({
 	entity,
 	settings,
 }: {
@@ -21,17 +20,19 @@ const EntitySwitch = ({
 	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
-	const [updateState] = useUpdateEntityStateMutation();
+	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
 	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
+	// Activated in the past 60 seconds?
+	const state = (new Date() - new Date(entity.state)) < 60 * 1000;
 
-	const toggleOnOff = () => {
-		updateState({
+	const activateScene = () => {
+		callService({
 			entity_id: entity.entity_id,
-			domain: 'switch',
-			state: entity.state == 'on' ? 'off' : 'on',
+			domain: 'scene',
+			service: 'turn_on',
 		});
 	};
 
@@ -51,15 +52,6 @@ const EntitySwitch = ({
 				</div>
 
 				<div className="flex items-center justify-center">
-					<input
-						id="onOff"
-						type="checkbox"
-						checked={entity.state == 'on'}
-						onChange={toggleOnOff}
-					/>
-
-					<label htmlFor="onOff" className="ml-2">{capitalize(entity.state)}</label>
-
 					<span
 						className={cx("ml-4 text-xl", { 'text-blue/90': showSettings })}
 						onClick={() => setShowSettings(!showSettings)}
@@ -82,8 +74,8 @@ const EntitySwitch = ({
 
 			<Card
 				onLongPress={() => setOpen(true)}
-				onClick={toggleOnOff}
-				state={entity.state == 'on' ? 'light' : 'dark'}
+				onClick={activateScene}
+				state={state ? 'light' : 'dark'}
 				type="switch"
 				backgroundImage={settings?.backgroundUrl}
 			>
@@ -99,10 +91,6 @@ const EntitySwitch = ({
 							settings.name
 						: entity.attributes.friendly_name}
 					</div>
-
-					<div>
-						{capitalize(entity.state)}
-					</div>
 				</div>
 
 				<div className="flex justify-between">
@@ -110,7 +98,7 @@ const EntitySwitch = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-light': entity.state != 'on' }
+						{ 'text-light': !state }
 					)}>
 						<Icon name={icon_name} />
 					</div>
@@ -121,4 +109,4 @@ const EntitySwitch = ({
 
 };
 
-export default EntitySwitch;
+export default EntityScene;
