@@ -471,6 +471,12 @@ const Icon = ({ name, className }: {
 		case 'star':
 			return <Star className={className} />
 
+		case 'wrench':
+			return <FontAwesomeIcon icon={solid('wrench')} className={className} />
+
+		case 'rotate':
+			return <FontAwesomeIcon icon={solid('rotate')} className={className} />
+
 		default:
 			return null;
 	};
