@@ -20,20 +20,24 @@ function App() {
 
 		if (squares.length > 0) {
 			squares.forEach((square) => {
-				if (square.classList.contains('square-h')) {
-					square.style.width = square.scrollHeight + 'px';
-				}
-
 				if (square.classList.contains('square-h-half')) {
 					square.style.width = (square.scrollHeight / 2) - 10 + 'px';
+					return;
 				}
 
-				if (square.classList.contains('square-w')) {
-					square.style.width = square.scrollWidth + 'px';
+				if (square.classList.contains('square-h')) {
+					square.style.width = square.scrollHeight + 'px';
+					return;
 				}
 
 				if (square.classList.contains('square-w-half')) {
 					square.style.width = (square.scrollWidth / 2) - 10 + 'px';
+					return;
+				}
+
+				if (square.classList.contains('square-w')) {
+					square.style.width = square.scrollWidth + 'px';
+					return;
 				}
 			});
 		}
