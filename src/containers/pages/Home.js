@@ -39,7 +39,7 @@ const Home = () => {
 			});
 		}
 
-		const scenes = entities?.filter((entity) => entity.entity_id.includes('scene.'));
+		const scenes = entities.filter((entity) => entity.entity_id.includes('scene.'));
 		if (scenes != null && scenes.length > 0) {
 			sections.push({
 				title: 'Scenes',
@@ -47,7 +47,7 @@ const Home = () => {
 			});
 		}
 
-		const groups_result = groups.filter((group) =>
+		const groups_result = groups?.filter((group) =>
 			favorites.find((favorite) =>
 				favorite == group.id
 			) == null
