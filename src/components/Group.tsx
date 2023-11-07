@@ -144,9 +144,9 @@ const Group = ({ group }: {
 
 						<div className="truncate">
 							{lightsOnCount > 0 ?
-								"Turn off all"
+								"Turn all off"
 							:
-								"Turn on all"
+								"Turn all on"
 							}
 						</div>
 					</div>
