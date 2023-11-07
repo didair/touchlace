@@ -163,17 +163,17 @@ const Settings = () => {
 			</h1>
 
 			{entities != null ?
-				<h3 className="text-lg mt-1 mb-4">
+				<div>
 					<Icon name="circle-info" className="mr-2" />
 					Got states from {entities.length} devices
 
 					{unavailable > 0 ?
-						<span className="ml-4">
+						<div>
 							<Icon name="triangle-exclamation" className="mr-2" />
 							{unavailable} unavailable devices
-						</span>
+						</div>
 					: null}
-				</h3>
+				</div>
 			: null}
 
 			<div className="mt-8">
