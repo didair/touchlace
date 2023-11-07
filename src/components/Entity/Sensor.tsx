@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IEntity, IEntitySettings } from 'types';
+import { useDispatch, useSelector } from 'react-redux';
+import { favoriteEntity } from 'services/settings/slice';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -18,10 +20,12 @@ const EntitySensor = ({
 	entity: IEntity,
 	settings: IEntitySettings,
 }) => {
+	const dispatch = useDispatch();
 	const [fetchStatistics, setFetchStatistics] = useState(false);
 	const { data: statistics } = useGetEntityStatisticsQuery({
 		entity_id: entity.entity_id,
 	}, { skip: !fetchStatistics });
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
 	const locale = window.navigator.userLanguage || window.navigator.language;
 	const [open, setOpen] = useState(false);
@@ -51,6 +55,10 @@ const EntitySensor = ({
 		}
 	}, [entity, settings]);
 
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
+	};
+
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
@@ -66,6 +74,13 @@ const EntitySensor = ({
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
+					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
 					</span>
 				</div>
 

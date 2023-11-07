@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { IEntity, IEntitySettings } from 'types';
+import { useDispatch, useSelector } from 'react-redux';
+import { favoriteEntity } from 'services/settings/slice';
 import useEntityIcon from 'lib/useEntityIcon';
 import cx from 'classnames';
 
@@ -15,13 +17,19 @@ const EntityBinarySensor = ({
 	entity: IEntity,
 	settings: IEntitySettings,
 }) => {
+	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 	const icon_name = useEntityIcon(entity);
 	const name = settings != null && settings.name != null && settings.name != '' ?
 		settings.name
 	: entity.attributes.friendly_name;
 	let value = entity.state === 'on' ? 'Open' : 'Closed';
+
+	const toggleFavorite = () => {
+		dispatch(favoriteEntity(entity.entity_id));
+	};
 
 	return (
 		<>
@@ -38,6 +46,13 @@ const EntityBinarySensor = ({
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
+					</span>
+
+					<span
+						className={cx("ml-4 text-xl", { 'text-bright-green': isFavorited })}
+						onClick={toggleFavorite}
+					>
+						<Icon name="star" />
 					</span>
 				</div>
 
