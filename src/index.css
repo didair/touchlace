@@ -66,9 +66,17 @@ code {
 	grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
+.responsive-grid-rows .group {
+	order: -1;
+}
+
 @media (min-height: 720px) {
 	.responsive-grid-rows {
 		grid-template-rows: repeat(3, minmax(0, 1fr));
+	}
+
+	.responsive-grid-rows .group {
+		order: 0;
 	}
 }
 
