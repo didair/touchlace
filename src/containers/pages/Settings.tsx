@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { IDropdownItem } from "components/Dropdown";
+import { createPortal } from "react-dom";
+import { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createRoom, deleteRoom, updateRoom, moveRoom } from "services/rooms/slice";
 import { addGroup, updateGroup, deleteGroup } from "services/settings/slice";
@@ -9,6 +11,7 @@ import Icon from "components/Icon";
 import Modal from "components/Modal";
 import RoomForm from "components/Forms/RoomForm";
 import GroupForm from "components/Forms/GroupForm";
+import Dropdown from "components/Dropdown";
 
 const Settings = () => {
 	const dispatch = useDispatch();
@@ -18,6 +21,40 @@ const Settings = () => {
 	const rooms = useSelector((state) => state.rooms.list);
 	const groups = useSelector((state) => state.settings.groups);
 	const unavailable = entities != null ? entities.filter((ent) => ent.state === 'unavailable').length : 0;
+
+	const dropdownItems = useMemo<IDropdownItem[]>(() => {
+		return [
+			{
+				label: 'Change HASS base url',
+				icon: 'rotate',
+				onClick: () => {
+					const confirm = window.confirm('You will be taken to the setup screen but all settings will be kept. OK?');
+					if (confirm) {
+						localStorage.removeItem('touchlace-base-uri');
+						localStorage.removeItem('hassTokens');
+
+						// Replace this redirect l8er
+						window.location = '/setup';
+					}
+				},
+			},
+			{
+				label: 'Reset all settings',
+				icon: 'triangle-exclamation',
+				onClick: () => {
+					const confirm = window.confirm('This will clear all settings made and redirect you to the setup screen! Proceed?');
+					if (confirm) {
+						localStorage.removeItem('touchlace-base-uri');
+						localStorage.removeItem('hassTokens');
+						localStorage.removeItem('persist:root');
+
+						// Replace this redirect l8er
+						window.location = '/setup';
+					}
+				},
+			},
+		];
+	}, []);
 
 	const onRoomSubmit = (values) => new Promise((resolve) => {
 		if (values.id == null || values.id == 'new') {
@@ -89,6 +126,14 @@ const Settings = () => {
 
 	return (
 		<div className="px-8 h-full overflow-y-scroll">
+			{createPortal((
+				<Dropdown items={dropdownItems}>
+					<div className="cursor-pointer flex items-center">
+						<Icon name="wrench" className="mr-2" /> Tools
+					</div>
+				</Dropdown>
+			), document.getElementById('header-right') ?? document.body)}
+
 			<Modal open={room != null} onClose={() => setSelectedRoom(null)}>
 				<div className="mb-4">
 					{room != null ?
