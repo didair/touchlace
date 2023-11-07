@@ -653,11 +653,24 @@ export const IconsList = [
 		preview: 'repeat',
 		on: 'repeat',
 		off: 'repeat',
-	}, {
+	},
+	{
 		name: 'star',
 		preview: 'star',
 		on: 'star',
 		off: 'star',
+	},
+	{
+		name: 'wrench',
+		preview: 'wrench',
+		on: 'wrench',
+		off: 'wrench',
+	},
+	{
+		name: 'rotate',
+		preview: 'rotate',
+		on: 'rotate',
+		off: 'rotate',
 	},
 ];
 
