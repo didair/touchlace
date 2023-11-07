@@ -47,6 +47,19 @@ const Home = () => {
 			});
 		}
 
+		const groups_result = groups.filter((group) =>
+			favorites.find((favorite) =>
+				favorite == group.id
+			) == null
+		);
+
+		if (groups_result != null && groups_result.length > 0) {
+			sections.push({
+				title: 'Groups',
+				entities: groups_result.map((group) => group.id),
+			});
+		}
+
 		return sections;
 	}, [entities, favorites]);
 
@@ -61,14 +74,6 @@ const Home = () => {
 					<Entities entities={section.entities} />
 				</FolderContainer>
 			)}
-
-			{groups != null && groups.length > 0 ?
-				<FolderContainer title="Grupper">
-					{groups.map((group) => {
-						return <Group group={group} />
-					})}
-				</FolderContainer>
-			: null}
 		</FoldersContainer>
 	);
 }
