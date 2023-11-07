@@ -15,7 +15,7 @@ const initialState = {
 	currentlyPlayingDirectory: null,
 };
 
-async function fetchData(entity, child = null) {
+async function fetchData(entity, child = null, type = null) {
 	const connection = await getHassConnection();
 
 	if (connection == null) {
@@ -24,12 +24,15 @@ async function fetchData(entity, child = null) {
 	}
 
 	let message = {
-		type: 'media_player/browse_media',
-		entity_id: entity.entity_id,
+		type: type ?? 'media_player/browse_media',
+		entity_id: entity?.entity_id,
 	};
 
-	if (child != null && (child.media_content_id != '' || child.media_content_type != '')) {
+	if (child != null && child.media_content_id != '') {
 		message.media_content_id = child.media_content_id;
+	}
+	
+	if (child != null && child.media_content_type != '') {
 		message.media_content_type = child.media_content_type;
 	}
 
@@ -102,6 +105,45 @@ export const navigateDirectory = createAsyncThunk('mediaBrowser/fetchDirectory',
 	}
 );
 
+export const browseMedia = createAsyncThunk('mediaBrowser/browseMedia',
+	async (action, thunkAPI) => {
+		let response = null;
+
+		response = await fetchData(null,
+			{ media_content_id: 'media-source://media_source' },
+			'media_source/browse_media'
+		);
+
+		if (response.children != null && response.children.length > 0) {
+			response.children.forEach((child) => {
+				thunkAPI.dispatch(resolveMedia(child));
+			});
+		}
+
+		return {
+			directory: response,
+		};
+	}
+);
+
+export const resolveMedia = createAsyncThunk('mediaBrowser/resolveMedia',
+	async (child, thunkAPI) => {
+		let response = null;
+
+		response = await fetchData(null,
+			{ media_content_id: child.media_content_id },
+			'media_source/resolve_media'
+		);
+
+		return {
+			media: {
+				...response,
+				media_content_id: child.media_content_id
+			},
+		};
+	}
+);
+
 export const mediaBrowserSlice = createSlice({
 	name: 'mediaBrowser',
 	initialState,
@@ -152,6 +194,26 @@ export const mediaBrowserSlice = createSlice({
 				if (foundInState == null) {
 					state.directories.push(directory);
 				}
+			}
+		});
+
+		builder.addCase(browseMedia.fulfilled, (state, action) => {
+			const { directory } = action.payload;
+			state.currentDirectory = directory;
+		});
+
+		builder.addCase(resolveMedia.fulfilled, (state, action) => {
+			const { media } = action.payload;
+
+			if (state.currentDirectory != null) {
+				state.currentDirectory.children = state.currentDirectory.children?.map((child) => {
+					if (child.media_content_id == media.media_content_id) {
+						child.url = media.url;
+						child.mime_type = media.mime_type;
+					}
+
+					return child;
+				});
 			}
 		});
 	},

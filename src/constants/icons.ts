@@ -1,4 +1,3 @@
-
 export const IconsList = [
 	{
 		name: 'arrow-up-down',
@@ -517,6 +516,12 @@ export const IconsList = [
 		off: 'RoutinesLeavingHome',
 	},
 	{
+		name: 'house',
+		preview: 'house',
+		on: 'house',
+		off: 'house',
+	},
+	{
 		name: 'RoutinesLocation',
 		preview: 'RoutinesLocation',
 		on: 'RoutinesLocation',
@@ -648,4 +653,90 @@ export const IconsList = [
 		on: 'repeat',
 		off: 'repeat',
 	},
+	{
+		name: 'star',
+		preview: 'star',
+		on: 'star',
+		off: 'star',
+	},
+	{
+		name: 'wrench',
+		preview: 'wrench',
+		on: 'wrench',
+		off: 'wrench',
+	},
+	{
+		name: 'rotate',
+		preview: 'rotate',
+		on: 'rotate',
+		off: 'rotate',
+	},
+	{
+		name: 'mug',
+		preview: 'mug',
+		on: 'mug',
+		off: 'mug',
+	},
+	{
+		name: 'blender',
+		preview: 'blender',
+		on: 'blender',
+		off: 'blender',
+	},
+	{
+		name: 'beer',
+		preview: 'beer',
+		on: 'beer',
+		off: 'beer',
+	},
+	{
+		name: 'wine-glass',
+		preview: 'wine-glass',
+		on: 'wine-glass',
+		off: 'wine-glass',
+	},
+	{
+		name: 'wine-bottle',
+		preview: 'wine-bottle',
+		on: 'wine-bottle',
+		off: 'wine-bottle',
+	},
+	{
+		name: 'whiskey-glass',
+		preview: 'whiskey-glass',
+		on: 'whiskey-glass',
+		off: 'whiskey-glass',
+	},
+	{
+		name: 'martini-citrus',
+		preview: 'martini-citrus',
+		on: 'martini-citrus',
+		off: 'martini-citrus',
+	},
+	{
+		name: 'martini',
+		preview: 'martini',
+		on: 'martini',
+		off: 'martini',
+	},
+	{
+		name: 'glass-water',
+		preview: 'glass-water',
+		on: 'glass-water',
+		off: 'glass-water',
+	},
+	{
+		name: 'burger',
+		preview: 'burger',
+		on: 'burger',
+		off: 'burger',
+	},
+	{
+		name: 'pizza-slice',
+		preview: 'pizza-slice',
+		on: 'pizza-slice',
+		off: 'pizza-slice',
+	},
 ];
+
+export type IconNames = typeof IconsList[number]['name'];

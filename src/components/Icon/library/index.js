@@ -69,3 +69,4 @@ export { RoutinesWakeUp } from './hue/RoutinesWakeUp'
 export { UicontrolsMotionSensitivity } from './hue/UicontrolsMotionSensitivity'
 export { UicontrolsNoMotion } from './hue/UicontrolsNoMotion'
 export { Speaker } from './eva/Speaker';
+export { Star } from './eva/Star';

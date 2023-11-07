@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import { IconsList } from "constants/icons";
-import { Entity } from "types";
+import { IEntity } from "types";
 
-const useEntityIcon = (entity: Entity) => {
+const useEntityIcon = (entity: IEntity) => {
 	const entity_type = entity.entity_id.split('.')[0];
 	const entitySettings = useSelector((state) => {
 		return state.settings.entities.find(({ entity_id }) => entity_id == entity.entity_id)
 	});
 
 	const getState = () => {
-		if (entity_type === 'light' || entity_type === 'switch') {
+		if (entity_type === 'light' || entity_type === 'switch' || entity_type === 'binary_sensor') {
 			return entity.state === 'on';
 		}
 
@@ -35,12 +35,20 @@ const useEntityIcon = (entity: Entity) => {
 			return 'arrow-up-down';
 		}
 
+		if (entity_type === 'binary_sensor') {
+			return 'door';
+		}
+
 		if (entity_type === 'sensor') {
 			return 'lightbulb';
 		}
 
 		if (entity_type === 'media_player') {
 			return 'speaker';
+		}
+
+		if (entity_type === 'scene') {
+			return 'RoutinesComingHome';
 		}
 	};
 

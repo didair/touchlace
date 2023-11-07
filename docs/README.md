@@ -1,15 +1,16 @@
 # Touchlace
-(WIP) A Lovelace (Home Assistant) alternative written in ReactJS. Mainly designed to run on tablets
+A Lovelace (Home Assistant) alternative written in ReactJS. Mainly designed to run on tablets. Configure a beautiful dashboard without writing a single line of YAML!
 
 ![Touchlace preview on an wall mounted iPad](https://github.com/didair/touchlace/blob/main/docs/preview.jpeg)
 
 ## Features
 * A beautiful interface!
 * Configurable rooms
-* 90+ icons for your devices
+* 120+ icons for your devices
 * Real time device updates using web sockets
 * Basic configuration of all cards
-* Excellent Sonos integration with grouping and media browser (WIP, promised feature)
+* Excellent Sonos integration with grouping and media browser (WIP)
+* Set up your entire dashboard with GUI - No YAML required!
 
 ### ... Also worth mentioning
 * ✓ All data lives on your device
@@ -19,14 +20,19 @@
 - [x] Light
 - [x] Switch
 - [x] Cover (Blinds etc)
-- [ ] Scene
+- [x] Scene
 - [x] Sensor
-- [ ] Binary sensor
+- [x] Binary sensor
 - [ ] Person
 - [x] Media player
 
 ### Note
-Since all data (including preferences and authentication) lives locally on your devices it will not sync between app/browsers. Please be careful to not clear the cache once all settings are made.
+Since all data (including preferences and authentication) lives locally on your devices it will not sync between app/browsers. Please be careful to not clear the cache/localstorage once all settings are made.
+
+#### Adding backgrounds on entities
+Add images under "My Media" in hass. Before uploading them it is highly recommended to compress them using [imagecompressor.com](https://imagecompressor.com/) or similar.
+
+It should be enough if the images are a resolution of 300x300px. Note that this feature can reduce the lifespan of SD cards since it adds additional reads and writes. My tip is to keep all images as small as possible.
 
 ## Installation
 ### Expose Home Assistant

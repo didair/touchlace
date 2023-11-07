@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
-import { Entity as EntityInterface, EntitySettings as EntitySettingsInterface } from 'types';
+import { IEntity, IEntitySettings } from 'types';
 import { getBaseURI } from 'lib/config';
+import { capitalize } from 'lib/text';
 import cx from 'classnames';
 
 import Card from "components/Card";
@@ -15,8 +16,8 @@ const MediaPlayerEntity = ({
 	entity,
 	settings,
 }: {
-	entity: EntityInterface,
-	settings: EntitySettingsInterface,
+	entity: IEntity,
+	settings: IEntitySettings,
 }) => {
 	const [open, setOpen] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
@@ -89,86 +90,39 @@ const MediaPlayerEntity = ({
 
 			<Card
 				type="media"
-				className="col-span-2 overflow-hidden"
-				state={entity.state == 'playing' ? 'light' : 'dark'}
-				onLongPress={() => setOpen(true)}
+				state={entity.state == 'playing' || (entity.attributes.device_class == 'tv' && entity.state == 'on') ? 'light' : 'dark'}
+				backgroundImage={mediaInfo != null ? getBaseURI() + mediaInfo.entity_picture : null}
+				onClick={() => setOpen(true)}
 			>
-				{mediaInfo == null ?
-					<div className="flex items-center">
-						<div className={cx(
-							"h-11",
-							"flex",
-							"items-center",
-							"text-3xl",
-						)}>
-							<Icon name="speaker" />
-						</div>
-
-						<div className="font-semibold truncate text-ellipsis text-xl ml-2">
-							{name}
-							{selected_group_members?.length > 0 ?
-								' +' + selected_group_members.length
-								: null}
-						</div>
-					</div>
-					: null}
-
-				{mediaInfo != null ?
-					<div className={cx(
-						"flex items-center mb-2",
-						{
-							"text-gray/70": entity.state == 'playing',
-							"text-light-gray/40": entity.state != 'playing',
-						}
-					)}>
-						<Icon name="speaker" className="mr-1" />
+				<div className="text-sm z-10">
+					<div className="font-semibold text-base truncate text-ellipsis">
 						{name}
 						{selected_group_members?.length > 0 ?
 							' +' + selected_group_members.length
 							: null}
 					</div>
-				: null}
 
-				{mediaInfo != null ?
-					<div className="flex mb-2 gap-x-3">
-						<div>
-							<img
-								alt=""
-								className="w-16 h-16 rounded-md"
-								src={getBaseURI() + mediaInfo.entity_picture}
-							/>
-						</div>
-
-						<div style={{ width: 'calc(100% - 5rem)' }}>
-							<div className="font-semibold truncate">
-								{mediaInfo.media_title}
-							</div>
-
-							<div className="text-sm">
-								{mediaInfo.media_artist}
-							</div>
-						</div>
+					<div className="">
+						{capitalize(entity.state)}
+						{entity.attributes.volume_level != null && entity.state == 'playing' ?
+							' • ' + Math.round((entity.attributes.volume_level) * 100) + '%'
+						: null}
 					</div>
-					: null}
+				</div>
 
-				<SpeakerMediaControls entity={entity} />
-
-				<div className="absolute bottom-0 left-0 w-full">
-					<div
-						className={cx(
-							'transition-all',
-							'duration-500',
-							'h-1',
-							'bg-blue',
-							'translate-0',
-							{
-								'translate-y-1': entity.state != 'playing' || mediaInfo == null
-							}
-						)}
-						style={mediaInfo != null ?
-							{ width: Math.round((mediaInfo.media_position) / mediaInfo.media_duration * 100) + '%' }
-							: { width: '0%' }}
-					/>
+				<div className={cx(
+					"flex",
+					"items-center",
+					"text-2xl",
+					"z-10",
+					"text-light",
+					{
+						"!text-dark": mediaInfo == null && entity.state == 'on'
+					}
+				)}>
+					{entity.attributes.device_class == 'tv' ?
+						<Icon name="tv" />
+					: <Icon name="speaker" />}
 				</div>
 			</Card>
 		</>
