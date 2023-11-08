@@ -31,17 +31,16 @@ const Sidebar = () => {
 		const active = document.querySelector(`#sidebar a[href="${location.pathname}"].navitem`);
 
 		if (active != null) {
-			const activeRect = active.getBoundingClientRect();
 			const indicatorRect = indicator.getBoundingClientRect();
 			indicator.classList.remove('-translate-x-1');
-			indicator.style.top = activeRect.top + (activeRect.height/2) - (indicatorRect.height/2) + 'px';
+			indicator.style.top = active.offsetTop + (indicatorRect.height / 2) + 'px';
 		} else {
 			indicator.classList.add('-translate-x-1');
 		}
 	}, [location]);
 
 	return (
-		<div className="flex flex-col" id="sidebar">
+		<div className="flex flex-col relative" id="sidebar">
 			<SidebarItem to="/">
 				Home
 			</SidebarItem>
@@ -74,7 +73,7 @@ const Sidebar = () => {
 					</SidebarItem>
 				);
 			})}
-
+			
 			<div
 				className={cx(
 					'h-8 w-1',
