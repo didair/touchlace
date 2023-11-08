@@ -39,7 +39,7 @@ const Setup = () => {
 
 				<input
 					id="endpoint"
-					type="text"
+					type="url"
 					value={hass}
 					onChange={(e) => setHass(e.target.value)}
 					placeholder="http://192.168.1.15:8123"
