@@ -64,7 +64,7 @@ function App() {
 			<ScrollToTop />
 
 			<div className="flex flex-col max-h-full h-screen flex-nowrap overflow-hidden">
-				<div className="pt-6 flex-1 flex flex-col overflow-scroll">
+				<div className="pt-6 flex-1 flex flex-col overflow-hidden">
 					<div className="px-8 mb-5 flex justify-between">
 						<h1 className="text-xl">
 							<Time />
@@ -76,12 +76,12 @@ function App() {
 						<div id="header-right"></div>
 					</div>
 
-					<div className="flex flex-1 h-full overflow-scroll">
-						<div className="w-64 flex-shrink-0">
+					<div className="flex flex-1 h-full overflow-hidden">
+						<div className="w-64 flex-shrink-0 overflow-y-auto">
 							<Sidebar />
 						</div>
 
-						<div className="w-full overflow-y-hidden overflow-x-scroll">
+						<div className="w-full overflow-y-hidden overflow-x-auto">
 							<Outlet />
 						</div>
 					</div>
