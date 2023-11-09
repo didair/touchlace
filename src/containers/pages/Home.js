@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useGetStatesQuery } from "services/states/api";
 import { useSelector } from "react-redux";
 
-import Group from "components/Group";
 import Entities from "components/Entities";
 import FoldersContainer from "components/FoldersContainer";
 import FolderContainer from "components/FolderContainer";
