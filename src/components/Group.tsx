@@ -17,20 +17,10 @@ const Group = ({ group }: {
 		return entities.find((entity) => entity.entity_id == entity_id);
 	};
 
-
 	const hasLights = useMemo(() => {
 		if (group != null && group.entities != null) {
 			return group.entities.find((entity_id) =>
 				entity_id.indexOf('light') > -1
-			) != null;
-		}
-		return false;
-	}, [group]);
-
-	const hasSwitches = useMemo(() => {
-		if (group != null && group.entities != null) {
-			return group.entities.find((entity_id) =>
-				entity_id.indexOf('switch') > -1
 			) != null;
 		}
 		return false;
