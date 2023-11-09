@@ -26,13 +26,13 @@ const EntityCover = ({
 	const [showSettings, setShowSettings] = useState(false);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
-	const updatePosition = (event) => {
+	const updatePosition = (value) => {
 		callService({
 			entity_id: entity.entity_id,
 			domain: 'cover',
 			service: 'set_cover_position',
 			fields: {
-				position: event.target.value,
+				position: value,
 			},
 		});
 	};
@@ -62,12 +62,13 @@ const EntityCover = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="my-8">
+					<div className="py-4 w-28 h-72">
 						<RangeSlider
-							min="1"
-							max="100"
+							min={0}
+							max={100}
 							onChange={updatePosition}
 							value={entity.attributes.current_position}
+							flip
 						/>
 					</div>
 				</div>
