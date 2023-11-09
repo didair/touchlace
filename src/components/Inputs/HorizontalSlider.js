@@ -1,18 +1,15 @@
 import { useEffect, useId, useState, useRef } from 'react';
-import cx from 'classnames';
 import ReactSlider from 'react-slider';
-import './rangeSlider.css';
 
-const RangeSlider = ({
+import './horizontalSlider.css';
+
+const HorizontalSlider = ({
 	value = 0,
 	onChange = () => null,
 	min = 0,
 	max = 100,
-	showLabel = true,
-	flip = false,
 }) => {
 	const [internalValue, setInternalValue] = useState(parseInt(value));
-	const percentage = (internalValue / parseInt(max)) * 100;
 	const id = useId();
 	const sliderRef = useRef(null)
 
@@ -47,32 +44,20 @@ const RangeSlider = ({
 	};
 
 	return (
-		<div className="h-full flex flex-col items-center">
-			{showLabel ?
-				<label htmlFor={id} className="block mb-4">
-					{Math.round(percentage) + '%'}
-				</label>
-			: null}
-
-			<ReactSlider
-				ref={sliderRef}
-				orientation="vertical"
-				invert={true}
-				className={cx("range-slider", {
-					'flip': flip
-				})}
-				thumbClassName="slider-thumb"
-				trackClassName="slider-track"
-				value={internalValue}
-				onAfterChange={onSliderAfterChange}
-				onChange={onSliderChange}
-				min={parseInt(min)}
-				max={parseInt(max)}
-				id={id}
-			/>
-		</div>
+		<ReactSlider
+			ref={sliderRef}
+			value={internalValue}
+			className="horizontal-slider"
+			thumbClassName="slider-thumb"
+			trackClassName="slider-track"
+			onAfterChange={onSliderAfterChange}
+			onChange={onSliderChange}
+			min={parseInt(min)}
+			max={parseInt(max)}
+			id={id}
+		/>
 	);
 
 };
 
-export default RangeSlider;
+export default HorizontalSlider;
