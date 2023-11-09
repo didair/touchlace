@@ -4,7 +4,7 @@ import { useCallEntityServiceMutation } from "services/states/api";
 import { getBaseURI } from "lib/config";
 
 import Icon from "components/Icon";
-import HorizontalSlider from "./Inputs/HorizontalSlider";
+import HorizontalSlider from "components/Inputs/HorizontalSlider";
 
 const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider = false }) => {
 	const [callService] = useCallEntityServiceMutation();

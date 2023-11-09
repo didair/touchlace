@@ -9,8 +9,8 @@ import Icon from "components/Icon";
 import Modal from 'components/Modal';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 import MediaBrowser from 'components/MediaBrowser';
-import SpeakerGroupMembers from 'components/SpeakerGroupMembers';
-import SpeakerMediaControls from 'components/SpeakerMediaControls';
+import SpeakerGroupMembers from 'components/MediaBrowser/SpeakerGroupMembers';
+import SpeakerMediaControls from 'components/MediaBrowser/SpeakerMediaControls';
 
 const MediaPlayerEntity = ({
 	entity,
