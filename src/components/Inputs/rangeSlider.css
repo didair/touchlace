@@ -16,6 +16,11 @@
 	--bg-value-color: rgba(255, 255, 255, 0.7);
 }
 
+.range-slider.flip {
+	--bg-value-color: rgba(255, 255, 255, 0.05);
+	--bg-range-color: rgba(255, 255, 255, 0.7);
+}
+
 .range-slider .slider-track {
 	width: 100%;
 }

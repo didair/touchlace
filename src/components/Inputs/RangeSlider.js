@@ -1,4 +1,5 @@
 import { useEffect, useId, useState, useRef } from 'react';
+import cx from 'classnames';
 import ReactSlider from 'react-slider';
 import './rangeSlider.css';
 
@@ -8,6 +9,7 @@ const RangeSlider = ({
 	min = 0,
 	max = 100,
 	showLabel = true,
+	flip = false,
 }) => {
 	const [internalValue, setInternalValue] = useState(parseInt(value));
 	const percentage = (internalValue / parseInt(max)) * 100;
@@ -52,7 +54,9 @@ const RangeSlider = ({
 				ref={sliderRef}
 				orientation="vertical"
 				invert={true}
-				className="range-slider"
+				className={cx("range-slider", {
+					'flip': flip
+				})}
 				thumbClassName="slider-thumb"
 				trackClassName="slider-track"
 				value={internalValue}
