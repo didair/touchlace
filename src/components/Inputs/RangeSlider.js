@@ -1,7 +1,7 @@
 import { useEffect, useId, useState, useRef } from 'react';
 import cx from 'classnames';
 import ReactSlider from 'react-slider';
-import './rangeSlider.css';
+import './_rangeSlider.css';
 
 const RangeSlider = ({
 	value = 0,

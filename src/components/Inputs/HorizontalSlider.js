@@ -1,7 +1,7 @@
 import { useEffect, useId, useState, useRef } from 'react';
 import ReactSlider from 'react-slider';
 
-import './horizontalSlider.css';
+import './_horizontalSlider.css';
 
 const HorizontalSlider = ({
 	value = 0,
