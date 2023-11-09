@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import './checkbox.css';
+import './_checkbox.css';
 
 const Checkbox = (props) => {
 	const id = useId();
