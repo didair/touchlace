@@ -1,11 +1,10 @@
+import cx from 'classnames';
 import { useMemo } from "react";
 import { useCallEntityServiceMutation } from "services/states/api";
-import cx from 'classnames';
-import Icon from "components/Icon";
-import ReactSlider from "react-slider";
 import { getBaseURI } from "lib/config";
 
-import './Inputs/horizontalSlider.css';
+import Icon from "components/Icon";
+import HorizontalSlider from "./Inputs/HorizontalSlider";
 
 const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider = false }) => {
 	const [callService] = useCallEntityServiceMutation();
@@ -161,14 +160,11 @@ const SpeakerMediaControls = ({ entity, showMediaInfo = false, showVolumeSlider 
 
 			{showVolumeSlider ?
 				<div className="relative mt-4">
-					<ReactSlider
-						className="horizontal-slider"
-						thumbClassName="slider-thumb"
-						trackClassName="slider-track"
-						defaultValue={entity.attributes.volume_level != null ?
+					<HorizontalSlider
+						value={entity.attributes.volume_level != null ?
 							entity.attributes.volume_level * 100
 						: 0}
-						onAfterChange={onVolumeChange}
+						onChange={onVolumeChange}
 					/>
 				</div>
 			: null}
