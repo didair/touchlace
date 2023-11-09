@@ -64,8 +64,6 @@ const EntityCover = ({
 
 					<div className="py-4 w-28 h-72">
 						<RangeSlider
-							min={0}
-							max={100}
 							onChange={updatePosition}
 							value={entity.attributes.current_position}
 							flip
