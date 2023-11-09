@@ -1,7 +1,7 @@
 # Touchlace
 A Lovelace (Home Assistant) alternative written in ReactJS. Mainly designed to run on tablets. Configure a beautiful dashboard without writing a single line of YAML!
 
-![Touchlace preview on an wall mounted iPad](https://github.com/didair/touchlace/blob/main/docs/preview.jpeg)
+![Touchlace preview on an wall mounted iPad](https://github.com/didair/touchlace/blob/main/docs/preview1.jpg)
 
 ## Features
 * A beautiful interface!
@@ -46,3 +46,6 @@ http:
   cors_allowed_origins:
     - https://touchlace.aekstrom.me
 ```
+
+
+![Touchlace preview](https://github.com/didair/touchlace/blob/main/docs/preview2.jpg)
