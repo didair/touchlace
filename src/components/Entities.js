@@ -14,7 +14,7 @@ const Entities = (props) => {
 	return props.entities.map((entity_id) => {
 		const entity = entities.find((entity) => entity.entity_id == entity_id);
 
-		if (entity == null) {
+		if (entity == null && groups != null) {
 			const group = groups.find((group) => group.id == entity_id);
 
 			if (group != null) {
