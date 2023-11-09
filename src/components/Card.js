@@ -64,7 +64,7 @@ const Card = (props) => {
 			)}
 		>
 			{props.backgroundImage != null ?
-				<div className='absolute inset-0 w-full h-full z-0 bg-dark/50'>
+				<div className='absolute inset-0 w-full h-full z-0 bg-dark/50 rounded-xl overflow-hidden'>
 					<div
 						className={cx(
 							"absolute inset-0 w-full h-full bg-cover bg-center",
