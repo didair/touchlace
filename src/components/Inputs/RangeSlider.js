@@ -17,15 +17,19 @@ const RangeSlider = ({
 	const sliderRef = useRef(null)
 
 	useEffect(() => {
-		if (sliderRef.current != null) {
-			sliderRef.current.resize()
-		}
-
-		setTimeout(() => {
-			if (sliderRef.current != null) {
-				sliderRef.current.resize()
+		const handleSliderResize = () => {
+			if (sliderRef.current == null) {
+				return;
 			}
-		}, 100);
+
+			sliderRef.current.handleResize();
+			sliderRef.current.resize();
+		};
+
+		setTimeout(handleSliderResize, 100);
+		setTimeout(handleSliderResize, 250);
+		setTimeout(handleSliderResize, 350);
+		handleSliderResize();
 	}, [sliderRef.current])
 
 	useEffect(() => {
