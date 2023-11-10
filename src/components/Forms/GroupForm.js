@@ -46,7 +46,7 @@ const GroupForm = ({
 							Save
 						</Button>
 
-						{initialValues != null ?
+						{initialValues != null && initialValues.id != null ?
 							<span
 								className={cx("text-xl", { 'text-bright-green': isFavorited })}
 								onClick={toggleFavorite}
