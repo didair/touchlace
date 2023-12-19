@@ -50,6 +50,10 @@ const useEntityIcon = (entity: IEntity) => {
 		if (entity_type === 'scene') {
 			return 'RoutinesComingHome';
 		}
+
+		if (entity_type === 'vacuum') {
+			return 'DevicesBridgesV2';
+		}
 	};
 
 	const getCurrentRange = (icon) => {

@@ -10,6 +10,7 @@ import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Inputs/Input';
 import EntitySettingsForm from './EntitySettingsForm';
+import VacuumForm from './VacuumForm';
 
 const RoomAddEntityForm = (props) => {
 	const { data: entities } = useGetStatesQuery();
@@ -34,6 +35,10 @@ const RoomAddEntityForm = (props) => {
 		if (props.type == 'cover') {
 			return ['cover'];
 		}
+
+		if (props.type == 'vacuum') {
+			return ['vacuum'];
+		}
 	}, [props.type]);
 
 	const onSubmit = (values) => {
@@ -54,7 +59,6 @@ const RoomAddEntityForm = (props) => {
 				/>
 
 				<div className="bg-gray/10 border border-gray/40 rounded-md px-2">
-
 					{entities.map((entity: IEntity) => {
 						const entity_type = getEntityType(entity);
 						if (types_map.indexOf(entity_type) == -1) return null;
@@ -94,6 +98,13 @@ const RoomAddEntityForm = (props) => {
 	};
 
 	const step2 = () => {
+		if (props.type == 'vacuum') {
+			return (
+				<div>
+				</div>
+			);
+		}
+
 		return (
 			<div>
 				<EntitySettingsForm entity={selectedEntity} hideRoomInput />
