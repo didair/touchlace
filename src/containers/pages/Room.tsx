@@ -86,6 +86,11 @@ const Room = (props) => {
 				icon: 'circle-plus',
 				onClick: () => { setForm('cover'); setOpen(true) },
 			},
+			{
+				label: 'Vacuum',
+				icon: 'circle-plus',
+				onClick: () => { setForm('vacuum'); setOpen(true) },
+			},
 		];
 	}, [room]);
 
