@@ -1,7 +1,7 @@
 import { IEntity, IEntitySettings } from "types";
 import { store } from "./store";
 
-export const getEntityType = (entity: IEntity): 'light' | 'sensor' | 'binary_sensor' | 'switch' | 'cover' | 'media_player' => {
+export const getEntityType = (entity: IEntity): 'light' | 'sensor' | 'binary_sensor' | 'switch' | 'cover' | 'media_player' | 'camera' | 'vacuum' => {
 	const entity_type: string = entity.entity_id.split('.')[0];
 	return entity_type;
 };

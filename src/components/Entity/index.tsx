@@ -9,6 +9,7 @@ import EntityBinarySensor from "./BinarySensor";
 import EntitySensor from './Sensor';
 import MediaPlayerEntity from "./MediaPlayer";
 import EntityScene from "./Scene";
+import EntityVacuum from "./Vacuum";
 
 const Entity = (props) => {
 	const entity_type = getEntityType(props.entity);
@@ -67,6 +68,15 @@ const Entity = (props) => {
 	if (entity_type === 'scene') {
 		return (
 			<EntityScene
+				settings={entitySettings}
+				{...props}
+			/>
+		);
+	}
+
+	if (entity_type === 'vacuum') {
+		return (
+			<EntityVacuum
 				settings={entitySettings}
 				{...props}
 			/>
