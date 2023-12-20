@@ -52,7 +52,7 @@ const useEntityIcon = (entity: IEntity) => {
 		}
 
 		if (entity_type === 'vacuum') {
-			return 'DevicesBridgesV2';
+			return 'broom';
 		}
 	};
 

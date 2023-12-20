@@ -26,6 +26,8 @@ const Room = (props) => {
 		return rooms.find((room) => room.id == currentRoom);
 	}, [rooms, currentRoom]);
 
+	console.log('room', room);
+
 	useEffect(() => {
 		if (id != currentRoom) {
 			setCurrentRoom(null);

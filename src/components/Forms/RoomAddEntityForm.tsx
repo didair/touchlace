@@ -46,11 +46,10 @@ const RoomAddEntityForm = (props) => {
 		}
 	}, [props.type]);
 
-	const onSubmit = (values) => {
+	const onSubmit = () => {
 		if (typeof props.onSubmit == 'function') {
 			props.onSubmit({
 				entity: selectedEntity,
-				...values,
 			});
 		}
 	};
@@ -158,7 +157,7 @@ const RoomAddEntityForm = (props) => {
 				: null}
 
 			{showSubmit ?
-				<Button type="submit" className="mt-4">
+				<Button type="submit" className="mt-4" onClick={onSubmit}>
 					Save
 				</Button>
 				: null}
