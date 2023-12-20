@@ -21,6 +21,12 @@ export interface IEntity {
 	},
 };
 
+export interface IRoom {
+	id: string,
+	name: string,
+	entities?: Array<string>,
+};
+
 export interface IEntitySettings {
 	name?: string,
 	note?: string,
@@ -36,4 +42,11 @@ export interface IEntityGroup {
 	backgroundImageId?: string,
 	backgroundUrl?: string,
 	entities: Array<string>,
+};
+
+export interface IVacuum {
+	id: string,
+	name: string,
+	map: string,
+	room: string,
 };

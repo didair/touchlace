@@ -1,11 +1,13 @@
 import { IEntity } from 'types';
 
-import { useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Fragment, useMemo, useState } from 'react';
 import { useGetStatesQuery } from 'services/states/api';
 import { getEntityRoom, getEntityType } from 'lib/entity';
+import { addVacuum } from 'services/settings/slice';
 import { capitalize } from 'lib/text';
+import useVacuumEntityMap from 'lib/useVacuumEntityMap';
 
-import { Form } from 'react-final-form';
 import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Inputs/Input';
@@ -13,9 +15,12 @@ import EntitySettingsForm from './EntitySettingsForm';
 import VacuumForm from './VacuumForm';
 
 const RoomAddEntityForm = (props) => {
+	const dispatch = useDispatch();
 	const { data: entities } = useGetStatesQuery();
 	const [selectedEntity, setSelectedEntity] = useState(null);
 	const [filter, setFilter] = useState('');
+	const [showSubmit, setShowSubmit] = useState(false);
+	const [mapVacuumEntities] = useVacuumEntityMap();
 
 	const types_map = useMemo(() => {
 		if (props.type == null) return null;
@@ -42,11 +47,34 @@ const RoomAddEntityForm = (props) => {
 	}, [props.type]);
 
 	const onSubmit = (values) => {
-		values['entity'] = selectedEntity;
 		if (typeof props.onSubmit == 'function') {
-			props.onSubmit(values);
+			props.onSubmit({
+				entity: selectedEntity,
+				...values,
+			});
 		}
 	};
+
+	const selectEntity = (entity) => {
+		if (props.type != 'vacuum') {
+			setShowSubmit(true);
+		}
+
+		setSelectedEntity(entity);
+	};
+
+	const onVacuumSubmit = (values) => new Promise((resolve) => {
+		dispatch(addVacuum(values));
+
+		if (typeof props.onSubmit == 'function' && values.room != '') {
+			props.onSubmit({
+				entity: selectedEntity,
+				...values,
+			});
+		}
+
+		resolve(1);
+	});
 
 	const step1 = () => {
 		return (
@@ -75,7 +103,7 @@ const RoomAddEntityForm = (props) => {
 							<div
 								key={entity.entity_id}
 								className="flex items-center justify-between py-2 border-b border-b-gray/40 last-of-type:border-b-0 cursor-pointer"
-								onClick={() => setSelectedEntity(entity)}
+								onClick={() => selectEntity(entity)}
 							>
 								<div className="truncate">
 									<div className="text-sm">
@@ -99,8 +127,11 @@ const RoomAddEntityForm = (props) => {
 
 	const step2 = () => {
 		if (props.type == 'vacuum') {
+			const entitiesMap = mapVacuumEntities(selectedEntity);
+
 			return (
 				<div>
+					<VacuumForm initialValues={entitiesMap} onSubmit={onVacuumSubmit} />
 				</div>
 			);
 		}
@@ -117,27 +148,21 @@ const RoomAddEntityForm = (props) => {
 	}
 
 	return (
-		<Form
-			onSubmit={onSubmit}
-			initialValues={props.initialValues}
-			render={({ handleSubmit }) => (
-				<form onSubmit={handleSubmit}>
-					{selectedEntity == null ?
-						step1()
-						: null}
+		<Fragment>
+			{selectedEntity == null ?
+				step1()
+				: null}
 
-					{selectedEntity != null ?
-						step2()
-						: null}
+			{selectedEntity != null ?
+				step2()
+				: null}
 
-					{selectedEntity != null ?
-						<Button type="submit" className="mt-4">
-							Save
-						</Button>
-						: null}
-				</form>
-			)}
-		/>
+			{showSubmit ?
+				<Button type="submit" className="mt-4">
+					Save
+				</Button>
+				: null}
+		</Fragment>
 	);
 
 };

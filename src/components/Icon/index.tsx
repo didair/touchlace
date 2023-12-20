@@ -510,6 +510,9 @@ const Icon = ({ name, className }: {
 		case 'pizza-slice':
 			return <FontAwesomeIcon icon={solid('pizza-slice')} className={className} />
 
+		case 'broom':
+			return <FontAwesomeIcon icon="fa-solid fa-broom" className={className} />
+
 		default:
 			return null;
 	};

@@ -8,10 +8,8 @@ const Cleaning = () => {
 	const { data: entities }: { data: [IEntity] } = useGetStatesQuery();
 
 	const test = entities?.filter((entity) => {
-		return entity.entity_id.indexOf('goran_') > -1;
+		return entity.entity_id.indexOf('goran') > -1;
 	});
-
-	console.log('test', test);
 
 	const camera = entities?.find((entity) => {
 		return entity.entity_id == 'camera.goran_map'

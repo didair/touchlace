@@ -1,3 +1,5 @@
+import { IRoom } from "types";
+
 import { createPortal } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +20,8 @@ const Room = (props) => {
 	const [currentRoom, setCurrentRoom] = useState(null);
 	const [form, setForm] = useState(null);
 	const [isOpen, setOpen] = useState(false);
-	const rooms = useSelector((state) => state.rooms.list);
+	const rooms: [IRoom] = useSelector((state) => state.rooms.list);
+
 	const room = useMemo(() => {
 		return rooms.find((room) => room.id == currentRoom);
 	}, [rooms, currentRoom]);
@@ -36,6 +39,9 @@ const Room = (props) => {
 		if (room == null) return [];
 
 		return room.entities.filter((entity_id) => {
+			if (entity_id == null) {
+				console.log('entity id  null', entity_id);
+			}
 			return entity_id.includes('light.') || entity_id.includes('switch.');
 		});
 	}, [room]);
@@ -61,6 +67,14 @@ const Room = (props) => {
 
 		return room.entities.filter((entity_id) => {
 			return entity_id.includes('scene.');
+		});
+	}, [room]);
+
+	const cleaning = useMemo(() => {
+		if (room == null) return [];
+
+		return room.entities.filter((entity_id) => {
+			return entity_id.includes('vacuum.');
 		});
 	}, [room]);
 
@@ -125,6 +139,12 @@ const Room = (props) => {
 				{lights.length > 0 ?
 					<FolderContainer title="Lights" key={room.id + "lights"}>
 						<Entities entities={lights} />
+					</FolderContainer>
+				: null}
+
+				{cleaning.length > 0 ?
+					<FolderContainer title="Cleaning" key={room.id + "cleaning"}>
+						<Entities entities={cleaning} />
 					</FolderContainer>
 				: null}
 
