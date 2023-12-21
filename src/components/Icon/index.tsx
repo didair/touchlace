@@ -74,6 +74,7 @@ import {
 	Star,
 	UicontrolsMotionSensitivity,
 	UicontrolsNoMotion,
+	Vacuum,
 } from './library';
 
 const Icon = ({ name, className }: {
@@ -512,6 +513,9 @@ const Icon = ({ name, className }: {
 
 		case 'broom':
 			return <FontAwesomeIcon icon="fa-solid fa-broom" className={className} />
+
+		case 'vacuum':
+			return <Vacuum className={className} />
 
 		default:
 			return null;
