@@ -743,6 +743,12 @@ export const IconsList = [
 		on: 'broom',
 		off: 'broom',
 	},
+	{
+		name: 'vacuum',
+		preview: 'vacuum',
+		on: 'vacuum',
+		off: 'vacuum',
+	}
 ];
 
 export type IconNames = typeof IconsList[number]['name'];
