@@ -1,9 +1,9 @@
 import { useGetStatesQuery } from "services/states/api";
 import { useSelector } from "react-redux";
-import { IEntity } from "types";
-import { getBaseURI } from "lib/config";
-import FolderContainer from "components/FolderContainer";
+import { IVacuum, IEntity } from "types";
+
 import FoldersContainer from "components/FoldersContainer";
+import FolderContainer from "components/FolderContainer";
 
 const Cleaning = () => {
 	const { data: entities }: { data: [IEntity] } = useGetStatesQuery();
@@ -11,19 +11,12 @@ const Cleaning = () => {
 
 	console.log('vacuums', vacuums);
 
-	const test = entities?.filter((entity) => {
-		return entity.entity_id.indexOf('goran') > -1;
-	});
-
-	const camera = entities?.find((entity) => {
-		return entity.entity_id == 'camera.goran_map'
-	});
-
 	return (
 		<FoldersContainer>
 			{vacuums?.map((vacuum) => {
+				console.log('vacuum', vacuum);
 				return (
-					<FolderContainer title={vacuum.title}>
+					<FolderContainer title={vacuum.name} key={vacuum.id}>
 					</FolderContainer>
 				);
 			})}

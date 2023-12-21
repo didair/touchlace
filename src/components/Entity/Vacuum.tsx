@@ -1,12 +1,13 @@
 import { IVacuum } from 'types';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IEntity, IEntitySettings } from 'types';
 import { capitalize } from 'lib/text';
-import useEntityIcon from 'lib/useEntityIcon';
+import { getBaseURI } from 'lib/config';
+import useInterval from 'lib/useInterval';
 import cx from 'classnames';
 
-import { useUpdateEntityStateMutation } from 'services/states/api';
+import { useGetStatesQuery, useUpdateEntityStateMutation } from 'services/states/api';
 import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
@@ -21,14 +22,14 @@ const EntityVacuum = ({
 	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
+	const { data: entities } = useGetStatesQuery();
 	const [updateState] = useUpdateEntityStateMutation();
 	const [open, setOpen] = useState(false);
+	const [delay, setDelay] = useState(null);
+	const [mapPicture, setMapPicture] = useState(null);
 	const [showSettings, setShowSettings] = useState(false);
-	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 	const vacuum: IVacuum = useSelector((state) => state.settings.vacuums.find((vac) => vac.id == entity.entity_id));
-
-	console.log('entity, vac', entity, vacuum);
 
 	const toggleOnOff = () => {
 		updateState({
@@ -42,15 +43,47 @@ const EntityVacuum = ({
 		dispatch(favoriteEntity(entity.entity_id));
 	};
 
+	useInterval(() => {
+		if (mapEntity == null) {
+			setMapPicture(null);
+			return;
+		}
+
+		setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
+	}, delay);
+
+	const mapEntity: IEntity = useMemo(() => {
+		if (vacuum == null || vacuum.map == '') {
+			return null;
+		}
+
+		return entities.find((entity) => entity.entity_id == vacuum.map);
+	}, [vacuum]);
+
+	useEffect(() => {
+		if (open) {
+			setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
+			setDelay(3000);
+		} else {
+			setDelay(null);
+		}
+	}, [open]);
+
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}} type="big">
 				<div className="mb-8">
 					<h3 className="text-2xl">
-						{settings != null && settings.name != null && settings.name != '' ?
-							settings.name
+						{vacuum != null && vacuum.name != null && vacuum.name != '' ?
+							vacuum.name
 						: entity.attributes.friendly_name}
 					</h3>
+				</div>
+
+				<div>
+					{mapPicture != null ?
+						<img src={mapPicture} alt={vacuum.name + ' real time map'} />
+					: null}
 				</div>
 
 				<div className="flex items-center justify-center">
@@ -79,7 +112,18 @@ const EntityVacuum = ({
 				state={entity.state != 'docked' ? 'light' : 'dark'}
 				type="vacuum"
 			>
-				<div className="text-sm">
+				<div className={cx("absolute left-0 bottom-3 w-full h-28 flex items-center justify-center",
+					{
+						'text-light': entity.state == 'docked',
+						'animate-vacuum-running': entity.state == 'cleaning' || entity.state == 'paused',
+						'paused': entity.state == 'paused',
+						'animate-vacuum-returning': entity.state == 'returning'
+					}
+				)}>
+					<Icon name="vacuum" className="!w-full !h-full" />
+				</div>
+
+				<div className="text-sm z-10">
 					{settings != null && settings.note != '' ?
 						<div>
 							{settings.note}
@@ -94,17 +138,6 @@ const EntityVacuum = ({
 
 					<div>
 						{capitalize(entity.state)}
-					</div>
-				</div>
-
-				<div className="flex justify-between">
-					<div className={cx(
-						"flex",
-						"items-center",
-						"text-2xl",
-						{ 'text-light': entity.state == 'docked' }
-					)}>
-						<Icon name={icon_name} />
 					</div>
 				</div>
 			</Card>
