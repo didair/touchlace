@@ -512,7 +512,7 @@ const Icon = ({ name, className }: {
 			return <FontAwesomeIcon icon={solid('pizza-slice')} className={className} />
 
 		case 'broom':
-			return <FontAwesomeIcon icon="fa-solid fa-broom" className={className} />
+			return <FontAwesomeIcon icon={solid('broom')} className={className} />
 
 		case 'vacuum':
 			return <Vacuum className={className} />
