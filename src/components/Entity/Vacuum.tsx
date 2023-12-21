@@ -76,7 +76,7 @@ const EntityVacuum = ({
 
 			<Card
 				onClick={() => setOpen(true)}
-				state={entity.state == 'on' ? 'light' : 'dark'}
+				state={entity.state != 'docked' ? 'light' : 'dark'}
 				type="vacuum"
 			>
 				<div className="text-sm">
@@ -102,7 +102,7 @@ const EntityVacuum = ({
 						"flex",
 						"items-center",
 						"text-2xl",
-						{ 'text-light': entity.state != 'on' }
+						{ 'text-light': entity.state == 'docked' }
 					)}>
 						<Icon name={icon_name} />
 					</div>

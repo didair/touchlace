@@ -48,7 +48,6 @@ export const roomsSlice = createSlice({
 		setEntityRoom: (state, action) => {
 			state.list = state.list.map((room) => {
 				room.entities = room.entities?.filter((entity_id) => entity_id != action.payload.entityId);
-				room.entities = room.entites?.filter((entity_id) => entity_id != null);
 				return room;
 			});
 
