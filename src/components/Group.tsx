@@ -4,8 +4,8 @@ import { useGetStatesQuery, useUpdateEntityStateMutation } from "services/states
 import { useMemo } from "react";
 
 import Card from "./Card";
-import RangeSlider from "./Inputs/RangeSlider";
 import Icon from "./Icon";
+import Slider from "./Inputs/Slider";
 
 const Group = ({ group }: {
 	group: IEntityGroup
@@ -13,7 +13,7 @@ const Group = ({ group }: {
 	const { data: entities } = useGetStatesQuery();
 	const [updateState] = useUpdateEntityStateMutation();
 
-	const findEntity = (entity_id) : IEntity => {
+	const findEntity = (entity_id: string): IEntity => {
 		return entities.find((entity) => entity.entity_id == entity_id);
 	};
 
@@ -54,7 +54,7 @@ const Group = ({ group }: {
 		return highest;
 	}, [group, entities]);
 
-	const turnOnLights = (brightness) => {
+	const turnOnLights = (brightness?: number) => {
 		group.entities.forEach((entity_id) => {
 			if (entity_id.indexOf('switch') > -1) {
 				updateState({
@@ -95,7 +95,7 @@ const Group = ({ group }: {
 
 	const onSliderChange = (value) => {
 		if (value > 0) {
-			turnOnLights(value);
+			turnOnLights(value[0]);
 		} else {
 			turnOffLights();
 		}
@@ -120,16 +120,15 @@ const Group = ({ group }: {
 			>
 				<div className="absolute top-0 left-0 w-full h-full flex flex-col">
 					<div className="flex-1">
-						<RangeSlider
-							value={defaultValue}
+						<Slider
 							min={0}
 							max={255}
-							onChange={onSliderChange}
-							showLabel={false}
+							defaultValue={[defaultValue]}
+							onValueCommit={onSliderChange}
 						/>
 					</div>
 
-					<div className="flex items-center px-4 py-3 mt-1" style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }} onClick={onToggleAll}>
+					<div className="flex items-center px-4 py-3 mt-1 bg-light/60" onClick={onToggleAll}>
 						<Icon name="BulbGroup" className="mr-1" />
 
 						<div className="truncate">
