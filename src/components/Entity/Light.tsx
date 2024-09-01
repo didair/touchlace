@@ -12,6 +12,7 @@ import { useUpdateEntityStateMutation } from 'services/states/api';
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import RangeSlider from 'components/Inputs/RangeSlider';
+import Slider from 'components/Inputs/Slider';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
@@ -70,12 +71,12 @@ const EntityLight = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="py-4 w-28 h-72">
-						<RangeSlider
+					<div className="my-8 w-28 h-72 rounded-xl overflow-hidden">
+						<Slider
 							min={0}
 							max={255}
-							onChange={updateBrightness}
-							value={entity.attributes.brightness}
+							onValueCommit={updateBrightness}
+							defaultValue={[entity.attributes.brightness]}
 						/>
 					</div>
 				</div>
