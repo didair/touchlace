@@ -19,7 +19,7 @@ const Slider = React.forwardRef<
 			<SliderPrimitive.Range className="absolute w-full bg-light/60" />
 		</SliderPrimitive.Track>
 
-		<SliderPrimitive.Thumb className="flex w-full justify-center ml-12 disabled:pointer-events-none outline-none disabled:opacity-50">
+		<SliderPrimitive.Thumb className="flex disabled:pointer-events-none outline-none disabled:opacity-50">
 			<span
 				className={cx("h-1 w-12 bg-light shadow-md rounded-full transition-colors", {
 					"mt-2": !props.inverted,
