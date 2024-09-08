@@ -9,7 +9,7 @@ import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
-import RangeSlider from 'components/Inputs/RangeSlider';
+import Slider from 'components/Inputs/Slider';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
 
@@ -26,7 +26,7 @@ const EntityCover = ({
 	const [showSettings, setShowSettings] = useState(false);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
-	const updatePosition = (value) => {
+	const updatePosition = ([value]: number[]) => {
 		callService({
 			entity_id: entity.entity_id,
 			domain: 'cover',
@@ -52,6 +52,8 @@ const EntityCover = ({
 		dispatch(favoriteEntity(entity.entity_id));
 	};
 
+	console.log('### cover', entity);
+
 	return (
 		<>
 			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}}>
@@ -62,10 +64,12 @@ const EntityCover = ({
 						: entity.attributes.friendly_name}
 					</h3>
 
-					<div className="py-4 w-28 h-72">
-						<RangeSlider
-							onChange={updatePosition}
-							value={entity.attributes.current_position}
+					<div className="my-8 w-28 h-72 rounded-xl overflow-hidden">
+						<Slider
+							min={0}
+							max={100}
+							onValueCommit={updatePosition}
+							defaultValue={[entity.attributes.current_position]}
 							flip
 						/>
 					</div>
