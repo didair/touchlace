@@ -2,29 +2,41 @@ import cx from 'classnames';
 import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 
+interface SliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+  flip?: boolean;
+}
+
 const Slider = React.forwardRef<
 	React.ElementRef<typeof SliderPrimitive.Root>,
-	React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, ...props }, ref) => (
+	SliderProps
+>(({ className, flip, ...props }, ref) => (
 	<SliderPrimitive.Root
 		ref={ref}
 		className={cx(
-			"relative flex w-full h-full touch-none select-none items-center",
-			className
+			"relative flex w-full h-full touch-none select-none items-center overflow-hidden",
+			className,
 		)}
 		orientation="vertical"
 		{...props}
 	>
-		<SliderPrimitive.Track className="relative h-full w-full grow overflow-hidden bg-light/5">
-			<SliderPrimitive.Range className="absolute w-full bg-light/60" />
+		<SliderPrimitive.Track
+			className={cx("relative h-full w-full grow overflow-hidden", {
+				"bg-gray": !flip,
+				"bg-light-gray": flip
+			})}
+		>
+			<SliderPrimitive.Range
+				className={cx("absolute w-full", {
+					"bg-gray": flip,
+					"bg-light-gray": !flip
+				})}
+			/>
 		</SliderPrimitive.Track>
 
-		<SliderPrimitive.Thumb className="flex disabled:pointer-events-none outline-none disabled:opacity-50">
+		<SliderPrimitive.Thumb className="flex w-full max-w-full disabled:pointer-events-none outline-none disabled:opacity-50">
 			<span
-				className={cx("h-1 w-12 bg-light shadow-md rounded-full transition-colors", {
-					"mt-2": !props.inverted,
-					"mb-2": props.inverted,
-				})}
+				className={cx("h-1 bg-light shadow-md transition-colors")}
+				style={{ width: 999 }}
 			/>
 		</SliderPrimitive.Thumb>
 	</SliderPrimitive.Root>
