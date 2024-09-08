@@ -93,9 +93,9 @@ const Group = ({ group }: {
 		});
 	};
 
-	const onSliderChange = (value) => {
+	const onSliderChange = ([value]: number[]) => {
 		if (value > 0) {
-			turnOnLights(value[0]);
+			turnOnLights(value);
 		} else {
 			turnOffLights();
 		}

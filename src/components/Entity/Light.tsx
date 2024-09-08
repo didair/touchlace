@@ -11,7 +11,6 @@ import { useUpdateEntityStateMutation } from 'services/states/api';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
-import RangeSlider from 'components/Inputs/RangeSlider';
 import Slider from 'components/Inputs/Slider';
 import Icon from 'components/Icon';
 import EntitySettings from 'components/Forms/EntitySettingsForm';
@@ -30,7 +29,7 @@ const EntityLight = ({
 	const icon_name = useEntityIcon(entity);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
-	const updateBrightness = (value) => {
+	const updateBrightness = ([value]: number[]) => {
 		if (value > 0) {
 			updateState({
 				entity_id: entity.entity_id,
