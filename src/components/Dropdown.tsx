@@ -98,7 +98,7 @@ export function Dropdown({
 	items = [],
 }: {
 	children: React.ReactNode;
-	items: [IDropdownItem],
+	items: IDropdownItem[];
 } & PopoverOptions) {
 	// This can accept any props as options, e.g. `placement`,
 	// or other positioning options.
