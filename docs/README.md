@@ -23,6 +23,7 @@ A Lovelace (Home Assistant) alternative written in ReactJS. Mainly designed to r
 - [x] Scene
 - [x] Sensor
 - [x] Binary sensor
+- [ ] Vacuum (Currently in development)
 - [ ] Person
 - [x] Media player
 
