@@ -7,6 +7,21 @@ const deepCompare = (a, b) => {
 	return JSON.stringify(a) === JSON.stringify(b);
 };
 
+const generateEntitiesSubscrition = (connection, updateCachedData) => {
+	return subscribeEntities(connection, (entities) => {
+		updateCachedData((state) => {
+			return state.map((entity) => {
+				const foundInSubscription = entities[entity.entity_id];
+				if (foundInSubscription != null && !deepCompare(foundInSubscription, entity)) {
+					return foundInSubscription;
+				}
+
+				return entity;
+			});
+		});
+	});
+};
+
 export const statesApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: getBaseURI() + '/api/',
@@ -27,25 +42,31 @@ export const statesApi = createApi({
 			providesTags: ['Entities'],
 			async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
 				await cacheDataLoaded;
-				const connection = await getHassConnection();
+				let connection = await getHassConnection();
+				let destroyPrevious;
 
 				if (connection == null) {
 					console.log('COULD NOT FETCH HASS CONNECTION');
 					return;
 				}
 
-				subscribeEntities(connection, (entities) => {
-					updateCachedData((state) => {
-						return state.map((entity) => {
-							const foundInSubscription = entities[entity.entity_id];
-							if (foundInSubscription != null && !deepCompare(foundInSubscription, entity)) {
-								return foundInSubscription;
-							}
+				setInterval(async () => {
+					if (!connection.connected) {
+						if (destroyPrevious != null) {
+							destroyPrevious();
+						}
 
-							return entity;
-						});
-					});
-				});
+						connection = await getHassConnection(true);
+						if (connection == null) {
+							console.log('COULD NOT FETCH HASS CONNECTION');
+							return;
+						}
+
+						destroyPrevious = generateEntitiesSubscrition(connection, updateCachedData);
+					}
+				}, 1000 * 10);
+
+				destroyPrevious = generateEntitiesSubscrition(connection, updateCachedData);
 			},
 		}),
 		updateEntityState: build.mutation({
