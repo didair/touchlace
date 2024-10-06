@@ -73,7 +73,7 @@ const badgeTypes = [
 		},
 		iconFunc: (matchingEntities: [IEntity]) => 'temperature-three-quarters',
 		matchFunc: (entity: IEntity) => {
-			return getEntityType(entity) == 'sensor' &&
+			return getEntityType(entity) == 'sensor' && entity.state !== 'unavailable' &&
 				getEntitySettings(entity.entity_id)?.sensorType == 'temperature'
 		},
 	},

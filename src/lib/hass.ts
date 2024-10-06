@@ -1,11 +1,13 @@
 import {
 	getAuth,
 	createConnection,
+	Auth,
+	Connection,
 } from "home-assistant-js-websocket";
 import { getBaseURI } from "./config";
 
 export const getHassAuth = async () => {
-	let auth;
+	let auth: Auth;
 	const authOptions = {
 		hassUrl: getBaseURI(),
 		redirectUrl: window.location.origin + '/setup',
@@ -31,16 +33,16 @@ export const getHassAuth = async () => {
 	return auth;
 };
 
-var hass_session_connection = null;
-export const getHassConnection = async () => {
+var connectionCache: Connection;
+export const getHassConnection = async (skipCache = false) => {
 	const auth = await getHassAuth();
 	if (auth != null) {
-		if (hass_session_connection != null) {
-			return hass_session_connection;
+		if (connectionCache != null && !skipCache && connectionCache.connected) {
+			return connectionCache;
 		}
 
-		hass_session_connection = await createConnection({ auth });
-		return hass_session_connection;
+		connectionCache = await createConnection({ auth });
+		return connectionCache;
 	}
 
 	return null;
