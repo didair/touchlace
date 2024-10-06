@@ -38,25 +38,6 @@ const VacuumForm = ({
 						})}
 					</Field>
 
-					<Field
-						name="map"
-						component={Select}
-						label="Vacuum map (entity)"
-					>
-						{entities != null ?
-							entities.filter((entity) =>
-								getEntityType(entity) == 'camera'
-							)
-							.map((entity) => {
-								return (
-									<option value={entity.entity_id} key={entity.entity_id}>
-										{entity.attributes.friendly_name}
-									</option>
-								)
-							})
-						: null}
-					</Field>
-
 					<Button type="submit">
 						Save
 					</Button>

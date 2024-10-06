@@ -1,19 +1,15 @@
-import { IVacuum } from 'types';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IEntity, IEntitySettings } from 'types';
 import { capitalize } from 'lib/text';
-import { getBaseURI } from 'lib/config';
-import useInterval from 'lib/useInterval';
 import cx from 'classnames';
 
-import { useCallEntityServiceMutation, useGetStatesQuery } from 'services/states/api';
+import { useCallEntityServiceMutation } from 'services/states/api';
 import { favoriteEntity } from 'services/settings/slice';
 
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
-import Button from 'components/Inputs/Button';
 
 const EntityVacuum = ({
 	entity,
@@ -23,14 +19,12 @@ const EntityVacuum = ({
 	settings: IEntitySettings,
 }) => {
 	const dispatch = useDispatch();
-	const { data: entities } = useGetStatesQuery();
 	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
 	const [delay, setDelay] = useState(null);
 	const [mapPicture, setMapPicture] = useState(null);
 	const [showSettings, setShowSettings] = useState(false);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
-	const vacuum: IVacuum = useSelector((state) => state.settings.vacuums.find((vac) => vac.id == entity.entity_id));
 
 	const startVacuum = () => {
 		callService({
@@ -65,68 +59,60 @@ const EntityVacuum = ({
 		dispatch(favoriteEntity(entity.entity_id));
 	};
 
-	useInterval(() => {
-		if (mapEntity == null) {
-			setMapPicture(null);
-			return;
-		}
+	// useInterval(() => {
+	// 	if (mapEntity == null) {
+	// 		setMapPicture(null);
+	// 		return;
+	// 	}
 
-		setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
-	}, delay);
+	// 	setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
+	// }, delay);
 
-	const mapEntity: IEntity = useMemo(() => {
-		if (vacuum == null || vacuum.map == '') {
-			return null;
-		}
+	// const mapEntity: IEntity = useMemo(() => {
+	// 	if (vacuum == null || vacuum.map == '') {
+	// 		return null;
+	// 	}
 
-		return entities.find((entity) => entity.entity_id == vacuum.map);
-	}, [vacuum]);
+	// 	return entities.find((entity) => entity.entity_id == vacuum.map);
+	// }, [vacuum]);
 
-	const vacuumEntity: IEntity = useMemo(() => {
-		if (vacuum == null) {
-			return null;
-		}
+	const rooms = useMemo(() => {
+		const map = entity.attributes.selected_map;
+		return entity.attributes?.rooms?.[map] ?? null;
+	}, [entity]);
 
-		return entities.find((entity) => entity.entity_id == vacuum.id);
-	}, [vacuum]);
+	// useEffect(() => {
+	// 	if (open) {
+	// 		setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
+	// 		setDelay(3000);
+	// 	} else {
+	// 		setDelay(null);
+	// 	}
+	// }, [open]);
 
-	const rooms: Array<object> = useMemo(() => {
-		const map = vacuumEntity.attributes.selected_map;
-		return vacuumEntity.attributes.rooms[map];
-	}, [vacuumEntity]);
-
-	useEffect(() => {
-		if (open) {
-			setMapPicture(getBaseURI() + mapEntity.attributes.entity_picture + '&_=' + Date.now());
-			setDelay(3000);
-		} else {
-			setDelay(null);
-		}
-	}, [open]);
-
-	console.log('vacuum', vacuumEntity, rooms);
+	console.log('### vacuum entity', entity);
 
 	return (
 		<>
-			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}} type="big">
+			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}} type="small">
 				<div className="mb-8">
 					<h3 className="text-2xl">
-						{vacuum != null && vacuum.name != null && vacuum.name != '' ?
-							vacuum.name
+						{settings != null && settings.name != null && settings.name != '' ?
+							settings.name
 						: entity.attributes.friendly_name}
 					</h3>
 				</div>
 
 				<div className="flex my-8 gap-x-6">
-					<div className="w-9/12">
+					{/* <div className="w-9/12">
 						<div className="h-[60vh]">
 							{mapPicture != null ?
 								<img src={mapPicture} alt={vacuum.name + ' real time map'} className="h-full" />
 							: null}
 						</div>
-					</div>
+					</div> */}
 
-					<div className="w-3/12 flex justify-start items-center flex-col">
+					<div className="w-full flex justify-start items-center flex-col">
 						<div className={cx("bottom-3 w-1/2 flex items-center justify-center transition-all",
 							{
 								'text-light': entity.state == 'docked',
@@ -135,11 +121,11 @@ const EntityVacuum = ({
 								'animate-vacuum-returning': entity.state == 'returning'
 							}
 						)}>
-							<Icon name="vacuum" className="!w-full !h-full" />
+							<Icon name="vacuum" className="!w-full !h-32" />
 						</div>
 
 						<div className="my-4">
-							{capitalize(entity.state)}
+							{capitalize(entity.state + '')}
 						</div>
 
 						<div className="w-full flex gap-2">
@@ -181,12 +167,12 @@ const EntityVacuum = ({
 				</div>
 
 				<div className="flex items-center justify-center">
-					<span
+					{/* <span
 						className={cx("ml-4 text-xl", { 'text-blue/90': showSettings })}
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
-					</span>
+					</span> */}
 
 					<span
 						className={cx("relative ml-4 text-xl", { 'text-bright-green': isFavorited })}
@@ -196,15 +182,11 @@ const EntityVacuum = ({
 						<Icon name="star" />
 					</span>
 				</div>
-
-				{showSettings ?
-				null
-				: null}
 			</Modal>
 
 			<Card
 				onClick={() => setOpen(true)}
-				state={entity.state != 'docked' ? 'light' : 'dark'}
+				state={entity.state != 'docked' && entity.state != 'unavailable' ? 'light' : 'dark'}
 				type="vacuum"
 			>
 				<div className={cx("absolute left-0 bottom-3 w-full h-1/2 flex items-center justify-center transition-all",
@@ -226,13 +208,13 @@ const EntityVacuum = ({
 					: null}
 
 					<div className="font-semibold text-base truncate text-ellipsis">
-						{vacuum.name != null && vacuum.name != '' ?
-							vacuum.name
+						{settings != null && settings.name != null && settings.name != '' ?
+							settings.name
 						: entity.attributes.friendly_name}
 					</div>
 
 					<div>
-						{capitalize(entity.state)}
+						{capitalize(entity.state + '')}
 					</div>
 				</div>
 			</Card>
