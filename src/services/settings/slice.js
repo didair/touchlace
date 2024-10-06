@@ -6,7 +6,6 @@ const initialState = {
 	entities: [],
 	favorites: [],
 	groups: [],
-	vacuums: [],
 };
 
 export const settingsSlice = createSlice({
@@ -65,23 +64,6 @@ export const settingsSlice = createSlice({
 
 			if (groupIndex > -1) {
 				state.groups.splice(groupIndex, 1);
-			}
-		},
-		addVacuum: (state, action) => {
-			if (state.vacuums == null) {
-				state.vacuums = [];
-			}
-
-			state.vacuums.push(action.payload);
-		},
-		updateVacuum: (state, action) => {
-			const { payload: vacuum } = action;
-			const vacuumIndex = state.vacuums.findIndex((v) =>
-				v.id == vacuum.id
-			);
-
-			if (vacuumIndex > -1) {
-				state.vacuums.splice(vacuumIndex, 1, vacuum);
 			}
 		},
 	},

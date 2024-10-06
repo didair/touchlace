@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Fragment, useMemo, useState } from 'react';
 import { useGetStatesQuery } from 'services/states/api';
 import { getEntityRoom, getEntityType } from 'lib/entity';
-import { addVacuum } from 'services/settings/slice';
+import { addVacuum, setEntitySettings } from 'services/settings/slice';
 import { capitalize } from 'lib/text';
 import useVacuumEntityMap from 'lib/useVacuumEntityMap';
 
@@ -63,7 +63,11 @@ const RoomAddEntityForm = (props) => {
 	};
 
 	const onVacuumSubmit = (values) => new Promise((resolve) => {
-		dispatch(addVacuum(values));
+		console.log('### vacuum submit', values);
+		// dispatch(addVacuum(values));
+
+		resolve(1);
+		return true;
 
 		if (typeof props.onSubmit == 'function' && values.room != '') {
 			props.onSubmit({
@@ -90,7 +94,7 @@ const RoomAddEntityForm = (props) => {
 						const entity_type = getEntityType(entity);
 						if (types_map.indexOf(entity_type) == -1) return null;
 						const entity_room = getEntityRoom(entity.entity_id);
-						if (entity_room != null) return null;
+						// if (entity_room != null) return null;
 
 						if (filter != '') {
 							if (entity.entity_id.indexOf(filter) == -1) {
