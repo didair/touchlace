@@ -1,26 +1,19 @@
 import { IEntity } from 'types';
 
-import { useDispatch } from 'react-redux';
 import { Fragment, useMemo, useState } from 'react';
 import { useGetStatesQuery } from 'services/states/api';
 import { getEntityRoom, getEntityType } from 'lib/entity';
-import { addVacuum, setEntitySettings } from 'services/settings/slice';
 import { capitalize } from 'lib/text';
-import useVacuumEntityMap from 'lib/useVacuumEntityMap';
 
 import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Inputs/Input';
 import EntitySettingsForm from './EntitySettingsForm';
-import VacuumForm from './VacuumForm';
 
 const RoomAddEntityForm = (props) => {
-	const dispatch = useDispatch();
 	const { data: entities } = useGetStatesQuery();
 	const [selectedEntity, setSelectedEntity] = useState(null);
 	const [filter, setFilter] = useState('');
-	const [showSubmit, setShowSubmit] = useState(false);
-	const [mapVacuumEntities] = useVacuumEntityMap();
 
 	const types_map = useMemo(() => {
 		if (props.type == null) return null;
@@ -55,29 +48,8 @@ const RoomAddEntityForm = (props) => {
 	};
 
 	const selectEntity = (entity) => {
-		if (props.type != 'vacuum') {
-			setShowSubmit(true);
-		}
-
 		setSelectedEntity(entity);
 	};
-
-	const onVacuumSubmit = (values) => new Promise((resolve) => {
-		console.log('### vacuum submit', values);
-		// dispatch(addVacuum(values));
-
-		resolve(1);
-		return true;
-
-		if (typeof props.onSubmit == 'function' && values.room != '') {
-			props.onSubmit({
-				entity: selectedEntity,
-				...values,
-			});
-		}
-
-		resolve(1);
-	});
 
 	const step1 = () => {
 		return (
@@ -94,7 +66,7 @@ const RoomAddEntityForm = (props) => {
 						const entity_type = getEntityType(entity);
 						if (types_map.indexOf(entity_type) == -1) return null;
 						const entity_room = getEntityRoom(entity.entity_id);
-						// if (entity_room != null) return null;
+						if (entity_room != null) return null;
 
 						if (filter != '') {
 							if (entity.entity_id.indexOf(filter) == -1) {
@@ -129,16 +101,6 @@ const RoomAddEntityForm = (props) => {
 	};
 
 	const step2 = () => {
-		if (props.type == 'vacuum') {
-			const entitiesMap = mapVacuumEntities(selectedEntity);
-
-			return (
-				<div>
-					<VacuumForm initialValues={entitiesMap} onSubmit={onVacuumSubmit} />
-				</div>
-			);
-		}
-
 		return (
 			<div>
 				<EntitySettingsForm entity={selectedEntity} hideRoomInput />
@@ -160,7 +122,7 @@ const RoomAddEntityForm = (props) => {
 				step2()
 				: null}
 
-			{showSubmit ?
+			{selectedEntity != null ?
 				<Button type="submit" className="mt-4" onClick={onSubmit}>
 					Save
 				</Button>
