@@ -10,6 +10,7 @@ import { favoriteEntity } from 'services/settings/slice';
 import Card from 'components/Card';
 import Modal from 'components/Modal';
 import Icon from 'components/Icon';
+import EntitySettings from 'components/Forms/EntitySettingsForm';
 
 const EntityVacuum = ({
 	entity,
@@ -21,9 +22,9 @@ const EntityVacuum = ({
 	const dispatch = useDispatch();
 	const [callService] = useCallEntityServiceMutation();
 	const [open, setOpen] = useState(false);
-	const [delay, setDelay] = useState(null);
-	const [mapPicture, setMapPicture] = useState(null);
 	const [showSettings, setShowSettings] = useState(false);
+	// const [delay, setDelay] = useState(null);
+	// const [mapPicture, setMapPicture] = useState(null);
 	const isFavorited = useSelector((state) => state.settings.favorites?.includes(entity.entity_id));
 
 	const startVacuum = () => {
@@ -90,11 +91,9 @@ const EntityVacuum = ({
 	// 	}
 	// }, [open]);
 
-	console.log('### vacuum entity', entity);
-
 	return (
 		<>
-			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false)}} type="small">
+			<Modal open={open} onClose={() => { setOpen(false); setShowSettings(false); }} type="small">
 				<div className="mb-8">
 					<h3 className="text-2xl">
 						{settings != null && settings.name != null && settings.name != '' ?
@@ -157,7 +156,11 @@ const EntityVacuum = ({
 
 							<div className="flex flex-col gap-1">
 								{rooms?.map((room) => {
-									return <div className="flex bg-off-white text-dark flex-col flex-1 p-2 rounded-md cursor-pointer" onClick={() => startRoomCleaning(room.id)}>
+									return <div
+										className="flex bg-off-white text-dark flex-col flex-1 p-2 rounded-md cursor-pointer"
+										onClick={() => startRoomCleaning(room.id)}
+										key={room.id}
+									>
 										{room.name}
 									</div>
 								})}
@@ -167,12 +170,12 @@ const EntityVacuum = ({
 				</div>
 
 				<div className="flex items-center justify-center">
-					{/* <span
+					<span
 						className={cx("ml-4 text-xl", { 'text-blue/90': showSettings })}
 						onClick={() => setShowSettings(!showSettings)}
 					>
 						<Icon name="gear" />
-					</span> */}
+					</span>
 
 					<span
 						className={cx("relative ml-4 text-xl", { 'text-bright-green': isFavorited })}
@@ -182,6 +185,10 @@ const EntityVacuum = ({
 						<Icon name="star" />
 					</span>
 				</div>
+
+				{showSettings ?
+					<EntitySettings entity={entity} />
+				: null}
 			</Modal>
 
 			<Card
