@@ -20,8 +20,8 @@ const Modal = ({
 	type = 'small',
 }: {
 	children: ReactNode,
-	onClose: Function,
-	onOpen: Function,
+	onClose?: Function,
+	onOpen?: Function,
 	open: boolean,
 	title?: string | ReactElement,
 	closeButtonText?: string | ReactElement,
