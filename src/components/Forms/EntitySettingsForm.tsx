@@ -92,16 +92,20 @@ const EntitySettings = ({ entity, hideRoomInput = false }: { entity: IEntity }) 
 				onChange={updateNote}
 			/>
 
-			<IconSelect
-				onSelect={updateIcon}
-				entity={entity}
-				value={entitySettings?.icon ?? null}
-			/>
+			{entity_type != 'vacuum' ?
+				<IconSelect
+					onSelect={updateIcon}
+					entity={entity}
+					value={entitySettings?.icon ?? null}
+				/>
+			: null}
 
-			<ImageSelect
-				onSelect={updateImage}
-				settings={entitySettings}
-			/>
+			{entity_type != 'vacuum' ?
+				<ImageSelect
+					onSelect={updateImage}
+					settings={entitySettings}
+				/>
+			: null}
 
 			{!hideRoomInput ?
 				<Select label="Room" onChange={onRoomChange} value={entityRoom?.id}>

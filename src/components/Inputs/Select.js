@@ -1,8 +1,16 @@
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import cx from 'classnames';
 
-const Select = ({ label, value, onChange, children }) => {
+const Select = ({ label, value, onChange, children, input }) => {
 	const id = useId();
+
+	useEffect(() => {
+		if (input != null && input.value == '') {
+			if (children[0]?.props?.value) {
+				input.onChange(children[0].props.value);
+			}
+		}
+	}, []);
 
 	return (
 		<div className="form-element mb-4 last-of-type:mb-0">
@@ -14,7 +22,7 @@ const Select = ({ label, value, onChange, children }) => {
 
 			<div className="text-dark">
 				<select
-					value={value}
+					value={input?.value ?? value}
 					id={id}
 					className={cx(
 						'w-full',
@@ -25,7 +33,7 @@ const Select = ({ label, value, onChange, children }) => {
 						'border-green',
 						'focus:border-bright-green',
 					)}
-					onChange={onChange}
+					onChange={input?.onChange ?? onChange}
 				>
 					{children}
 				</select>

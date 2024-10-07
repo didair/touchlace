@@ -1,4 +1,4 @@
-import { IEntitySettings } from "types";
+import { IEntity, IEntitySettings } from "types";
 import { useSelector } from "react-redux";
 import { getEntityType } from "lib/entity";
 
@@ -9,8 +9,13 @@ import EntityBinarySensor from "./BinarySensor";
 import EntitySensor from './Sensor';
 import MediaPlayerEntity from "./MediaPlayer";
 import EntityScene from "./Scene";
+import EntityVacuum from "./Vacuum";
 
-const Entity = (props) => {
+interface EntityProps {
+	entity: IEntity;
+};
+
+const Entity = (props: EntityProps) => {
 	const entity_type = getEntityType(props.entity);
 	const entitySettings: IEntitySettings = useSelector((state) => {
 		return state.settings.entities.find((entity) => entity.entity_id == props.entity.entity_id)
@@ -67,6 +72,15 @@ const Entity = (props) => {
 	if (entity_type === 'scene') {
 		return (
 			<EntityScene
+				settings={entitySettings}
+				{...props}
+			/>
+		);
+	}
+
+	if (entity_type === 'vacuum') {
+		return (
+			<EntityVacuum
 				settings={entitySettings}
 				{...props}
 			/>

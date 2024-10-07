@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IRoom } from '../../types/index';
 
-const initialState = {
+interface RoomsState {
+	list: IRoom[];
+};
+
+const initialState: RoomsState = {
 	list: [],
 };
 
@@ -8,11 +13,11 @@ export const roomsSlice = createSlice({
 	name: 'rooms',
 	initialState,
 	reducers: {
-		createRoom: (state, action) => {
+		createRoom: (state, action: { payload: IRoom }) => {
 			state.list.push(action.payload);
 			state.list = state.list.map((room, index) => ({ ...room, index }));
 		},
-		updateRoom: (state, action) => {
+		updateRoom: (state, action: { payload: IRoom }) => {
 			const roomIndex = state.list.findIndex((room) => room.id == action.payload.id);
 
 			if (roomIndex > -1) {
@@ -20,7 +25,7 @@ export const roomsSlice = createSlice({
 				state.list = state.list.map((room, index) => ({ ...room, index }));
 			}
 		},
-		deleteRoom: (state, action) => {
+		deleteRoom: (state, action: { payload: IRoom }) => {
 			const roomIndex = state.list.findIndex((room) => {
 				if (typeof action.payload == 'object') {
 					return room.id == action.payload.id;
@@ -34,7 +39,7 @@ export const roomsSlice = createSlice({
 				state.list = state.list.map((room, index) => ({ ...room, index }));
 			}
 		},
-		moveRoom: (state, action) => {
+		moveRoom: (state, action: { payload: { from: number, to: number } }) => {
 			const element = state.list[action.payload.from];
 			state.list.splice(action.payload.from, 1);
 			state.list.splice(action.payload.to, 0, element);
@@ -45,7 +50,7 @@ export const roomsSlice = createSlice({
 				window.dispatchEvent(roomsChange);
 			}, 1000)
 		},
-		setEntityRoom: (state, action) => {
+		setEntityRoom: (state, action: { payload: { roomId: string, entityId: string } }) => {
 			state.list = state.list.map((room) => {
 				room.entities = room.entities?.filter((entity_id) => entity_id != action.payload.entityId);
 				return room;

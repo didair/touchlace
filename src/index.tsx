@@ -18,6 +18,7 @@ import Media from 'containers/pages/Media';
 import Room from 'containers/pages/Room';
 import Settings from 'containers/pages/Settings';
 import Setup from 'containers/pages/Setup';
+import Cleaning from 'containers/pages/Cleaning';
 
 import './index.css';
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
 			{
 				path: '/settings',
 				element: <Settings />,
+			},
+			{
+				path: '/cleaning',
+				element: <Cleaning />
 			},
 		],
 		loader: () => new Promise((resolve, reject) => {
