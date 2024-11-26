@@ -49,10 +49,6 @@ const Sidebar = () => {
 				Media
 			</SidebarItem>
 
-			<SidebarItem to="/cleaning">
-				Cleaning
-			</SidebarItem>
-
 			<div className="bg-gray rounded-full mx-8 my-4" style={{ height: 1 }} />
 
 			{rooms == null || rooms.length == 0 ?
