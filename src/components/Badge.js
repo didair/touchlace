@@ -42,6 +42,7 @@ const Badge = (props) => {
 					"select-none",
 					"text-light-gray/90",
 				)}
+				tabIndex={0}
 			>
 				<div className="flex items-center">
 					{props.icon != null ?

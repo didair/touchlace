@@ -180,9 +180,12 @@ const Settings = () => {
 				<h2 className="text-3xl flex items-center mb-4">
 					Rooms
 
-					<span className="ml-2 cursor-pointer text-xl" onClick={() => setSelectedRoom({
-						id: 'new',
-					})}>
+					<span
+						role="button"
+						className="ml-2 cursor-pointer text-xl" onClick={() => setSelectedRoom({
+							id: 'new',
+						})}
+					>
 						<Icon name="circle-plus" />
 					</span>
 				</h2>
@@ -226,9 +229,12 @@ const Settings = () => {
 				<h2 className="text-3xl flex items-center mb-4">
 					Groups
 
-					<span className="ml-2 cursor-pointer text-xl" onClick={() => setSelectedGroup({
-						id: 'new',
-					})}>
+					<span
+						role="button"
+						className="ml-2 cursor-pointer text-xl" onClick={() => setSelectedGroup({
+							id: 'new',
+						})}
+					>
 						<Icon name="circle-plus" />
 					</span>
 				</h2>

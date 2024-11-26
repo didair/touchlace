@@ -1,11 +1,10 @@
 import { IEntity } from 'types';
 
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useGetStatesQuery } from 'services/states/api';
 import { getEntityRoom, getEntityType } from 'lib/entity';
 import { capitalize } from 'lib/text';
 
-import { Form } from 'react-final-form';
 import Button from 'components/Inputs/Button';
 import Icon from 'components/Icon';
 import Input from 'components/Inputs/Input';
@@ -34,13 +33,22 @@ const RoomAddEntityForm = (props) => {
 		if (props.type == 'cover') {
 			return ['cover'];
 		}
+
+		if (props.type == 'vacuum') {
+			return ['vacuum'];
+		}
 	}, [props.type]);
 
-	const onSubmit = (values) => {
-		values['entity'] = selectedEntity;
+	const onSubmit = () => {
 		if (typeof props.onSubmit == 'function') {
-			props.onSubmit(values);
+			props.onSubmit({
+				entity: selectedEntity,
+			});
 		}
+	};
+
+	const selectEntity = (entity) => {
+		setSelectedEntity(entity);
 	};
 
 	const step1 = () => {
@@ -54,7 +62,6 @@ const RoomAddEntityForm = (props) => {
 				/>
 
 				<div className="bg-gray/10 border border-gray/40 rounded-md px-2">
-
 					{entities.map((entity: IEntity) => {
 						const entity_type = getEntityType(entity);
 						if (types_map.indexOf(entity_type) == -1) return null;
@@ -71,7 +78,7 @@ const RoomAddEntityForm = (props) => {
 							<div
 								key={entity.entity_id}
 								className="flex items-center justify-between py-2 border-b border-b-gray/40 last-of-type:border-b-0 cursor-pointer"
-								onClick={() => setSelectedEntity(entity)}
+								onClick={() => selectEntity(entity)}
 							>
 								<div className="truncate">
 									<div className="text-sm">
@@ -106,27 +113,21 @@ const RoomAddEntityForm = (props) => {
 	}
 
 	return (
-		<Form
-			onSubmit={onSubmit}
-			initialValues={props.initialValues}
-			render={({ handleSubmit }) => (
-				<form onSubmit={handleSubmit}>
-					{selectedEntity == null ?
-						step1()
-						: null}
+		<Fragment>
+			{selectedEntity == null ?
+				step1()
+				: null}
 
-					{selectedEntity != null ?
-						step2()
-						: null}
+			{selectedEntity != null ?
+				step2()
+				: null}
 
-					{selectedEntity != null ?
-						<Button type="submit" className="mt-4">
-							Save
-						</Button>
-						: null}
-				</form>
-			)}
-		/>
+			{selectedEntity != null ?
+				<Button type="submit" className="mt-4" onClick={onSubmit}>
+					Save
+				</Button>
+				: null}
+		</Fragment>
 	);
 
 };

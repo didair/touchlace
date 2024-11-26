@@ -18,7 +18,18 @@ export interface IEntity {
 		shuffle?: boolean,
 		unit_of_measurement?: string,
 		volume_level?: number,
+		selected_map?: string;
+		rooms?: {
+			[mapName: string]: IRoom[]
+		};
 	},
+};
+
+export interface IRoom {
+	id: string,
+	name: string,
+	entities?: Array<string>,
+	icon?: string;
 };
 
 export interface IEntitySettings {
@@ -36,4 +47,9 @@ export interface IEntityGroup {
 	backgroundImageId?: string,
 	backgroundUrl?: string,
 	entities: Array<string>,
+};
+
+export interface IVacuum {
+	id: string,
+	name: string,
 };

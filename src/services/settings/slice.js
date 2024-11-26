@@ -88,6 +88,8 @@ export const {
 	addGroup,
 	updateGroup,
 	deleteGroup,
+	addVacuum,
+	updateVacuum,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
