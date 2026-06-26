@@ -1,90 +1,74 @@
 .ReactModal__Overlay {
-	@apply bg-transparent;
-	@apply fixed;
-	@apply top-0;
-	@apply bottom-0;
-	@apply left-0;
-	@apply right-0;
-	z-index: 2048;
-
-	@apply transition-all;
-	@apply ease-in-out;
-	@apply duration-300;
-
-	-webkit-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2048;
+  background-color: transparent;
+  transition: all 300ms ease-in-out;
+  user-select: none;
+  pointer-events: none;
 }
 
 .ReactModal__Overlay--after-open {
-	pointer-events: all;
-	@apply bg-dark/60 backdrop-blur-sm;
+  pointer-events: all;
+  background-color: rgb(13 17 19 / 60%);
+  backdrop-filter: blur(4px);
 }
 
 .ReactModal__Overlay--before-close {
-	@apply bg-transparent backdrop-blur-0;
+  background-color: transparent;
+  backdrop-filter: blur(0);
 }
 
 body.ReactModal__Body--open {
-	@apply fixed inset-0 w-full overflow-hidden touch-none;
-	-webkit-overflow-scrolling: auto;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-overflow-scrolling: auto;
 }
 
 .ReactModal__Content {
-	outline: none !important;
-	@apply absolute;
-	@apply bg-dark;
-	@apply max-w-lg;
-	@apply top-1/2 left-1/2;
-	width: 90%;
-
-	@apply rounded-lg;
-	@apply border border-gray/40;
-	@apply -translate-y-1/2 -translate-x-1/2;
-	@apply transition;
-	@apply ease-in-out;
-	@apply duration-300;
-	@apply flex flex-col;
-	@apply shadow-2xl;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 32rem;
+  border: 1px solid rgb(95 96 98 / 40%);
+  border-radius: 0.5rem;
+  outline: none !important;
+  background-color: #0d1113;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: all 300ms ease-in-out;
 }
 
 .ReactModal__Content.type-big {
-	@apply max-w-6xl;
+  max-width: 72rem;
 }
 
-/* From middle (default) */
-/* Initial state */
-.ReactModal__Content {
-	@apply scale-50;
-	@apply opacity-0;
-}
-
-/* Open animation */
 .ReactModal__Content--after-open {
-	@apply scale-100;
-	@apply opacity-100;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-/* Close animation */
 .ReactModal__Content--before-close {
-	@apply scale-50;
-	@apply opacity-0;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
 }
 
-/* From bottom slide in */
-/* Initial state */
 .ReactModal__Content.fromBottom {
-	@apply scale-100 duration-500;
-	@apply translate-y-[100vh];
+  transform: translate(-50%, 100vh) scale(1);
+  transition-duration: 500ms;
 }
 
-/* Open animation */
 .ReactModal__Content--after-open.fromBottom {
-	@apply -translate-y-1/2;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-/* Close animation */
 .ReactModal__Content--before-close.fromBottom {
-	@apply translate-y-[100vh];
+  transform: translate(-50%, 100vh) scale(1);
 }

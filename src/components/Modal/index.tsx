@@ -11,63 +11,63 @@ ReactModal.defaultStyles.overlay = {};
 ReactModal.setAppElement('#root');
 
 const Modal = ({
-	children = null,
-	onClose = () => null,
-	onOpen = () => null,
-	open = false,
-	title = null,
-	closeButtonText = null,
-	type = 'small',
+  children = null,
+  onClose = () => null,
+  onOpen = () => null,
+  open = false,
+  title = null,
+  closeButtonText = null,
+  type = 'small',
 }: {
-	children: ReactNode,
-	onClose?: Function,
-	onOpen?: Function,
-	open: boolean,
-	title?: string | ReactElement,
-	closeButtonText?: string | ReactElement,
-	type: 'small' | 'big',
+  children: ReactNode,
+  onClose?: Function,
+  onOpen?: Function,
+  open: boolean,
+  title?: string | ReactElement,
+  closeButtonText?: string | ReactElement,
+  type: 'small' | 'big',
 }) => {
-	const [canClose, setCanClose] = useState(false);
+  const [canClose, setCanClose] = useState(false);
 
-	useEffect(() => {
-		if (open) {
-			setTimeout(() => {
-				setCanClose(true);
-			}, 1250);
-		} else {
-			setTimeout(() => {
-				setCanClose(false);
-			}, 350);
-		}
-	}, [open]);
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        setCanClose(true);
+      }, 1250);
+    } else {
+      setTimeout(() => {
+        setCanClose(false);
+      }, 350);
+    }
+  }, [open]);
 
-	return (
-		<ReactModal
-			isOpen={open}
-			onRequestClose={onClose}
-			onAfterOpen={onOpen}
-			// Animation timing
-			closeTimeoutMS={300}
-			className={`type-${type}`}
-			shouldCloseOnOverlayClick={canClose}
-		>
-			{title != null ?
-				<div className="flex items-center justify-between px-7 py-2 border-b border-b-gray/40">
-					{title}
+  return (
+    <ReactModal
+      isOpen={open}
+      onRequestClose={onClose}
+      onAfterOpen={onOpen}
+      // Animation timing
+      closeTimeoutMS={300}
+      className={`type-${type}`}
+      shouldCloseOnOverlayClick={canClose}
+    >
+      {title != null ?
+        <div className="flex items-center justify-between px-7 py-2 border-b border-b-gray/40">
+          {title}
 
-					{closeButtonText != null ?
-						<div onClick={() => onClose()} className="cursor-pointer uppercase text-sm font-semibold text-green">
-							{closeButtonText}
-						</div>
-					: null}
-				</div>
-			: null}
+          {closeButtonText != null ?
+            <div onClick={() => onClose()} className="cursor-pointer uppercase text-sm font-semibold text-green">
+              {closeButtonText}
+            </div>
+            : null}
+        </div>
+        : null}
 
-			<div className="max-h-[85vh] overflow-auto flex-1 p-7">
-				{children}
-			</div>
-		</ReactModal>
-	);
+      <div className="max-h-[85vh] overflow-auto flex-1 p-7">
+        {children}
+      </div>
+    </ReactModal>
+  );
 
 }
 

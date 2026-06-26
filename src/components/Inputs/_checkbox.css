@@ -1,6 +1,8 @@
 input:checked + div {
-  @apply !border-bright-green;
+  border-color: #21d16a !important;
 }
+
 input:checked + div svg {
-  @apply !opacity-100 !scale-100;
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }

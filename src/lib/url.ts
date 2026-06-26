@@ -4,12 +4,12 @@
  * @returns Parameter value
  */
 export const getParameterByName = (name: string, url: string) => {
-	if (!url) url = window.location.href;
-	name = name.replace(/[\[\]]/g, '\\$&');
-	var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-		results = regex.exec(url);
-	if (!results) return null;
-	if (!results[2]) return '';
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
 
-	return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
